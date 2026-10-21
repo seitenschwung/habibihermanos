@@ -1,24 +1,55 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project template demo</title>
-  <meta name="description" content="Demo page of the project template. It passes the pipeline checks and is meant to be replaced.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <style>
-    body { margin: 0; font: 1.125rem/1.6 system-ui, sans-serif; color: #1b1b1b; background: #fff; }
-    main { max-width: 40rem; margin: 0 auto; padding: 3rem 1.25rem; }
-    h1 { line-height: 1.2; }
-    a { color: #0b4f9c; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#401b14">
+<meta name="description" content="Habbibi Hermanos – spanische Gitarrenmelodien und Gesang treffen auf Cajón und arabisch inspirierte Rhythmen. Live anhören und für Konzerte anfragen.">
+<meta property="og:title" content="Habbibi Hermanos – Gitarre · Gesang · Cajón">
+<meta property="og:description" content="Zwei Freunde. Eine Gitarre. Ein Cajón. Ein gemeinsamer Rhythmus.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/images/hero-duo.webp">
+<link rel="icon" href="assets/images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/site.js" defer></script>
+<title>Habbibi Hermanos — Live, Gitarre & Cajón</title>
 </head>
 <body>
-  <main>
-    <h1>Project template demo</h1>
-    <p>This page is the demo content of the template. It is a working example of the deploy
-       contract: port 8080, <code>/healthz</code> and <code>/version.txt</code>.</p>
-    <p>Replace this site with the real project. The pipeline keeps checking it the same way.</p>
-  </main>
-</body>
-</html>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<div class="ambient" aria-hidden="true"></div>
+<header class="topbar" id="top"><a class="logo" href="#start" aria-label="Habbibi Hermanos, zur Startseite"><img src="assets/images/silhouette-mark-small.png" alt="" width="42" height="42"><span>Habbibi<br>Hermanos</span></a>
+<nav class="topnav" id="primary-nav" aria-label="Hauptnavigation"><a href="#musik">Musik</a><a href="#ueber-uns">Über uns</a><a href="#auftritte">Auftritte</a><a href="#kontakt">Kontakt</a><a class="top-book" href="#buchen">Buchen <span aria-hidden="true">↗</span></a></nav>
+<button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menü öffnen" type="button"><span></span><span></span></button></header>
+<main id="main">
+<section id="start" class="hero" aria-labelledby="hero-title">
+<div class="hero-media" aria-hidden="true"><video id="hero-video" muted loop autoplay playsinline preload="metadata" poster="assets/images/live-cover.jpg"><source src="assets/media/hero-loop.mp4" type="video/mp4"></video><div class="hero-media-tint"></div></div>
+<div class="hero-aura" aria-hidden="true"></div>
+<div class="hero-inner">
+<div class="hero-topline"><span>SPANISCHE MELODIEN <span class="aster">/</span> ARABISCH INSPIRIERTER PULS</span><span class="hero-index">HH — 01 / LIVE</span></div>
+<h1 id="hero-title"><span class="title-row">HABBIBI</span><span class="title-row title-two">HERMANOS<span class="fullstop">.</span></span></h1>
+<div class="hero-bottom"><p class="hero-manifesto">Eine Gitarre.<br>Ein Cajón.<br><i>Ein Rhythmus.</i></p><div class="hero-ctas"><a class="primary-button" href="#musik">Musik erleben <span aria-hidden="true">↗</span></a><a class="text-button" href="#buchen">Für euren Abend buchen <span aria-hidden="true">↗</span></a></div></div>
+<div class="hero-side-note" lang="ar" dir="rtl">الموسيقى تجمعنا</div>
+</div>
+<button class="hero-sound" id="hero-sound" type="button" aria-pressed="false"><span class="sound-pulse" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span id="hero-sound-text">TON AN</span></button>
+<div class="hero-footer"><span>LIVE – GESANG / GITARRE / CAJÓN</span><a href="#entdecken">ENTDECKEN <span aria-hidden="true">↓</span></a></div>
+</section>
+<section class="index-links" id="entdecken" aria-label="Entdecke Habbibi Hermanos"><div class="content-width"><p class="meta light">WEITERHÖREN / WEITERLESEN</p><div class="index-grid"><a href="#musik">Musik <span>↗</span></a><a href="#ueber-uns">Über uns <span>↗</span></a><a href="#auftritte">Nächste Auftritte <span>↗</span></a><a href="#buchen">Buchen <span>↗</span></a><a href="#kontakt">Kontakt <span>↗</span></a></div></div></section>
+<section id="musik" class="section music-section" aria-labelledby="music-title"><div class="content-width">
+<div class="section-top"><p class="meta">01 — UNSER SOUND</p><p class="small-aside">Originalmitschnitte. Keine gestellten Szenen.</p></div>
+<h2 id="music-title" class="display-title">HÖR<br><span>SELBST<span class="tiny-dot">.</span></span></h2>
+<div class="live-feature"><button type="button" class="video-tile" data-video="main" aria-label="Live-Session mit Gitarre, Gesang und Cajón öffnen"><img src="assets/images/live-cover.jpg" alt="Die beiden Musiker während einer Live-Session mit Gitarre und Cajón" loading="lazy"><span class="video-darken"></span><span class="play-circle" aria-hidden="true">▶</span><span class="video-corner">VIDEO / LIVE AUS DEM CAFÉ</span></button>
+<div class="live-feature-details"><p class="meta">01 / VIDEO</p><h3>Keine große Bühne.<br><em>Ein echter Moment.</em></h3><p>Gitarre, Gesang und Cajón – so klingt Habbibi Hermanos, wenn wir live zusammenspielen.</p><button class="line-cta" type="button" data-video="main">Live-Video ansehen <span aria-hidden="true">↗</span></button><button class="line-cta secondary" type="button" data-video="second">Zweiten Mitschnitt ansehen <span aria-hidden="true">↗</span></button></div></div>
+<div class="audio-strip"><div class="audio-info"><span class="meta">02 / AUDIO</span><h3>Nur zuhören.</h3><p>Ein Ausschnitt direkt aus dem Raum.</p></div><div class="audio-controls"><button type="button" id="audio-play" class="audio-button" aria-label="Audiomitschnitt abspielen"><span id="audio-play-symbol">▶</span></button><div class="audio-timeline"><div class="waveform" id="waveform" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wave-bars" id="wave-bars"></div><div class="wave-highlight" id="wave-highlight"></div></div><div class="time-row"><span id="audio-now">0:00</span><span id="audio-end">0:00</span></div></div></div><audio id="song-audio" src="assets/media/live-audio.m4a" preload="metadata"></audio></div>
+</div></section>
+<section class="section story-section" id="ueber-uns" aria-labelledby="story-title"><div class="content-width story-grid"><div class="story-content"><p class="meta">02 — ÜBER UNS</p><h2 class="display-title story-title" id="story-title">ZWEI<br>WELTEN.<br><span>EIN TAKT.</span></h2><p class="story-lead">Spanische Lieder, eine akustische Gitarre und eine Stimme, die Geschichten erzählt. Daneben das Cajón: der Herzschlag, der alles zusammenhält.</p><p class="story-body">Wir sind zwei Freunde mit unterschiedlichen musikalischen Einflüssen. Auf der Bühne entsteht daraus etwas Gemeinsames – mit Gesang, Rhythmus und Raum für spontane Momente. Wir spielen auf Konzerten, in Cafés und bei privaten Veranstaltungen.</p><p class="arabic-art" lang="ar" dir="rtl">الموسيقى تجمعنا</p><small class="arabic-translation">MUSIK VERBINDET UNS</small></div><div class="story-image"><img src="assets/images/hero-duo.webp" alt="Die Musiker Habbibi Hermanos sitzen gemeinsam vor einem Café" loading="lazy"><span class="image-numeral">02 / HERMANOS</span></div></div></section>
+<section class="section dates-section" id="auftritte" aria-labelledby="dates-title"><div class="content-width"><div class="dates-head"><p class="meta">03 — LIVE ERLEBEN</p><span class="date-stamp">Café · Kulturveranstaltung · Konzert · Fest</span></div><div class="dates-layout"><h2 id="dates-title" class="display-title">NÄCHSTE<br><span>AUFTRITTE.</span></h2><div class="dates-copy"><p>Neue Termine folgen hier, sobald sie feststehen.</p><p>Ihr plant selbst einen Konzertabend oder eine Veranstaltung?</p><a class="line-cta" href="#buchen">Fragt uns direkt an <span aria-hidden="true">↗</span></a></div></div></div></section>
+<section class="section photo-section" id="momente" aria-labelledby="moments-title"><div class="content-width"><div class="section-top"><p class="meta">04 — UNTERWEGS</p><p class="small-aside">Von Auftritten und den Augenblicken dazwischen.</p></div><h2 class="display-title" id="moments-title">MOMENTE<span class="tiny-dot">.</span></h2><div class="photos"><button type="button" class="photo photo-one" data-photo="assets/images/gallery-performance.webp" data-caption="Gitarre und Cajón" aria-label="Foto vergrößern: Gitarre und Cajón"><img src="assets/images/gallery-performance.webp" alt="Die Musiker mit Gitarre und Cajón bei einem Auftritt" loading="lazy"><span>01 / LIVE <b>↗</b></span></button><button type="button" class="photo photo-two" data-photo="assets/images/portrait-suited.webp" data-caption="Die Hermanos" aria-label="Foto vergrößern: Die Hermanos"><img src="assets/images/portrait-suited.webp" alt="Beide Musiker gemeinsam vor einer Caféfassade" loading="lazy"><span>02 / HERMANOS <b>↗</b></span></button><button type="button" class="photo photo-three" data-photo="assets/images/gallery-community.webp" data-caption="Zusammen unterwegs" aria-label="Foto vergrößern: Gemeinsam unterwegs"><img src="assets/images/gallery-community.webp" alt="Die Musiker gemeinsam mit Freunden" loading="lazy"><span>03 / ZUSAMMEN <b>↗</b></span></button></div></div></section>
+<section class="section contact-section" id="buchen" aria-labelledby="contact-title"><div class="content-width contact-layout"><div class="contact-copy"><p class="meta">05 — BUCHUNG & KONTAKT</p><h2 class="display-title" id="contact-title">EURE<br>BÜHNE.<br><span>UNSER</span><br>SOUND.</h2><p>Ob kleines Café, großes Fest oder Kulturveranstaltung: Schreibt uns, wo und wann wir für euch spielen sollen.</p><div class="signature"><img src="assets/images/silhouette-mark-small.png" alt="" width="60" height="60"><span>Habbibi Hermanos</span></div></div>
+<div class="contact-form-wrap" id="kontakt"><p class="form-title">Macht den ersten Ton.</p><form id="booking-form" novalidate><div class="input-line"><label for="contact-name">Name *</label><input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Dein Name" required></div><div class="input-line"><label for="contact-email">E-Mail *</label><input id="contact-email" name="email" type="email" autocomplete="email" placeholder="deine@email.de" required></div><div class="input-line"><label for="contact-event">Ort / Veranstaltung *</label><input id="contact-event" name="event" type="text" placeholder="Wo soll gespielt werden?" required></div><div class="input-line"><label for="contact-date">Wunschtermin</label><input id="contact-date" name="date" type="date"></div><div class="input-line full"><label for="contact-message">Deine Nachricht *</label><textarea id="contact-message" name="message" rows="3" placeholder="Erzähl uns von deiner Idee …" required></textarea></div><button type="submit" class="primary-button submit-button">Anfrage vorbereiten <span aria-hidden="true">↗</span></button><button type="button" id="copy-booking" class="copy-button">Anfrage als Text kopieren ↗</button><p id="form-status" class="form-status" role="status">Die Kontakt-E-Mail-Adresse ist noch nicht hinterlegt. Du kannst deine Anfrage bereits kopieren.</p></form></div></div></section>
+</main>
+<footer class="footer"><div class="content-width footer-inside"><a href="#start" class="footer-brand">HABBIBI<br>HERMANOS<span>.</span></a><p>Gitarre. Gesang. Cajón.<br><span>الموسيقى تجمعنا</span></p><a href="#top" aria-label="Zurück nach oben">ZURÜCK NACH OBEN ↑</a></div></footer>
+<dialog id="video-dialog" class="modal" aria-label="Live-Video"><div class="modal-inner"><button type="button" class="close-modal" id="close-video" aria-label="Video schließen">SCHLIESSEN ×</button><video id="modal-video" controls playsinline preload="none" poster="assets/images/live-cover.jpg"></video><p id="modal-video-label">Habbibi Hermanos / Live-Session</p></div></dialog>
+<dialog id="photo-dialog" class="photo-modal" aria-label="Foto vergrößert"><button type="button" class="close-modal" id="close-photo" aria-label="Foto schließen">SCHLIESSEN ×</button><img id="large-photo" alt=""><p id="large-photo-caption"></p></dialog>
+</body></html>
