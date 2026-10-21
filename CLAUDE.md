@@ -28,5 +28,6 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - `BOOKING_EMAIL` in `site.js` is empty until the owner supplies it (form then only copies text).
 - Google Fonts are loaded externally (GDPR concern); plan: self-host. Blocked in the sandbox proxy,
   so a console error for it is expected locally.
-- No Impressum / Datenschutz yet; required before public launch.
+- `public/impressum.html` and `public/datenschutz.html` are placeholders (`.todo` fields); owner must fill and legally review before public launch.
+- Design: tokens in `:root` of `style.css` (`--dusk`, `--rose`, `--gold`, glows); hero is a sunrise (violet sky, horizon glow). Plan/critique: `docs/design-critique.md`.
 - Media is ~16 MB (videos); keep new media compressed.
