@@ -10,7 +10,8 @@ $$('.topnav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove(
 const hero=$('#hero-video'),heroToggle=$('#hero-sound'),heroText=$('#hero-sound-text');
 const audio=$('#song-audio'),audioBtn=$('#audio-play'),audioIcon=$('#audio-play-symbol'),wave=$('#waveform'),bars=$('#wave-bars'),now=$('#audio-now'),end=$('#audio-end'),fill=$('#wave-highlight');
 const videoDialog=$('#video-dialog'),modalVideo=$('#modal-video'),photoDialog=$('#photo-dialog');
-hero.play().catch(()=>{});
+const saveData=navigator.connection&&navigator.connection.saveData;
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&!saveData)hero.play().catch(()=>{});
 function silenceHero(){hero.muted=true;heroToggle.setAttribute('aria-pressed','false');heroText.textContent='TON AN'}
 function stopAudio(){audio.pause()}
 function stopDialog(){modalVideo.pause()}
