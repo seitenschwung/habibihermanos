@@ -32,3 +32,4 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - Design: light blush/coral/amber gradient (`.stage`), plum text, Anton headlines. Tokens in `:root` of `style.css`; full concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
 - Next gig card (29.10 Alma Kiel) in `#auftritte` is hand-maintained; remove it after the date.
 - Media is ~12 MB (videos H.264 crf 29, 64k mono audio; photos webp q72, max 1000 px wide); keep new media compressed.
+- Caching (`nginx.conf`): HTML/CSS/JS `no-cache` (revalidate), fonts/images/media 1 day. Files are not fingerprinted, so replaced media may show old for up to a day; rename the file to force it.
