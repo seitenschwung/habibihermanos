@@ -1,6 +1,6 @@
 'use strict';
 // REPLACE WITH THE BAND'S REAL BOOKING EMAIL BEFORE PUBLISHING.
-const BOOKING_EMAIL = '';
+const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 const menu=$('.menu-toggle'), nav=$('.topnav');
