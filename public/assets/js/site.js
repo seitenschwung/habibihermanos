@@ -39,3 +39,21 @@ const form=$('#booking-form'),status=$('#form-status');
 function bookingText(){const d=new FormData(form);return `Hallo Habibi Hermanos,\n\nich möchte euch für eine Veranstaltung anfragen.\n\nName: ${d.get('name')||'-'}\nE-Mail: ${d.get('email')||'-'}\nOrt / Veranstaltung: ${d.get('event')||'-'}\nWunschtermin: ${d.get('date')||'noch offen'}\n\n${d.get('message')||''}\n\nViele Grüße\n${d.get('name')||''}`}
 form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;if(!BOOKING_EMAIL){status.textContent='Die Booking-E-Mail-Adresse fehlt noch. Bitte zunächst die Anfrage kopieren; die Adresse muss vor der Veröffentlichung in assets/js/site.js ergänzt werden.';status.className='form-status error';return;}status.textContent='Dein E-Mail-Programm öffnet sich. Bitte bestätige dort noch den Versand.';status.className='form-status success';window.location.href=`mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent('Booking-Anfrage | Habibi Hermanos')}&body=${encodeURIComponent(bookingText())}`});
 $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();try{await navigator.clipboard.writeText(text);status.textContent='Anfrage kopiert – jetzt in eine E-Mail oder Nachricht einfügen.';status.className='form-status success'}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();status.textContent=ok?'Anfrage kopiert.':'Automatisches Kopieren nicht möglich – bitte Nachricht manuell markieren.';status.className='form-status '+(ok?'success':'error')}});
+
+// Gig cards come from assets/termine.json; past dates are hidden automatically.
+(async()=>{
+const layout=$('#dates-layout'),box=$('#gigs');
+try{
+const res=await fetch('assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
+const today=new Date();today.setHours(0,0,0,0);
+const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
+box.replaceChildren(...gigs.map(g=>{
+const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
+const meta=el('span','gig-meta');
+[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,i)=>{if(i)meta.append(document.createElement('br'));meta.append(t)});
+const date=el('div','gig-date');date.append(el('span','gig-day',g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'')),meta);
+const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
+const card=el('article','gig');card.append(date,body);return card}));
+layout.classList.toggle('is-empty',!gigs.length);
+}catch(e){layout.classList.add('is-empty')}
+})();

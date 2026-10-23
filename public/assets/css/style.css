@@ -146,6 +146,9 @@ p{margin:0 0 16px;max-width:40em}
 .gig-body .label{color:var(--plum-deep);margin-bottom:10px}
 .gig-body p:last-child{margin:0;font-weight:500}
 .dates-cta{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding-left:clamp(0px,2vw,28px);border-left:1px solid var(--line)}
+.gigs{display:grid;gap:20px;grid-auto-rows:1fr}
+.dates-layout.is-empty{grid-template-columns:1fr}
+.dates-layout.is-empty .dates-cta{padding-left:0;border-left:0}
 
 /* Photos */
 .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,28px)}

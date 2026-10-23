@@ -30,5 +30,5 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are placeholders (`.todo` fields); owner must fill and legally review before public launch.
 - Design: light blush/coral/amber gradient (`.stage`), plum text, Anton headlines. Tokens in `:root` of `style.css`; full concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
-- Next gig card (29.10 Alma Kiel) in `#auftritte` is hand-maintained; remove it after the date.
+- Gigs live in `public/assets/termine.json` (`date` YYYY-MM-DD, `time`, `venue`, `label`, `text`); `site.js` renders them into `#gigs` and hides past dates. `<noscript>` holds a static fallback card (29.10) to delete after the date.
 - Media is ~12 MB (videos H.264 crf 29, 64k mono audio; photos webp q72, max 1000 px wide); keep new media compressed.
