@@ -2,7 +2,7 @@
 
 ## Purpose
 Artist website (German) for the acoustic duo Habibi Hermanos (guitar, vocals, cajón): music, about,
-dates, photos, booking form. Production URL: TODO (ask owner).
+dates, photos, booking form. Production URL: https://habibi.seitenschwung.com (current, may change).
 
 ## Stack
 Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged nginx.
@@ -27,7 +27,7 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - UI language is German; keep copy honest (no invented dates, links or performers).
 - `BOOKING_EMAIL` in `site.js` is empty until the owner supplies it (form then only copies text).
 - Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
-  so a console error for it is expected locally.
+  Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are placeholders (`.todo` fields); owner must fill and legally review before public launch.
 - Design: light blush/coral/amber gradient (`.stage`), plum text, Anton headlines. Tokens in `:root` of `style.css`; full concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
 - Next gig card (29.10 Alma Kiel) in `#auftritte` is hand-maintained; remove it after the date.
