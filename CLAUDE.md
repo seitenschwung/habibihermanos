@@ -1,7 +1,7 @@
-# Habbibi Hermanos website
+# Habibi Hermanos website
 
 ## Purpose
-Artist website (German) for the acoustic duo Habbibi Hermanos (guitar, vocals, cajón): music, about,
+Artist website (German) for the acoustic duo Habibi Hermanos (guitar, vocals, cajón): music, about,
 dates, photos, booking form. Production URL: TODO (ask owner).
 
 ## Stack
@@ -26,8 +26,9 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 ## Conventions / pitfalls
 - UI language is German; keep copy honest (no invented dates, links or performers).
 - `BOOKING_EMAIL` in `site.js` is empty until the owner supplies it (form then only copies text).
-- Google Fonts are loaded externally (GDPR concern); plan: self-host. Blocked in the sandbox proxy,
+- Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
   so a console error for it is expected locally.
 - `public/impressum.html` and `public/datenschutz.html` are placeholders (`.todo` fields); owner must fill and legally review before public launch.
-- Design: tokens in `:root` of `style.css` (`--dusk`, `--rose`, `--gold`, glows); hero is a sunrise (violet sky, horizon glow). Plan/critique: `docs/design-critique.md`.
+- Design: light blush/coral/amber gradient (`.stage`), plum text, Anton headlines. Tokens in `:root` of `style.css`; full concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
+- Next gig card (29.10 Alma Kiel) in `#auftritte` is hand-maintained; remove it after the date.
 - Media is ~16 MB (videos); keep new media compressed.
