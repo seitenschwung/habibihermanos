@@ -31,4 +31,4 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - `public/impressum.html` and `public/datenschutz.html` are placeholders (`.todo` fields); owner must fill and legally review before public launch.
 - Design: light blush/coral/amber gradient (`.stage`), plum text, Anton headlines. Tokens in `:root` of `style.css`; full concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
 - Next gig card (29.10 Alma Kiel) in `#auftritte` is hand-maintained; remove it after the date.
-- Media is ~16 MB (videos); keep new media compressed.
+- Media is ~12 MB (videos H.264 crf 29, 64k mono audio; photos webp q72, max 1000 px wide); keep new media compressed.
