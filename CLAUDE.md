@@ -2,7 +2,7 @@
 
 ## Purpose
 Artist website (German) for the acoustic duo Habbibi Hermanos (guitar, vocals, cajón): music, about,
-dates, photos, booking form. Production URL: TODO (ask owner).
+dates, photos, booking form. Production URL: https://habibi.seitenschwung.com (current, may change).
 
 ## Stack
 Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged nginx.
