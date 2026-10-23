@@ -110,7 +110,6 @@ p{margin:0 0 16px;max-width:40em}
 .play-circle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:78px;height:78px;display:grid;place-items:center;border-radius:50%;background:rgba(255,248,243,.92);color:var(--plum-deep);font-size:20px;padding-left:4px;transition:background .2s,transform .2s}
 .video-tile:hover .play-circle{background:var(--coral);transform:translate(-50%,-50%) scale(1.08)}
 .video-corner{position:absolute;left:16px;bottom:16px;padding:7px 12px;border-radius:999px;background:rgba(58,34,41,.78);color:var(--blush);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
-.live-feature-details h3{font-family:var(--font-display);font-weight:400;text-transform:uppercase;font-size:clamp(36px,4.4vw,64px);line-height:1;margin:0 0 20px;color:var(--plum)}
 .audio-card{display:grid;gap:14px;padding:22px;border-radius:2px;background:rgba(255,248,243,.78);border:1px solid var(--line)}
 .audio-info{display:flex;align-items:baseline;gap:14px}
 .audio-info strong{font-family:var(--font-display);font-weight:400;text-transform:uppercase;font-size:24px;color:var(--plum)}
