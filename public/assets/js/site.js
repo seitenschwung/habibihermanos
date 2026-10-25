@@ -3,31 +3,6 @@
 const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
-const reduceMotion=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const finePointer=matchMedia('(pointer:fine)').matches;
-document.documentElement.classList.add('js');
-
-// Sky parallax: pointer position feeds --px/--py (-1..1), one write per frame.
-if(!reduceMotion&&finePointer&&$('.sky')){
-let frame=0,x=0,y=0;
-addEventListener('pointermove',e=>{x=e.clientX/innerWidth*2-1;y=e.clientY/innerHeight*2-1;if(!frame)frame=requestAnimationFrame(()=>{frame=0;const r=document.documentElement.style;r.setProperty('--px',x.toFixed(3));r.setProperty('--py',y.toFixed(3))})},{passive:true});
-}
-
-// Magnetic buttons pull slightly toward the cursor.
-if(!reduceMotion&&finePointer){
-$$('.magnetic').forEach(el=>{
-el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mx',((e.clientX-r.left)/r.width-.5)*14+'px');el.style.setProperty('--my',((e.clientY-r.top)/r.height-.5)*10+'px')});
-el.addEventListener('pointerleave',()=>{el.style.removeProperty('--mx');el.style.removeProperty('--my')});
-});
-}
-
-// Scroll reveals.
-const reveals=$$('.reveal');
-if(reveals.length){
-if(reduceMotion||!('IntersectionObserver' in window))reveals.forEach(el=>el.classList.add('is-in'));
-else{const io=new IntersectionObserver(entries=>entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('is-in');io.unobserve(en.target)}}),{rootMargin:'0px 0px -8% 0px'});reveals.forEach(el=>io.observe(el))}
-}
-
 // Only one medium plays at a time.
 const media=$$('audio,video');
 media.forEach(m=>m.addEventListener('play',()=>media.forEach(o=>{if(o!==m)o.pause()})));
@@ -77,13 +52,13 @@ try{
 const res=await fetch('assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
 const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
-box.replaceChildren(...gigs.map((g,i)=>{
+box.replaceChildren(...gigs.map(g=>{
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
 const meta=el('span','gig-meta');
 [g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)meta.append(document.createElement('br'));meta.append(t)});
 const date=el('div','gig-date');date.append(el('span','gig-day',g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'')),meta);
 const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
-const card=el('article','gig glass reveal is-in');card.style.setProperty('--d',i);card.append(date,body);return card}));
+const card=el('article','gig panel');card.append(date,body);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }catch(e){layout.classList.add('is-empty')}
 })();

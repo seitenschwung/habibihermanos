@@ -13,10 +13,10 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - Local check: `lighthouse http://localhost:8080 --chrome-flags="--no-sandbox --headless"`
 
 ## Layout
-- `public/index.html`: start page, only sunset sky + band name + arcade of arch buttons to the subpages
+- `public/index.html`: start page, only the gradient, band name and buttons to the subpages
 - Subpages: `musik.html` (videos + audio), `fotos.html` (masonry + lightbox), `ueber-uns.html`, `live.html` (gigs), `buchen.html` (form); same header/footer markup in each, copy it when adding a page
 - `public/assets/{css,js,media,images}`
-- `public/assets/js/site.js`: shared by all pages, each block guards for its elements (parallax, magnetic buttons, reveals, audio waveform, lightbox, booking form, gigs)
+- `public/assets/js/site.js`: shared by all pages, each block guards for its elements (audio waveform, lightbox, booking form, gigs)
 - `Dockerfile` + `nginx.conf`: port 8080, `/healthz`, `/version.txt` (from `APP_VERSION`)
 - `docker-compose.yml`: what Coolify runs (`image: ${IMAGE}`, CrowdSec labels, log rotation)
 
@@ -31,8 +31,7 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are placeholders (`.todo` fields); owner must fill and legally review before public launch.
-- Design "Atardecer": intense sunset sky (`.sky`, night violet → wine → crimson → flame → saffron) with sun and Andalusian/Maghreb skyline SVG on the start page, `.sky--dusk` on subpages; cream text, Anton headlines, Moorish arch shapes for buttons. Tokens in `:root` of `style.css`; critique in `docs/design-critique.md`, brand concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
-- Motion respects `prefers-reduced-motion`; `.reveal` content only hides when JS has set `html.js`.
+- Design: plain, intense sunset gradient on `body` (rose, coral, orange, amber, gold; fixed, no motifs), dark plum text, Anton headlines, simple pill buttons. Tokens in `:root` of `style.css`; full concept in `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
 - Gigs live in `public/assets/termine.json` (`date` YYYY-MM-DD, `time`, `venue`, `label`, `text`); `site.js` renders them into `#gigs` on `live.html` and hides past dates. `<noscript>` holds a static fallback card (29.10) to delete after the date.
 - Media is ~12 MB (videos H.264 crf 29, 64k mono audio; photos webp q72, max 1000 px wide); keep new media compressed.
 - Caching (`nginx.conf`): HTML/CSS/JS `no-cache` (revalidate), fonts/images/media 1 day. Files are not fingerprinted, so replaced media may show old for up to a day; rename the file to force it.

@@ -38,10 +38,8 @@ und eine Startseite, die nur Name und Atmosphäre zeigt.
 - Echte, ungestellte Fotos und Mitschnitte; ehrliche Texte ohne erfundene Fakten.
 - Arabische Zeilen als Kulturbezug.
 
-## Prioritäten
-1. **Intensiver Sonnenuntergang als Bühne:** Nacht-Violett → Weinrot → Karmin → Orange → Safran, Sonne am
-   Horizont, Silhouette aus Dünen, Kuppel, Minarett/Glockenturm und Palmen (Andalusien trifft Maghreb).
-2. **Startseite reduzieren:** nur Bandname und Einstiege; Einstiege als Arkade aus maurischen Bögen,
-   die auf dem Horizont stehen.
-3. **Unterseiten mit Bewegung:** Musik (Videos + Audio), Fotos (Masonry + Lightbox), Über uns, Live, Buchen;
-   gestaffelte Einblendungen, magnetische Buttons, Seitenübergänge; `prefers-reduced-motion` respektieren.
+## Umsetzung (nach Feedback)
+Erster Entwurf mit Sonne, Skyline und Bogen-Buttons war dem Owner zu viel. Umgesetzt ist die schlichte Variante:
+1. **Intensiver Verlauf als einziger Hintergrund:** Rose → Koralle → Orange → Bernstein → Gold, ohne weitere Motive.
+2. **Startseite reduziert:** nur Bandname, eine Zeile Claim und einfache Pillen-Buttons zu den Unterseiten.
+3. **Unterseiten:** Musik (Videos + Audio), Fotos (Galerie + Lightbox), Über uns, Live, Buchen; schlichte Kopfzeile, keine Effekte.
