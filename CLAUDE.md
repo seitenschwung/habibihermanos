@@ -13,7 +13,7 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - Local check: `lighthouse http://localhost:8080 --chrome-flags="--no-sandbox --headless"`
 
 ## Layout
-- `public/index.html`: start page, hero slider (slide 1: band name + buttons to the subpages, slide 2: poster `poster-stage.webp`) with arrows, dots, arrow keys and swipe
+- `public/index.html`: start page, hero slider (slide 1: band name + buttons to the subpages, slide 2: full-screen photo `hero-stage.webp` with the name on top) with arrows, dots, arrow keys and swipe
 - Subpages: `musik.html` (videos + audio), `fotos.html` (masonry + lightbox), `ueber-uns.html`, `live.html` (gigs), `buchen.html` (form); same header/footer markup in each, copy it when adding a page
 - `public/assets/{css,js,media,images}`
 - `public/assets/js/site.js`: shared by all pages, each block guards for its elements (hero slider, audio waveform, lightbox, booking form, gigs)

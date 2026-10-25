@@ -12,7 +12,8 @@ const slides=$$('.slide',hero),dots=$$('.hero-dots button',hero);let current=0;
 function show(i,dir){
 const next=(i+slides.length)%slides.length;if(next===current)return;
 slides.forEach((s,n)=>{s.style.setProperty('--from',(n===current?-dir:dir)*48+'px');const on=n===next;s.classList.toggle('is-active',on);s.inert=!on});
-dots.forEach((d,n)=>d.setAttribute('aria-current',String(n===next)));current=next}
+dots.forEach((d,n)=>d.setAttribute('aria-current',String(n===next)));current=next;
+hero.closest('.home').classList.toggle('on-photo',slides[next].classList.contains('slide-poster'))}
 slides.forEach((s,n)=>{s.inert=n!==0});
 $('.hero-prev',hero).addEventListener('click',()=>show(current-1,-1));
 $('.hero-next',hero).addEventListener('click',()=>show(current+1,1));
