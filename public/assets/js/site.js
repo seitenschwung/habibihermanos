@@ -7,10 +7,12 @@ const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector))
 // Start page: a small scroll (wheel, swipe, keys) glides on to the next section.
 if(document.documentElement.classList.contains('snap')){
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let busy=false,lastInput=0,touchY=null;
+let busy=false,lastInput=0,acc=0,fired=false,touchY=null;
 const stops=()=>[0,$('.stage-photo').offsetTop,document.documentElement.scrollHeight-innerHeight];
-// html has scroll-behavior:smooth, so every step must scroll instantly.
-const jump=y=>scrollTo({top:y,behavior:'instant'});
+// html has scroll-behavior:smooth, which would turn each animation step into its own smooth scroll;
+// switch it off on this page (behavior:'instant' is not understood by every browser).
+document.documentElement.style.scrollBehavior='auto';
+const jump=y=>scrollTo(0,y);
 function nearest(){const s=stops();let best=0;s.forEach((t,i)=>{if(Math.abs(scrollY-t)<Math.abs(scrollY-s[best]))best=i});return best}
 function glide(dir){
 const s=stops(),target=s[Math.max(0,Math.min(s.length-1,nearest()+dir))];
@@ -22,8 +24,11 @@ let done=false;const finish=()=>{if(!done){done=true;jump(target);busy=false}};
 (function step(now){if(done)return;const t=Math.min(1,(now-t0)/dur);jump(from+dist*ease(t));if(t<1)requestAnimationFrame(step);else finish()})(t0);
 setTimeout(finish,dur+80); // in case frames are throttled (background tab)
 }
-// Trackpads keep firing wheel events after a flick; swallow them until the input goes quiet.
-addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now(),quiet=now-lastInput>180;lastInput=now;if(busy||!quiet||Math.abs(e.deltaY)<4)return;glide(e.deltaY>0?1:-1)},{passive:false});
+// One gesture = wheel events without a 180 ms pause. Trackpads start a gesture with tiny deltas and keep
+// firing momentum events after it, so sum the deltas and glide once per gesture.
+addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now();
+if(now-lastInput>180){acc=0;fired=false}lastInput=now;if(busy||fired)return;
+acc+=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);if(Math.abs(acc)<30)return;fired=true;glide(acc>0?1:-1)},{passive:false});
 addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
 addEventListener('touchmove',e=>{if(e.touches.length>1)touchY=null;else if(touchY!==null)e.preventDefault()},{passive:false}); // pinch zoom stays native
 addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.changedTouches[0].clientY;touchY=null;if(!busy&&Math.abs(dy)>24)glide(dy>0?1:-1)});
