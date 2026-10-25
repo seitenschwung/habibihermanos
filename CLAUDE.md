@@ -13,10 +13,10 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - Local check: `lighthouse http://localhost:8080 --chrome-flags="--no-sandbox --headless"`
 
 ## Layout
-- `public/index.html`: start page, hero slider (slide 1: band name + buttons to the subpages, slide 2: full-screen photo `hero-stage.webp` with the name on top) with arrows, dots, arrow keys and swipe
+- `public/index.html`: start page, gradient section with band name + buttons to the subpages, below it a full-screen photo (`hero-stage.webp`) with the name on top; no JS
 - Subpages: `musik.html` (videos + audio), `fotos.html` (masonry + lightbox), `ueber-uns.html`, `live.html` (gigs), `buchen.html` (form); same header/footer markup in each, copy it when adding a page
 - `public/assets/{css,js,media,images}`
-- `public/assets/js/site.js`: shared by all pages, each block guards for its elements (hero slider, audio waveform, lightbox, booking form, gigs)
+- `public/assets/js/site.js`: shared by all pages, each block guards for its elements (audio waveform, lightbox, booking form, gigs)
 - `Dockerfile` + `nginx.conf`: port 8080, `/healthz`, `/version.txt` (from `APP_VERSION`)
 - `docker-compose.yml`: what Coolify runs (`image: ${IMAGE}`, CrowdSec labels, log rotation)
 
