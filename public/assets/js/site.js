@@ -8,7 +8,10 @@ const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector))
 if(document.documentElement.classList.contains('snap')){
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 let busy=false,lastInput=0,acc=0,fired=false,touchY=null;
-const stops=()=>[0,$('.stage-photo').offsetTop,document.documentElement.scrollHeight-innerHeight];
+// Stop at each section's top, and at its bottom too when it is taller than the screen (phones).
+const stops=()=>{const max=document.documentElement.scrollHeight-innerHeight,out=[];
+$$('.home,.stage-photo').forEach(sec=>{out.push(sec.offsetTop);if(sec.offsetHeight>innerHeight+10)out.push(sec.offsetTop+sec.offsetHeight-innerHeight)});
+out.push(max);return [...new Set(out.map(t=>Math.min(Math.round(t),max)))].sort((a,b)=>a-b)};
 // html has scroll-behavior:smooth, which would turn each animation step into its own smooth scroll;
 // switch it off on this page (behavior:'instant' is not understood by every browser).
 document.documentElement.style.scrollBehavior='auto';
@@ -34,6 +37,10 @@ addEventListener('touchmove',e=>{if(e.touches.length>1)touchY=null;else if(touch
 addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.changedTouches[0].clientY;touchY=null;if(!busy&&Math.abs(dy)>24)glide(dy>0?1:-1)});
 addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const down=['ArrowDown','PageDown',' '].includes(e.key),up=['ArrowUp','PageUp'].includes(e.key);if(!down&&!up)return;e.preventDefault();if(!busy)glide(down?1:-1)});
 }
+
+// Subpage tabs scroll sideways on phones: keep the current page in view.
+const currentTab=$('.pages [aria-current=page]');
+if(currentTab)currentTab.scrollIntoView({inline:'center',block:'nearest'});
 
 // Only one medium plays at a time.
 const media=$$('audio,video');
@@ -76,21 +83,23 @@ form.addEventListener('submit',e=>{e.preventDefault();markInvalid();if(!form.che
 $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();try{await navigator.clipboard.writeText(text);status.textContent='Anfrage kopiert – jetzt in eine E-Mail oder Nachricht einfügen.';status.className='form-status success'}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();status.textContent=ok?'Anfrage kopiert.':'Automatisches Kopieren nicht möglich – bitte Nachricht manuell markieren.';status.className='form-status '+(ok?'success':'error')}});
 }
 
-// Gig cards come from assets/termine.json; past dates are hidden automatically (Live).
-const box=$('#gigs');
-if(box)(async()=>{
+// Gigs come from assets/termine.json; past dates are hidden automatically.
+// Live page lists all upcoming gigs (#gigs), the start page shows the next one (#next-gig).
+const box=$('#gigs'),nextGig=$('#next-gig');
+if(box||nextGig)(async()=>{
 const layout=$('#dates-layout');
+const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
+const day=g=>g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'');
+const meta=g=>{const m=el('span','gig-meta');[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)m.append(document.createElement('br'));m.append(t)});return m};
 try{
 const res=await fetch('assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
 const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
-box.replaceChildren(...gigs.map(g=>{
-const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
-const meta=el('span','gig-meta');
-[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)meta.append(document.createElement('br'));meta.append(t)});
-const date=el('div','gig-date');date.append(el('span','gig-day',g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'')),meta);
-const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
-const card=el('article','gig panel');card.append(date,body);return card}));
+if(box){
+box.replaceChildren(...gigs.map(g=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
+const card=el('article','gig');card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
-}catch(e){layout.classList.add('is-empty')}
+}
+if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`)}
+}catch(e){if(layout)layout.classList.add('is-empty')}
 })();

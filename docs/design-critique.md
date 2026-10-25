@@ -1,45 +1,48 @@
-# Design-Kritik: Habibi Hermanos
+# Design-Kritik: Habibi Hermanos (Stand vor Konzept „Cartel“)
 
-Stand: 2026-10-25. Basis: Startseite auf `main` (Screenshots 800 px Breite, Hero, „Hör selbst“, „Über uns“)
-und `public/assets/css/style.css`. Ergebnis: Grundlage für den Redesign-Branch `redesign-sunset`.
+Stand: 2026-10-25. Basis: Branch `redesign-sunset` (Commit fdcb5df), Startseite (Verlauf-Hero + Scroll-Reveal-Foto)
+und Unterseiten, Desktop 1024 px und Mobil 375 px. Referenzen: adventureson.band, bigthief.net, metallica.com.
+Ergebnis fließt in `design-concept-v2.md`.
 
 ## Gesamteindruck
-Ehrlich und sympathisch, aber blass: Pastell-Blush mit Pflaumentext wirkt wie ein Baukasten-Template,
-nicht wie eine Band. Größte Chance: Farbe und Bühne. Ein intensiver Sonnenuntergang statt Pastellnebel
-und eine Startseite, die nur Name und Atmosphäre zeigt.
+Der kräftige Verlauf und das freigelegte Bühnenfoto haben Wirkung. Der Rest ist aber Standard: runde Pillen-Buttons,
+eine Zeile Claim, keine Information. Die Seite wirkt wie eine schöne Visitenkarte, nicht wie eine Band mit Programm.
+Größte Chance: Typografie und Struktur als Kunstmittel (Plakat), plus echte Information auf der Startseite.
 
 ## Usability
 | Befund | Schwere | Empfehlung |
 |---|---|---|
-| Startseite ist eine lange Scrollseite mit 5 gleich gebauten Sektionen; Fotos und Videos liegen weit unten | 🟡 | Startseite = Bühne + Einstiege; Inhalte auf eigene Unterseiten (Musik, Fotos, Über uns, Live, Buchen) |
-| Videos öffnen erst im Dialog, Vorschau ist ein kleines Standbild | 🟡 | Videos direkt groß auf der Musikseite abspielbar |
-| Hero hat 7 Elemente (Label, Name, Claim, 2 Buttons, arabische Zeile, Video mit Ton-Button) | 🟡 | Auf Name + Einstiege reduzieren |
-| Navigation oben ist Standard-Topbar mit Pillen-Button | 🟢 | Eigene, thematische Navigation |
+| Startseite zeigt keinen Termin; das Wichtigste für Fans („wann spielen sie?“) liegt eine Seite tiefer | 🔴 | Nächsten Auftritt aus `termine.json` direkt im Hero zeigen |
+| Fünf gleich gewichtete Pillen; „Buchen“ (Ziel für Veranstalter) geht unter | 🟡 | Navigation als nummerierte Tracklist, Buchen als eigener eckiger Primär-Button |
+| Unterseiten-Kopf ist eine generische Pillen-Navigation | 🟡 | Gleiche Tracklist-/Tab-Sprache, eckig, mit Nummern |
+| Mobil: 5 Buttons füllen den ganzen ersten Screen | 🟢 | Kompakte Tracklist-Zeilen (48 px) statt großer Pillen |
 
 ## Visuelle Hierarchie
-- **Erster Blick:** Bandname, korrekt, aber er konkurriert mit dem Videokasten rechts.
-- **Lesefluss:** Klassisch Z-förmig, jede Sektion „01 —“-Label, Titel, Lead. Vorhersehbar, Template-Gefühl.
-- **Betonung:** Farben zu weich (Sättigung niedrig, Pflaume auf Blush), keine Lichtquelle, keine Tiefe.
+- **Erster Blick:** Bandname, richtig. Danach nichts Gerichtetes; Claim ist klein und blass.
+- **Lesefluss:** Name → Claim → Buttonreihe. Keine zweite Ebene (Termin, Besetzung, Herkunft).
+- **Betonung:** Alles hat dasselbe Gewicht außer dem Namen. Referenzen arbeiten mit kleinen, gesperrten Labels
+  (Adventureson „BACKGROUND“, Metallica-Buttons), die Ordnung und Haltung geben.
 
 ## Konsistenz
 | Element | Problem | Empfehlung |
 |---|---|---|
-| Buttons | Gefüllte Pille + Ghost-Pille überall, generisch | Ein eigener Button-Typ (Bogen/Arkade) für Navigation |
-| Karten | Audio- und Formular-Karte mit Rahmen, Rest ohne | Glasflächen mit innerer Kante, einheitlich |
-| Fotos | Gleiche 3er-Reihe, gleiche Seitenverhältnisse | Masonry, wechselnde Größen |
+| Ecken | Pillen (999 px), Panels 18 px, Fotos 14–16 px, Video 16 px | Durchgängig 0 px |
+| Labels | Teils Versalien gesperrt, teils normal | Ein Label-Stil: 12–13 px, 500, Versalien, .16em |
+| Bilder | Galerie als gleichförmige Spalten mit Pillen-Label im Bild | Versetzte Collage, Label unter dem Bild |
+| Flächen | Halbtransparente runde Panels | Haarlinien und Rahmen statt Kästen |
 
 ## Barrierefreiheit
-- **Kontrast:** Pflaume auf Blush besteht; arabische Zierzeile (`--dust-rose`) und Labels grenzwertig.
-- **Touch-Ziele:** Buttons ≥ 44 px, ok.
-- **Lesbarkeit:** Fließtext 17 px, gut.
+- **Kontrast:** Pflaume `#2a1219` auf Orange/Koralle ≥ 5:1, ok. Weißer Name auf Foto mit Verlauf unten, ok.
+- **Touch-Ziele:** ≥ 48 px, ok; neue Tracklist-Zeilen ≥ 52 px halten.
+- **Lesbarkeit:** Fließtext 17 px ok; Claim 17–21 px auf Verlauf ok.
 
 ## Was funktioniert
-- Anton als Display-Schrift hat Wiedererkennung.
-- Echte, ungestellte Fotos und Mitschnitte; ehrliche Texte ohne erfundene Fakten.
-- Arabische Zeilen als Kulturbezug.
+- Intensiver Verlauf als eigenständige Bühne, ohne Motive.
+- Scroll-Reveal des Bühnenfotos und Abschnitts-Scrollen.
+- Anton als Plakatschrift, echte Fotos.
 
-## Umsetzung (nach Feedback)
-Erster Entwurf mit Sonne, Skyline und Bogen-Buttons war dem Owner zu viel. Umgesetzt ist die schlichte Variante:
-1. **Intensiver Verlauf als einziger Hintergrund:** Rose → Koralle → Orange → Bernstein → Gold, ohne weitere Motive.
-2. **Startseite reduziert:** nur Bandname, eine Zeile Claim und einfache Pillen-Buttons zu den Unterseiten.
-3. **Unterseiten:** Musik (Videos + Audio), Fotos (Galerie + Lightbox), Über uns, Live, Buchen; schlichte Kopfzeile, keine Effekte.
+## Prioritäten
+1. **Plakat-Hero:** Rahmen mit Eckbeschriftungen, Name einzeilig über die volle Breite, darunter drei Spalten:
+   Claim, nächster Auftritt (Ticket), Tracklist-Navigation.
+2. **Eckige, gesperrte Buttons und Tracklist** auf allen Seiten.
+3. **Collage und Haarlinien** auf den Unterseiten statt runder Panels.
