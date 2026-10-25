@@ -19,11 +19,14 @@
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="preload" href="assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/site.js" defer></script>
 <title>Habibi Hermanos — Live, Gitarre & Cajón</title>
 </head>
 <body>
 <main class="home" id="main">
-<div class="home-main">
+<div class="hero" id="hero" aria-roledescription="Karussell" aria-label="Habibi Hermanos">
+<div class="slides">
+<section class="slide home-main is-active" aria-roledescription="Folie" aria-label="1 von 2">
 <h1 class="band-name"><span>Habibi</span><span>Hermanos</span></h1>
 <p class="band-tag">Spanisch-deutsche Musik mit arabischem Takt · Kiel</p>
 <nav aria-label="Seiten">
@@ -35,6 +38,16 @@
 <li><a href="buchen.html">Buchen <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
 </ul>
 </nav>
+</section>
+<section class="slide slide-poster" aria-roledescription="Folie" aria-label="2 von 2">
+<img class="poster" src="assets/images/poster-stage.webp" alt="Habibi Hermanos live auf einer Bühne: einer am Cajón, einer mit Gitarre, beide lachen sich an; darunter der Schriftzug Habibi Hermanos" width="1080" height="1350" loading="lazy">
+</section>
+</div>
+<div class="hero-controls">
+<button type="button" class="hero-arrow hero-prev" aria-controls="hero" aria-label="Vorherige Folie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+<div class="hero-dots"><button type="button" aria-label="Folie 1" aria-current="true"></button><button type="button" aria-label="Folie 2"></button></div>
+<button type="button" class="hero-arrow hero-next" aria-controls="hero" aria-label="Nächste Folie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+</div>
 </div>
 <footer class="home-foot"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></footer>
 </main>

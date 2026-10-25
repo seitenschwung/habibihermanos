@@ -3,6 +3,25 @@
 const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
+document.documentElement.classList.add('js');
+
+// Hero slider on the start page: arrows, dots, arrow keys and swipe.
+const hero=$('#hero');
+if(hero){
+const slides=$$('.slide',hero),dots=$$('.hero-dots button',hero);let current=0;
+function show(i,dir){
+const next=(i+slides.length)%slides.length;if(next===current)return;
+slides.forEach((s,n)=>{s.style.setProperty('--from',(n===current?-dir:dir)*48+'px');const on=n===next;s.classList.toggle('is-active',on);s.inert=!on});
+dots.forEach((d,n)=>d.setAttribute('aria-current',String(n===next)));current=next}
+slides.forEach((s,n)=>{s.inert=n!==0});
+$('.hero-prev',hero).addEventListener('click',()=>show(current-1,-1));
+$('.hero-next',hero).addEventListener('click',()=>show(current+1,1));
+dots.forEach((d,n)=>d.addEventListener('click',()=>show(n,n>current?1:-1)));
+document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;if(e.key==='ArrowLeft')show(current-1,-1);if(e.key==='ArrowRight')show(current+1,1)});
+let startX=null;
+hero.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});
+hero.addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].clientX-startX;startX=null;if(Math.abs(dx)>50)dx<0?show(current+1,1):show(current-1,-1)});
+}
 // Only one medium plays at a time.
 const media=$$('audio,video');
 media.forEach(m=>m.addEventListener('play',()=>media.forEach(o=>{if(o!==m)o.pause()})));
