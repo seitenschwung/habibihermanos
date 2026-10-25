@@ -4,6 +4,32 @@ const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 
+// Start page: a small scroll (wheel, swipe, keys) glides on to the next section.
+if(document.documentElement.classList.contains('snap')){
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let busy=false,lastInput=0,touchY=null;
+const stops=()=>[0,$('.stage-photo').offsetTop,document.documentElement.scrollHeight-innerHeight];
+// html has scroll-behavior:smooth, so every step must scroll instantly.
+const jump=y=>scrollTo({top:y,behavior:'instant'});
+function nearest(){const s=stops();let best=0;s.forEach((t,i)=>{if(Math.abs(scrollY-t)<Math.abs(scrollY-s[best]))best=i});return best}
+function glide(dir){
+const s=stops(),target=s[Math.max(0,Math.min(s.length-1,nearest()+dir))];
+if(Math.abs(target-scrollY)<2)return;
+if(reduce){jump(target);return}
+busy=true;const from=scrollY,dist=target-from,dur=650,t0=performance.now();
+const ease=t=>1-Math.pow(1-t,4);
+let done=false;const finish=()=>{if(!done){done=true;jump(target);busy=false}};
+(function step(now){if(done)return;const t=Math.min(1,(now-t0)/dur);jump(from+dist*ease(t));if(t<1)requestAnimationFrame(step);else finish()})(t0);
+setTimeout(finish,dur+80); // in case frames are throttled (background tab)
+}
+// Trackpads keep firing wheel events after a flick; swallow them until the input goes quiet.
+addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now(),quiet=now-lastInput>180;lastInput=now;if(busy||!quiet||Math.abs(e.deltaY)<4)return;glide(e.deltaY>0?1:-1)},{passive:false});
+addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
+addEventListener('touchmove',e=>{if(e.touches.length>1)touchY=null;else if(touchY!==null)e.preventDefault()},{passive:false}); // pinch zoom stays native
+addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.changedTouches[0].clientY;touchY=null;if(!busy&&Math.abs(dy)>24)glide(dy>0?1:-1)});
+addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const down=['ArrowDown','PageDown',' '].includes(e.key),up=['ArrowUp','PageUp'].includes(e.key);if(!down&&!up)return;e.preventDefault();if(!busy)glide(down?1:-1)});
+}
+
 // Only one medium plays at a time.
 const media=$$('audio,video');
 media.forEach(m=>m.addEventListener('play',()=>media.forEach(o=>{if(o!==m)o.pause()})));
