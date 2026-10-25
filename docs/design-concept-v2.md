@@ -1,6 +1,8 @@
 # Habibi Hermanos – Konzept „Cartel“ (Website v2)
 
-Stand: 2026-10-25. Baut auf `design-concept.md` (Marke, Farben) auf und ersetzt dessen Website-Teil.
+Stand: 2026-10-25. **Überarbeitet nach Feedback:** Plakatrahmen, feine Linien, Termin-Ticket, Eckbeschriftungen und Nummerierung sind wieder raus (zu viel). Übrig bleiben: Verlauf, eckige Buttons mit Rahmen, gesperrte Versalien-Labels, Foto-Reveal, Abschnitts-Scrollen. Regeln 2–4 gelten nicht mehr.
+
+Baut auf `design-concept.md` (Marke, Farben) auf und ersetzt dessen Website-Teil.
 
 ## Idee
 Die Website ist ein **Konzertplakat** („cartel“ wie bei spanischen Fiesta- und Konzertplakaten): ein gerahmtes,

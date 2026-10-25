@@ -27,11 +27,18 @@ let done=false;const finish=()=>{if(!done){done=true;jump(target);busy=false}};
 (function step(now){if(done)return;const t=Math.min(1,(now-t0)/dur);jump(from+dist*ease(t));if(t<1)requestAnimationFrame(step);else finish()})(t0);
 setTimeout(finish,dur+80); // in case frames are throttled (background tab)
 }
-// One gesture = wheel events without a 180 ms pause. Trackpads start a gesture with tiny deltas and keep
-// firing momentum events after it, so sum the deltas and glide once per gesture.
-addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now();
-if(now-lastInput>180){acc=0;fired=false}lastInput=now;if(busy||fired)return;
-acc+=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);if(Math.abs(acc)<30)return;fired=true;glide(acc>0?1:-1)},{passive:false});
+// Trackpads fire a long momentum tail after each swipe, and a new swipe often starts before the tail ends,
+// so a pause cannot mark a new gesture. A new swipe shows as deltas rising again above the decaying tail.
+const hist=[];
+addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now(),gap=now-lastInput;lastInput=now;
+const dy=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1),v=Math.abs(dy);
+const prevDir=hist.length?Math.sign(hist[hist.length-1]):0;
+if(gap>200)hist.length=0;hist.push(dy);if(hist.length>12)hist.shift();
+const avg=a=>a.reduce((x,y)=>x+Math.abs(y),0)/a.length;
+const rising=hist.length>=6&&avg(hist.slice(-3))>avg(hist.slice(0,-3))*1.3&&v>6;
+if(hist.length===1||rising||(prevDir&&Math.sign(dy)!==prevDir&&v>6)){acc=0;fired=false}
+if(busy||fired)return;
+acc+=dy;if(Math.abs(acc)<25)return;fired=true;glide(acc>0?1:-1)},{passive:false});
 addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
 addEventListener('touchmove',e=>{if(e.touches.length>1)touchY=null;else if(touchY!==null)e.preventDefault()},{passive:false}); // pinch zoom stays native
 addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.changedTouches[0].clientY;touchY=null;if(!busy&&Math.abs(dy)>24)glide(dy>0?1:-1)});
