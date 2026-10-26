@@ -1,25 +1,28 @@
-# Project template
+# Habibi Hermanos
 
-Starting point for new projects made with `dev <name>` (claude-dev kit). It brings:
+Website of the acoustic duo Habibi Hermanos (guitar, vocals, cajón) from Kiel: music, photos, about, live dates
+and a booking form. German UI, plain static HTML/CSS/JS, no build step, served by nginx.
 
-- `CLAUDE.md`: a skeleton the box fills in during its first session
-- a working demo site (`public/`, `Dockerfile`, `nginx.conf`) that meets the deploy contract, so CI
-  is green from the first commit. Replace it with the real project.
-- `.github/workflows/ci.yml`: a thin caller. The pipeline itself (checks, hardened Docker test,
-  browser tests, deploy to Coolify after green CI on `main`) is `pipeline.yml` in this repository,
-  shared by all projects as `seitenschwung/template/.github/workflows/pipeline.yml@v1`
-- `docker-compose.yml`: what Coolify runs (the image tested by CI), with the CrowdSec labels and log rotation
-- `.gitignore`, `.dockerignore`, a PR template
+Live: https://habibi.seitenschwung.com and https://habibihermanos.de
 
-## Changing the shared pipeline (owner)
+## Work on it
 
-Projects follow the moving tag `v1`. After a tested change to `pipeline.yml` on `main`, move it:
-`git tag -f v1 && git push -f origin v1`. A breaking change gets `v2`; projects switch by editing
-the `uses:` line in their `ci.yml`. Test changes on a branch by pointing this repository's own
-`ci.yml` at that branch (`...pipeline.yml@<branch>`), and set it back to `@v1` before merging.
-This repository's CI runs the demo through the pipeline, so a green run is the template's self-test.
+```bash
+cd public && python3 -m http.server 8080 --bind 0.0.0.0
+```
 
-Replace this README with one about the project.
+Open http://localhost:8080. On localhost the gig lists show labelled example dates from `termine.demo.json`
+(`?demo=0` shows the real `termine.json`); `?debug=1` opens a panel to switch scroll-snapping, the background
+drift and the animations. Structure and conventions: `CLAUDE.md`.
+
+- Gigs: edit `public/assets/termine.json` (past dates hide themselves).
+- Booking: the form opens a mail draft to `info@seitenschwung.com`; nothing is sent to a server.
+
+## CI and deploy
+
+`.github/workflows/ci.yml` calls the shared pipeline `seitenschwung/template/.github/workflows/pipeline.yml@v1`
+(checks, hardened Docker test, axe + Lighthouse browser tests, deploy to Coolify after green CI on `main`).
+`docker-compose.yml` is what Coolify runs (the image tested by CI, CrowdSec labels, log rotation).
 
 ## Setting up the deploy (owner, once per project)
 

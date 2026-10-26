@@ -9,3 +9,6 @@ playwright-report/
 .env.*
 !.env.example
 .DS_Store
+
+# graphify knowledge graph output (local)
+graphify-out/
