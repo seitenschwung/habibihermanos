@@ -225,7 +225,8 @@ html.no-anim .reveal,html.no-anim .reveal-rise,html.no-anim .reveal-img{opacity:
 .bar--fixed.on-photo .pages .book{background:var(--cream);color:var(--ink)}
 .bar--fixed.on-photo .pages a[aria-current=page]:not(.book){background:rgba(255,246,238,.18);color:var(--cream)}
 
-.title{margin:0;font:400 clamp(56px,9vw,140px)/.86 var(--font-display);text-transform:uppercase}
+/* Umlaut dots stick out above Anton's tight line box; padding in em keeps room for them at every size */
+.title{margin:0;padding-top:.14em;font:400 clamp(56px,9vw,140px)/.86 var(--font-display);text-transform:uppercase}
 
 /* Musik */
 .music{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,40px);align-items:start}
