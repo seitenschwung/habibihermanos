@@ -1,7 +1,6 @@
 # Pages CMS (https://pagescms.org): a form for the band to add and edit gigs.
 # It edits public/assets/termine.json (a top-level array); saving commits to the branch chosen in Pages CMS,
 # and CI deploys main after the checks (npm test runs scripts/check-termine.mjs).
-media: false
 
 settings:
   commit:
