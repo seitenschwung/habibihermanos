@@ -11,8 +11,11 @@ const revealParts='.kicker,.title,.lead,.story-text>p,.block-actions,.gig,.clip,
 $$('main>section:not(.opener):not(.home):not([data-reveal])').forEach(sec=>{let i=0;
 $$(revealParts,sec).forEach(part=>{if(part.parentElement.closest('.reveal,.reveal-img'))return;
 part.classList.add(part.matches('.story-photo,.photo')?'reveal-img':'reveal');part.style.setProperty('--i',Math.min(i++,4))})});
-const ro='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('is-in');ro.unobserve(en.target)}}),{threshold:.15}):null;
-const reveal=part=>ro?ro.observe(part):part.classList.add('is-in');
+// .reveal-rise starts fully clipped, which never counts as visible; its unclipped parent is watched instead.
+const watched=new Map();
+const ro='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){(watched.get(en.target)||[]).forEach(part=>part.classList.add('is-in'));watched.delete(en.target);ro.unobserve(en.target)}}),{threshold:.15}):null;
+const reveal=part=>{if(!ro){part.classList.add('is-in');return}const target=part.matches('.reveal-rise')?part.parentElement:part;
+if(!watched.has(target)){watched.set(target,[]);ro.observe(target)}watched.get(target).push(part)};
 $$('.reveal,.reveal-rise,.reveal-img').forEach(reveal);
 
 // Fixed menu: dark with light text while the section under its middle line is dark (photo, [data-dark], footer).
