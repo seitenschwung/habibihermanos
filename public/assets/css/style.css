@@ -47,6 +47,17 @@ p{margin:0 0 16px;max-width:62ch}
 /* One label style for the whole site: small, caps, tracked */
 .label,.kicker{margin:0 0 12px;font-size:12px;font-weight:500;line-height:1.3;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
 
+/* Duo drawing (logo) as a mask: it takes the text colour, dark on the gradient, light on dark */
+.mark{display:block;flex:none;aspect-ratio:356/541;background:currentColor;
+  -webkit-mask:url(../images/duo-mark-mask.png) center/contain no-repeat;mask:url(../images/duo-mark-mask.png) center/contain no-repeat}
+.brand .mark{height:1.45em;margin:-.2em .15em -.2em 0}
+.footer-brand{align-items:flex-end}
+.footer-brand .mark{height:1.7em;margin-right:.12em}
+/* Start page: the drawing stands large on the poster, right of the name */
+.home-main{position:relative}
+.home-mark{position:absolute;right:calc(var(--side) - var(--frame));top:50%;height:min(62vh,560px);transform:translateY(-50%);opacity:.9}
+.motto-mark{height:clamp(220px,32vw,400px);margin-left:auto;color:var(--cream)}
+
 /* Square buttons */
 .btn{display:inline-flex;align-items:center;justify-content:space-between;gap:18px;min-height:52px;padding:14px 20px;border:1.5px solid var(--ink);background:var(--ink);color:var(--cream);
   font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1;transition:background .2s,color .2s}
@@ -176,7 +187,6 @@ p{margin:0 0 16px;max-width:62ch}
 .clip .label{display:block;margin:12px 0 0;color:var(--ink)}
 .clip--wide{grid-column:1/-1;order:-1}
 .clip--wide .frame{aspect-ratio:16/9;max-height:72vh}
-.duo-mark{width:min(220px,50%);margin-top:28px}
 .player{grid-column:1/-1;padding:22px;background:rgba(255,246,238,.28)}
 .block--dark .player{background:rgba(255,246,238,.08)}
 .block--dark .clip .label{color:var(--sand)}
@@ -215,7 +225,6 @@ p{margin:0 0 16px;max-width:62ch}
 .motto{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:clamp(28px,6vw,96px);align-items:center}
 .motto .ar{display:block;font-size:clamp(56px,9vw,140px);line-height:1.25}
 .motto p{margin:12px 0 0}
-.motto .duo-mark{width:100%;max-width:320px;margin:0 0 0 auto}
 
 /* Live */
 .gigs{display:grid;grid-template-columns:auto auto 1fr;gap:12px}
@@ -310,7 +319,8 @@ body.dialog-open{overflow:hidden}
   .opener--panel::after{background:linear-gradient(180deg,rgba(42,23,13,.55) 0%,transparent 25%,transparent 40%,rgba(42,23,13,.88) 100%)}
   .opener--panel .wrap>*{max-width:none}
   .motto{grid-template-columns:1fr}
-  .motto .duo-mark{max-width:200px;margin:0}
+  .motto-mark{height:200px;margin-left:0}
+  .home-mark{display:none}
   .story,.booking,.block-grid{grid-template-columns:1fr}
   .block-grid--media img{max-height:50vh}
 }
