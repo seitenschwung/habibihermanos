@@ -1,0 +1,37 @@
+[
+  {
+    "date": "2026-10-29",
+    "time": "18:00",
+    "venue": "Alma Kiel",
+    "label": "Bandgründung · Live",
+    "text": "Bandgründung live im Alma Kiel. Kommt vorbei."
+  },
+  {
+    "date": "2026-11-14",
+    "time": "20:00",
+    "venue": "Beispiel-Bar, Kiel",
+    "label": "Beispiel · Barkonzert",
+    "text": "Zwei Sets, Gitarre, Gesang und Cajón. Eintritt frei, Hut geht rum."
+  },
+  {
+    "date": "2026-11-28",
+    "time": "19:30",
+    "venue": "Musterkneipe, Flensburg",
+    "label": "Beispiel · Live",
+    "text": "Spanische und arabische Lieder im kleinen Raum."
+  },
+  {
+    "date": "2026-12-12",
+    "time": "17:00",
+    "venue": "Weihnachtsmarkt Musterstadt",
+    "label": "Beispiel · Open Air",
+    "text": "Ein Akustik-Set zwischen den Ständen."
+  },
+  {
+    "date": "2027-01-23",
+    "time": "20:00",
+    "venue": "Beispiel-Kulturzentrum, Hamburg",
+    "label": "Beispiel · Konzert",
+    "text": "Das erste Konzert im neuen Jahr."
+  }
+]

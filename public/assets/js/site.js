@@ -4,66 +4,64 @@ const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 
-// Start page: a small scroll (wheel, swipe, keys) glides on to the next section.
-if(document.documentElement.classList.contains('snap')){
-const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let busy=false,lastInput=0,acc=0,fired=false,touchY=null;
-// Stop at each section's top, and at its bottom too when it is taller than the screen (phones).
-const stops=()=>{const max=document.documentElement.scrollHeight-innerHeight,out=[];
-$$('main > section').forEach(sec=>{out.push(sec.offsetTop);if(sec.offsetHeight>innerHeight+10)out.push(sec.offsetTop+sec.offsetHeight-innerHeight)});
-out.push(max);return [...new Set(out.map(t=>Math.min(Math.round(t),max)))].sort((a,b)=>a-b)};
-// html has scroll-behavior:smooth, which would turn each animation step into its own smooth scroll;
-// switch it off on this page (behavior:'instant' is not understood by every browser).
-document.documentElement.style.scrollBehavior='auto';
-const jump=y=>scrollTo(0,y);
-function nearest(){const s=stops();let best=0;s.forEach((t,i)=>{if(Math.abs(scrollY-t)<Math.abs(scrollY-s[best]))best=i});return best}
-function glide(dir){
-const s=stops(),target=s[Math.max(0,Math.min(s.length-1,nearest()+dir))];
-if(Math.abs(target-scrollY)<2)return;
-if(reduce){jump(target);return}
-busy=true;const from=scrollY,dist=target-from,dur=650,t0=performance.now();
-const ease=t=>1-Math.pow(1-t,4);
-let done=false;const finish=()=>{if(!done){done=true;jump(target);busy=false}};
-(function step(now){if(done)return;const t=Math.min(1,(now-t0)/dur);jump(from+dist*ease(t));if(t<1)requestAnimationFrame(step);else finish()})(t0);
-setTimeout(finish,dur+80); // in case frames are throttled (background tab)
-}
-// Trackpads fire a long momentum tail after each swipe, and a new swipe often starts before the tail ends,
-// so a pause cannot mark a new gesture. A new swipe shows as deltas rising again above the decaying tail.
-const hist=[];
-addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now(),gap=now-lastInput;lastInput=now;
-const dy=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1),v=Math.abs(dy);
-const prevDir=hist.length?Math.sign(hist[hist.length-1]):0;
-if(gap>200)hist.length=0;hist.push(dy);if(hist.length>12)hist.shift();
-const avg=a=>a.reduce((x,y)=>x+Math.abs(y),0)/a.length;
-const rising=hist.length>=6&&avg(hist.slice(-3))>avg(hist.slice(0,-3))*1.3&&v>6;
-if(hist.length===1||rising||(prevDir&&Math.sign(dy)!==prevDir&&v>6)){acc=0;fired=false}
-if(busy||fired)return;
-acc+=dy;if(Math.abs(acc)<25)return;fired=true;glide(acc>0?1:-1)},{passive:false});
-addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
-addEventListener('touchmove',e=>{if(e.touches.length>1)touchY=null;else if(touchY!==null)e.preventDefault()},{passive:false}); // pinch zoom stays native
-addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.changedTouches[0].clientY;touchY=null;if(!busy&&Math.abs(dy)>24)glide(dy>0?1:-1)});
-addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const down=['ArrowDown','PageDown',' '].includes(e.key),up=['ArrowUp','PageUp'].includes(e.key);if(!down&&!up)return;e.preventDefault();if(!busy)glide(down?1:-1)});
+// Scroll reveal. Sections after the first screen get their text, cards and images marked automatically
+// (the start page sets its own classes via [data-reveal]); each marked element gets .is-in once it is in view.
+document.documentElement.classList.add('js');
+const revealParts='.kicker,.title,.lead,.story-text>p,.block-actions,.gig,.clip,.player,.photo,.occasions li,.form-card,.story-photo,.dates-empty,.social,.motto-mark,.motto-text>*,.cta-card>*,.block-grid>div>*';
+$$('main>section:not(.opener):not(.home):not([data-reveal])').forEach(sec=>{let i=0;
+$$(revealParts,sec).forEach(part=>{if(part.parentElement.closest('.reveal,.reveal-img'))return;
+part.classList.add(part.matches('.story-photo,.photo')?'reveal-img':'reveal');part.style.setProperty('--i',Math.min(i++,4))})});
+const ro='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('is-in');ro.unobserve(en.target)}}),{threshold:.15}):null;
+const reveal=part=>ro?ro.observe(part):part.classList.add('is-in');
+$$('.reveal,.reveal-rise,.reveal-img').forEach(reveal);
+
+// Fixed menu: dark with light text while the section under its middle line is dark (photo, [data-dark], footer).
+// Checked on every scroll frame, so fast jumps, snapping and mobile toolbar resizes cannot leave a stale colour.
+const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark],.footer');
+if(fixedBar){
+let queued=false;
+const update=()=>{queued=false;const y=fixedBar.offsetHeight/2;fixedBar.classList.toggle('on-photo',darkSecs.some(sec=>{const r=sec.getBoundingClientRect();return r.top<=y&&r.bottom>y}))};
+const queue=()=>{if(!queued){queued=true;requestAnimationFrame(update)}};
+addEventListener('scroll',queue,{passive:true});addEventListener('resize',queue);addEventListener('load',queue);update();
 }
 
-// Start page menu: light text while it sits over the photo or a dark block.
-const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark]');
-if(fixedBar&&darkSecs.length&&'IntersectionObserver' in window){
-const under=new Set();let io;const watch=()=>{if(io)io.disconnect();under.clear();
-io=new IntersectionObserver(es=>{es.forEach(en=>en.isIntersecting&&en.intersectionRect.height>0?under.add(en.target):under.delete(en.target)) /* a section that only touches the strip does not count */;fixedBar.classList.toggle('on-photo',under.size>0)},
-{rootMargin:`0px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});darkSecs.forEach(s=>io.observe(s))};
-watch();addEventListener('resize',watch);
+// Debug panel: ?debug=1 opens it on every page for this browser tab, ?debug=0 closes it.
+// It toggles the section snapping (html.snap / html.snap-soft), the drifting background (html.bg-still) and the text/scroll animations (html.no-anim); choices are kept for the tab.
+const store={get:k=>{try{return sessionStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{v===null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch(e){}}};
+const debugParam=new URLSearchParams(location.search).get('debug');
+if(debugParam==='1')store.set('hh-debug','1');else if(debugParam==='0'){store.set('hh-debug',null);store.set('hh-snap',null);store.set('hh-flow',null);store.set('hh-anim',null)}
+if(store.get('hh-debug')==='1'){
+const root=document.documentElement,snapClass=['snap','snap-soft'].find(c=>root.classList.contains(c));
+const setSnap=on=>{if(snapClass)root.classList.toggle(snapClass,on);store.set('hh-snap',on?null:'off')};
+const panel=document.createElement('aside');panel.className='debug';panel.setAttribute('aria-label','Debug');
+panel.innerHTML='<strong>Debug</strong><label><input type="checkbox" name="snap"> Auto-Scroll</label><span class="debug-note"></span><label><input type="checkbox" name="flow"> Hintergrund fließt</label><label><input type="checkbox" name="anim"> Animationen</label><a href="?debug=0">Schließen</a>';
+const box=$('[name=snap]',panel),note=$('.debug-note',panel),flow=$('[name=flow]',panel);
+const setFlow=on=>{root.classList.toggle('bg-still',!on);store.set('hh-flow',on?null:'off')};
+flow.checked=store.get('hh-flow')!=='off';setFlow(flow.checked);
+flow.addEventListener('change',()=>setFlow(flow.checked));
+const anim=$('[name=anim]',panel),setAnim=on=>{root.classList.toggle('no-anim',!on);store.set('hh-anim',on?null:'off')};
+anim.checked=store.get('hh-anim')!=='off';setAnim(anim.checked);
+anim.addEventListener('change',()=>setAnim(anim.checked));
+box.checked=store.get('hh-snap')!=='off';box.disabled=!snapClass;
+note.textContent=snapClass?(snapClass==='snap'?'Einrasten: stark':'Einrasten: sanft'):'Kein Einrasten auf dieser Seite';
+box.addEventListener('change',()=>setSnap(box.checked));
+if(snapClass&&!box.checked)root.classList.remove(snapClass);
+document.body.append(panel);
+window.habibiDebug={setSnap:on=>{box.checked=!!on;setSnap(!!on)},setFlow:on=>{flow.checked=!!on;setFlow(!!on)},setAnim:on=>{anim.checked=!!on;setAnim(!!on)}};
 }
 
-// Music block on the start page: muted loop plays while visible; "Ton an" unmutes it.
-const bgVideo=$('#bg-video'),bgSound=$('#bg-sound');
-if(bgVideo){
+// Muted background loops (start page music block, Musik opener): play while visible;
+// a [data-sound-for="<video id>"] button unmutes. Reduced motion or Save-Data keeps the poster until sound is asked for.
 const still=matchMedia('(prefers-reduced-motion:reduce)').matches||(navigator.connection&&navigator.connection.saveData);
-let visible=false;
-const run=()=>{if(visible&&(!still||!bgVideo.muted))bgVideo.play().catch(()=>{});else bgVideo.pause()};
-if('IntersectionObserver' in window)new IntersectionObserver(([en])=>{visible=en.isIntersecting;run()},{threshold:.25}).observe(bgVideo);
-bgSound.addEventListener('click',()=>{bgVideo.muted=!bgVideo.muted;bgSound.setAttribute('aria-pressed',String(!bgVideo.muted));bgSound.textContent=bgVideo.muted?'Ton an':'Ton aus';if(!bgVideo.muted){visible=true;bgVideo.play().catch(()=>{})}else run()});
-bgVideo.addEventListener('pause',()=>{if(!bgVideo.muted&&!visible){bgVideo.muted=true;bgSound.setAttribute('aria-pressed','false');bgSound.textContent='Ton an'}});
-}
+$$('video[data-loop]').forEach(v=>{
+const btn=$(`[data-sound-for="${v.id}"]`);let visible=false;
+const run=()=>{if(visible&&(!still||!v.muted))v.play().catch(()=>{});else v.pause()};
+if('IntersectionObserver' in window)new IntersectionObserver(([en])=>{visible=en.isIntersecting;run()},{threshold:.25}).observe(v);
+if(!btn)return;
+const label=()=>{btn.setAttribute('aria-pressed',String(!v.muted));btn.textContent=v.muted?'Ton an':'Ton aus'};
+btn.addEventListener('click',()=>{v.muted=!v.muted;label();if(!v.muted){visible=true;v.play().catch(()=>{})}else run()});
+v.addEventListener('pause',()=>{if(!v.muted&&!visible){v.muted=true;label()}});
+});
 
 // Cinema overlay for the videos on the music page.
 const cinema=$('#video-dialog');
@@ -120,7 +118,8 @@ $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();t
 }
 
 // Gigs come from assets/termine.json; past dates are hidden automatically.
-// Live page lists all upcoming gigs (#gigs), the start page shows the next one (#next-gig).
+// #gigs lists upcoming gigs (data-limit caps the count); #next-gig in the Live opener teases the next one.
+// Made-up example gigs (termine.demo.json) show on localhost and with ?demo, for layout reviews only; ?demo=0 turns them off.
 const box=$('#gigs'),nextGig=$('#next-gig');
 if(box||nextGig)(async()=>{
 const layout=$('#dates-layout');
@@ -128,14 +127,17 @@ const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className
 const day=g=>g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'');
 const meta=g=>{const m=el('span','gig-meta');[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)m.append(document.createElement('br'));m.append(t)});return m};
 try{
-const res=await fetch('assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
+const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$|\.localhost$/.test(location.hostname);
+const demo=q.has('demo')?q.get('demo')!=='0':local;
+const res=await fetch(demo?'assets/termine.demo.json':'assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
 const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
 if(box){
-box.replaceChildren(...gigs.map(g=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
-const card=el('article','gig');card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
+const shown=box.dataset.limit?gigs.slice(0,+box.dataset.limit):gigs;
+box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map((g,i)=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
+const card=el('article','gig reveal');card.style.setProperty('--i',Math.min(i+2,5));card.append(el('span','gig-day',day(g)),meta(g),body);reveal(card);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }
-if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`)}
+if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`);nextGig.classList.add('is-set')}
 }catch(e){if(layout)layout.classList.add('is-empty')}
 })();
