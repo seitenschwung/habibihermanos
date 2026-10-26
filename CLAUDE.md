@@ -55,7 +55,8 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 
 ## Conventions / pitfalls
 - UI language is German; keep copy honest (no invented dates, links or performers).
-- `BOOKING_EMAIL` in `site.js` is `info@seitenschwung.com` (form opens a mailto draft; empty value would make it copy text only).
+- Every Buchen/anfragen link points to `buchen.html#formular` (the form card; `scroll-margin-top` keeps it clear of the header).
+- `BOOKING_EMAIL` in `site.js` is `aemsez08@gmail.com` (form opens a mailto draft; empty value would make it copy text only).
 - Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are filled with the operator's details; the owner is responsible for their legal review.
