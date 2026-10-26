@@ -4,6 +4,12 @@ const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 
+// Scroll reveal: a [data-reveal] section gets .is-in once it is in view; its .reveal children fade up (CSS).
+document.documentElement.classList.add('js');
+const revealSecs=$$('[data-reveal]');
+if('IntersectionObserver' in window){const ro=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('is-in');ro.unobserve(en.target)}}),{threshold:.35});revealSecs.forEach(sec=>ro.observe(sec))}
+else revealSecs.forEach(sec=>sec.classList.add('is-in'));
+
 // Fixed menu: dark with light text while the section under its middle line is dark (photo, [data-dark], footer).
 // Checked on every scroll frame, so fast jumps, snapping and mobile toolbar resizes cannot leave a stale colour.
 const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark],.footer');
