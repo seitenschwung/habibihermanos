@@ -53,6 +53,7 @@ button,input,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 ::selection{background:var(--ink);color:var(--cream)}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .skip{position:absolute;z-index:1000;left:10px;top:-200px;background:var(--ink);color:var(--cream);padding:12px 16px}
 .skip:focus{top:10px}
 .wrap{width:min(100% - var(--side)*2,1240px);margin-inline:auto}
@@ -243,9 +244,13 @@ p{margin:0 0 16px;max-width:62ch}
 .photo img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .photo:hover img{transform:scale(1.04)}
 .photo .label{margin:10px 0 0;color:var(--ink)}
-/* Collage: the middle column sits lower, so the grid reads like pinned prints */
-.gallery--collage{padding-bottom:clamp(40px,7vw,100px)}
-.gallery--collage .photo:nth-child(3n+2){transform:translateY(clamp(40px,7vw,100px))}
+/* Fotos page: photos only, uncropped, in columns (masonry); captions show in the lightbox */
+.photos{padding:calc(var(--frame) * 2 + 46px + clamp(16px,3vw,40px)) 0 clamp(48px,8vh,96px)}
+.gallery--masonry{display:block;columns:3 150px;column-gap:clamp(12px,1.6vw,20px)}
+.gallery--masonry .photo{display:block;width:100%;margin-bottom:clamp(12px,1.6vw,20px);break-inside:avoid}
+.gallery--masonry .photo .frame{aspect-ratio:auto}
+.gallery--masonry .photo img{height:auto}
+.gallery--masonry .photo .label{display:none}
 
 /* Über uns */
 .story{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,6vw,96px);align-items:start}
@@ -368,9 +373,7 @@ body.dialog-open{overflow:hidden}
 }
 @media (max-width:860px){
   .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .gallery--collage .photo:nth-child(3n+2){transform:none}
-  .gallery--collage .photo:nth-child(even){transform:translateY(48px)}
-  .gallery--collage{padding-bottom:48px}
+  .photos{padding-top:150px}
 }
 @media (max-width:640px){
   .music{grid-template-columns:1fr}
