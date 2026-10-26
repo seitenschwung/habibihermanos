@@ -8,7 +8,7 @@
 
 :root{
   --rose:#ff4f6d;--coral:#ff6a4a;--orange:#ff8a2b;--amber:#ffb238;--gold:#ffd166;
-  --ink:#2a1219;--ink-soft:#4a2530;--cream:#fff6ee;
+  --ink:#3a2215;--ink-soft:#5a3823;--cream:#fff6ee;
   --side:clamp(16px,4vw,56px);--frame:clamp(10px,1.4vw,18px);
   --font-display:Anton,Impact,"Arial Narrow",sans-serif;
   --font-body:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -50,7 +50,7 @@ p{margin:0 0 16px;max-width:62ch}
 
 /* ---------- Start page: the poster ---------- */
 .home{position:relative;z-index:1;min-height:100dvh;padding:var(--frame);display:flex;
-  background:var(--stage-bg) fixed;background-color:var(--orange);box-shadow:0 30px 60px -10px rgba(42,18,25,.45)}
+  background:var(--stage-bg) fixed;background-color:var(--orange);box-shadow:0 30px 60px -10px rgba(58,34,21,.45)}
 .home-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vh,72px) calc(var(--side) - var(--frame))}
 .band-name{margin:0;font:400 clamp(64px,min(15vw,26vh),260px)/.86 var(--font-display);text-transform:uppercase;letter-spacing:-.005em}
 .band-name span{display:block}
@@ -78,7 +78,7 @@ p{margin:0 0 16px;max-width:62ch}
 .pages{display:flex;gap:6px;margin:0;padding:0;list-style:none}
 .pages li{display:flex}
 .pages a{display:flex;align-items:center;padding:12px 16px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;transition:background .2s,color .2s}
-.pages a:hover{background:rgba(42,18,25,.1)}
+.pages a:hover{background:rgba(58,34,21,.1)}
 .pages a[aria-current=page]{background:var(--ink);color:var(--cream)}
 
 .page{padding:clamp(36px,7vh,80px) 0 clamp(64px,10vh,110px)}
@@ -103,14 +103,14 @@ p{margin:0 0 16px;max-width:62ch}
 .audio-timeline{flex:1;min-width:0}
 .waveform{position:relative;height:50px;cursor:pointer}
 .wave-bars{position:absolute;inset:0;display:flex;align-items:center;gap:2px}
-.wave-bars span{flex:1;min-width:1px;background:rgba(42,18,25,.25)}
+.wave-bars span{flex:1;min-width:1px;background:rgba(58,34,21,.25)}
 .wave-bars span.played{background:var(--ink)}
 .time-row{display:flex;justify-content:space-between;margin-top:6px;font-size:13px;font-variant-numeric:tabular-nums}
 
 /* Fotos: even grid, all photos the same size */
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
 .photo{display:block;padding:0;border:0;background:none;text-align:left}
-.photo .frame{display:block;aspect-ratio:4/5;overflow:hidden;background:rgba(42,18,25,.15)}
+.photo .frame{display:block;aspect-ratio:4/5;overflow:hidden;background:rgba(58,34,21,.15)}
 .photo img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .photo:hover img{transform:scale(1.04)}
 .photo .label{margin:10px 0 0;color:var(--ink)}
@@ -171,7 +171,7 @@ p{margin:0 0 16px;max-width:62ch}
 
 /* Photo dialog */
 .photo-modal{border:0;padding:0;background:transparent;max-width:min(92vw,1000px);max-height:92dvh}
-.photo-modal::backdrop{background:rgba(42,18,25,.9)}
+.photo-modal::backdrop{background:rgba(58,34,21,.9)}
 .photo-modal img{max-height:80dvh;width:auto;margin-inline:auto}
 .photo-modal p{margin:10px auto 0;text-align:center;color:var(--cream);font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
 .close-modal{display:block;margin:0 0 10px auto;padding:12px 16px;border:1.5px solid var(--cream);background:var(--cream);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
