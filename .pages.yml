@@ -1,0 +1,49 @@
+# Pages CMS (https://pagescms.org): a form for the band to add and edit gigs.
+# It edits public/assets/termine.json (a top-level array); saving commits to the branch chosen in Pages CMS,
+# and CI deploys main after the checks (npm test runs scripts/check-termine.mjs).
+media: false
+
+settings:
+  commit:
+    identity: user
+    templates:
+      update: "Termine aktualisiert ({path})"
+
+content:
+  - name: termine
+    label: Termine
+    description: "Auftritte für die Startseite und die Live-Seite. Vergangene Termine verschwinden automatisch."
+    type: file
+    path: public/assets/termine.json
+    format: json
+    list: true
+    fields:
+      - name: date
+        label: Datum
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: time
+        label: Uhrzeit
+        type: string
+        description: "Format HH:MM, z. B. 20:00. Leer lassen, wenn sie noch nicht feststeht."
+        options:
+          maxlength: 5
+      - name: venue
+        label: Ort
+        type: string
+        required: true
+        description: "Name des Ortes, z. B. Alma Kiel."
+        options:
+          maxlength: 80
+      - name: label
+        label: Label
+        type: string
+        description: "Kleine Zeile über dem Text, z. B. Konzert oder Open Air. Leer = Live."
+        options:
+          maxlength: 40
+      - name: text
+        label: Text
+        type: text
+        description: "Ein, zwei Sätze zum Auftritt."
