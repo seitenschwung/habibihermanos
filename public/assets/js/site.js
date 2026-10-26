@@ -82,7 +82,7 @@ $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();t
 
 // Gigs come from assets/termine.json; past dates are hidden automatically.
 // #gigs lists upcoming gigs (data-limit caps the count); #next-gig in the Live opener teases the next one.
-// ?demo in the URL loads made-up example gigs from termine.demo.json, for layout reviews only.
+// Made-up example gigs (termine.demo.json) show on localhost and with ?demo, for layout reviews only; ?demo=0 turns them off.
 const box=$('#gigs'),nextGig=$('#next-gig');
 if(box||nextGig)(async()=>{
 const layout=$('#dates-layout');
@@ -90,7 +90,8 @@ const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className
 const day=g=>g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'');
 const meta=g=>{const m=el('span','gig-meta');[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)m.append(document.createElement('br'));m.append(t)});return m};
 try{
-const demo=new URLSearchParams(location.search).has('demo');
+const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+const demo=q.has('demo')?q.get('demo')!=='0':local;
 const res=await fetch(demo?'assets/termine.demo.json':'assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
 const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
