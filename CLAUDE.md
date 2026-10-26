@@ -23,10 +23,10 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
   open on a dark section start with `header.bar--fixed.on-photo`. Footer: dark, same markup on every page (brand,
   "Jetzt anfragen", pages, contact, Instagram https://www.instagram.com/habibihermanoshh/ as a link only, legal).
   Copy header/footer markup when adding a page.
-- `index.html`: hero (band name, claim, marquee, large logo) → Musik block (dark, muted `bar-loop.mp4` behind the
-  text while visible, "Ton an" unmutes; paused for reduced motion / Save-Data) → stage photo (`hero-stage.webp`,
-  pinned with `position:fixed` inside a `clip-path` section so scrolling uncovers it; keep the img eager) with the
-  about teaser bottom left and the white name bottom right → gigs (`#gigs`, `data-limit="3"`).
+- `index.html`: hero (band name, claim, marquee, large logo) → stage photo (`hero-stage.webp`, pinned with
+  `position:fixed` inside a `clip-path` section so scrolling uncovers it from behind the hero; keep the img eager)
+  with the about teaser bottom left and the white name bottom right → Musik block (dark, muted `bar-loop.mp4` behind
+  the text while visible, "Ton an" unmutes; paused for reduced motion / Save-Data) → gigs (`#gigs`, `data-limit="3"`).
 - Subpages (spec: `docs/superpowers/specs/2026-10-26-unterseiten-design.md`): a first-screen `.opener`, then
   `.block` / `.block--dark` sections (`.block--fit` = content height). `musik.html`: `.opener--split` (text + framed
   portrait loop), one-screen song block, clips + audio player. `fotos.html`: no opener, photos uncropped in CSS
