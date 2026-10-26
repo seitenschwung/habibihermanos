@@ -126,8 +126,8 @@ const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
 if(box){
 const shown=box.dataset.limit?gigs.slice(0,+box.dataset.limit):gigs;
-box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map(g=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
-const card=el('article','gig');card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
+box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map((g,i)=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
+const card=el('article','gig reveal');card.style.setProperty('--i',i+2);card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }
 if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`);nextGig.classList.add('is-set')}

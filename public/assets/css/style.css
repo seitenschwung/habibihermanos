@@ -101,6 +101,12 @@ p{margin:0 0 16px;max-width:62ch}
 /* Scroll reveal: children with .reveal fade up once their [data-reveal] section is in view (needs site.js, hence .js) */
 .js [data-reveal] .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0) * 120ms)}
 .js [data-reveal].is-in .reveal{opacity:1;transform:none}
+/* Big display lines rise from behind a mask (like the hero name); photos settle from a slight zoom */
+.js [data-reveal] .reveal-rise{opacity:0;transform:translateY(40%);clip-path:inset(0 -5% 100% -5%);
+  transition:opacity 1s var(--ease),transform 1s var(--ease),clip-path 1s var(--ease);transition-delay:calc(var(--i,0) * 140ms)}
+.js [data-reveal].is-in .reveal-rise{opacity:1;transform:none;clip-path:inset(-20% -5% -20% -5%)}
+.js [data-reveal] .reveal-img{opacity:0;transform:scale(1.06);transition:opacity 1.2s ease,transform 1.6s var(--ease)}
+.js [data-reveal].is-in .reveal-img{opacity:1;transform:none}
 .band-tag{margin:22px 0 0;font-size:clamp(17px,1.5vw,21px);font-weight:500}
 
 /* Marquee at the foot of the hero: big type running endlessly */
