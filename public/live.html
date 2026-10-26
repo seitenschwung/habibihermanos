@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" class="snap-soft">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,16 +15,31 @@
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
-<header class="bar"><a class="brand" href="index.html" aria-label="Habibi Hermanos, zur Startseite"><span>Habibi</span><span>Hermanos</span></a><nav aria-label="Seiten"><ul class="pages"><li><a href="musik.html">Musik</a></li><li><a href="fotos.html">Fotos</a></li><li><a href="ueber-uns.html">Über uns</a></li><li><a href="live.html" aria-current="page">Live</a></li><li><a href="buchen.html" class="book">Buchen</a></li></ul></nav></header>
-<main id="main" class="page">
+<header class="bar bar--fixed"><a class="brand" href="index.html" aria-label="Habibi Hermanos, zur Startseite"><span>Habibi</span><span>Hermanos</span></a><nav aria-label="Seiten"><ul class="pages"><li><a href="musik.html">Musik</a></li><li><a href="fotos.html">Fotos</a></li><li><a href="ueber-uns.html">Über uns</a></li><li><a href="live.html" aria-current="page">Live</a></li><li><a href="buchen.html" class="book">Buchen</a></li></ul></nav></header>
+<main id="main">
+<section class="opener opener--poster" aria-labelledby="live-title">
+<div class="wrap opener-main">
+<p class="kicker">Live erleben</p><h1 class="title" id="live-title">Live.</h1>
+<p class="lead">Nächste Auftritte in Kiel und Umgebung.</p>
+<a class="ticket" id="next-gig" href="#termine"><span class="ticket-more">Alle Termine</span></a>
+</div>
+<div class="marquee"><div class="marquee-run" aria-hidden="true"><div class="marquee-track"><div><span>Café</span><span class="sep">/</span><span>Bar</span><span class="sep">/</span><span>Fest</span><span class="sep">/</span><span>Kultur</span><span class="sep">/</span><span>Live aus Kiel</span><span class="sep">/</span></div><div><span>Café</span><span class="sep">/</span><span>Bar</span><span class="sep">/</span><span>Fest</span><span class="sep">/</span><span>Kultur</span><span class="sep">/</span><span>Live aus Kiel</span><span class="sep">/</span></div></div></div></div>
+</section>
+<section class="block block--fit" id="termine" aria-labelledby="dates-title">
 <div class="wrap">
-<header class="page-head"><div><p class="kicker">Live erleben</p><h1 class="title">Nächste Auftritte.</h1></div></header>
+<header class="section-head"><p class="kicker">Termine</p><h2 class="title" id="dates-title">Nächste Auftritte.</h2></header>
 <div class="dates-layout" id="dates-layout">
 <div class="gigs" id="gigs"><noscript><article class="gig"><span class="gig-day">29.10</span><span class="gig-meta">Donnerstag<br>18:00<br>Alma Kiel</span><div class="gig-body"><p class="label">Bandgründung · Live</p><p>Bandgründung live im Alma Kiel. Kommt vorbei.</p></div></article></noscript></div>
 <div class="dates-empty"><p class="lead">Gerade stehen keine Termine fest. Neue Auftritte erscheinen hier.</p></div>
-<div class="dates-cta"><p>Ihr plant selbst einen Konzertabend oder eine Veranstaltung?</p><a class="btn" href="buchen.html">Fragt uns direkt an <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
 </div>
 </div>
+</section>
+<section class="block block--dark block--fit" data-dark aria-labelledby="plan-title">
+<div class="wrap block-grid">
+<div><p class="kicker">Buchen</p><h2 class="title" id="plan-title">Ihr plant einen Abend?</h2><div class="block-actions"><a class="btn btn-light" href="buchen.html">Fragt uns an <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div></div>
+<div><p class="lead">Neue Termine zeigen wir zuerst auf Instagram.</p><a class="social" href="https://www.instagram.com/habibihermanoshh/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></div>
+</div>
+</section>
 </main>
 <footer class="footer">
 <div class="footer-top">

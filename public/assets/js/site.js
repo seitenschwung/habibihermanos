@@ -13,16 +13,18 @@ io=new IntersectionObserver(es=>{es.forEach(en=>en.isIntersecting&&en.intersecti
 watch();addEventListener('resize',watch);
 }
 
-// Music block on the start page: muted loop plays while visible; "Ton an" unmutes it.
-const bgVideo=$('#bg-video'),bgSound=$('#bg-sound');
-if(bgVideo){
+// Muted background loops (start page music block, Musik opener): play while visible;
+// a [data-sound-for="<video id>"] button unmutes. Reduced motion or Save-Data keeps the poster until sound is asked for.
 const still=matchMedia('(prefers-reduced-motion:reduce)').matches||(navigator.connection&&navigator.connection.saveData);
-let visible=false;
-const run=()=>{if(visible&&(!still||!bgVideo.muted))bgVideo.play().catch(()=>{});else bgVideo.pause()};
-if('IntersectionObserver' in window)new IntersectionObserver(([en])=>{visible=en.isIntersecting;run()},{threshold:.25}).observe(bgVideo);
-bgSound.addEventListener('click',()=>{bgVideo.muted=!bgVideo.muted;bgSound.setAttribute('aria-pressed',String(!bgVideo.muted));bgSound.textContent=bgVideo.muted?'Ton an':'Ton aus';if(!bgVideo.muted){visible=true;bgVideo.play().catch(()=>{})}else run()});
-bgVideo.addEventListener('pause',()=>{if(!bgVideo.muted&&!visible){bgVideo.muted=true;bgSound.setAttribute('aria-pressed','false');bgSound.textContent='Ton an'}});
-}
+$$('video[data-loop]').forEach(v=>{
+const btn=$(`[data-sound-for="${v.id}"]`);let visible=false;
+const run=()=>{if(visible&&(!still||!v.muted))v.play().catch(()=>{});else v.pause()};
+if('IntersectionObserver' in window)new IntersectionObserver(([en])=>{visible=en.isIntersecting;run()},{threshold:.25}).observe(v);
+if(!btn)return;
+const label=()=>{btn.setAttribute('aria-pressed',String(!v.muted));btn.textContent=v.muted?'Ton an':'Ton aus'};
+btn.addEventListener('click',()=>{v.muted=!v.muted;label();if(!v.muted){visible=true;v.play().catch(()=>{})}else run()});
+v.addEventListener('pause',()=>{if(!v.muted&&!visible){v.muted=true;label()}});
+});
 
 // Cinema overlay for the videos on the music page.
 const cinema=$('#video-dialog');
@@ -79,7 +81,7 @@ $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();t
 }
 
 // Gigs come from assets/termine.json; past dates are hidden automatically.
-// Live page lists all upcoming gigs (#gigs), the start page shows the next one (#next-gig).
+// #gigs lists upcoming gigs (data-limit caps the count); #next-gig in the Live opener teases the next one.
 // ?demo in the URL loads made-up example gigs from termine.demo.json, for layout reviews only.
 const box=$('#gigs'),nextGig=$('#next-gig');
 if(box||nextGig)(async()=>{
@@ -98,6 +100,6 @@ box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht ech
 const card=el('article','gig');card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }
-if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`)}
+if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`);nextGig.classList.add('is-set')}
 }catch(e){if(layout)layout.classList.add('is-empty')}
 })();
