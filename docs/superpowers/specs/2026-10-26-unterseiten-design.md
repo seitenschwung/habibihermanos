@@ -45,8 +45,8 @@ Bilder der Startseite (Bühnenfoto, Bar-Video/-Foto, Anzug-Porträt) werden in d
 ### Über uns (Medien)
 1. Einstieg: `hero-duo.webp`, „Aus zwei Freunden wird eine Band.“
 2. Verlauf: erster Absatz groß, übriger Text schmal neben `stage-duo.webp`.
-3. Dunkel: „الموسيقى تجمعنا“ groß (Noto Naskh), darunter „Musik verbindet uns“, Duo-Zeichen (`duo-mark.webp`, auf
-   Dunkel invertiert, falls nötig).
+3. Dunkel: „الموسيقى تجمعنا“ groß (Noto Naskh), darunter „Musik verbindet uns“, Duo-Zeichen (`duo-mark.webp`, ist
+   bereits Creme auf Dunkelbraun und sitzt ohne Rahmen auf dem dunklen Block).
 4. Verlauf: Buttons „Nächste Auftritte“ (live.html) und „Buchen“ (buchen.html).
 
 ### Live (Plakat)
