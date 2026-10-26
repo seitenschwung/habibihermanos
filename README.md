@@ -16,7 +16,7 @@ Open http://localhost:8080. On localhost the gig lists show labelled example dat
 drift and the animations. Structure and conventions: `CLAUDE.md`.
 
 - Gigs: edit `public/assets/termine.json` (past dates hide themselves).
-- Booking: the form opens a mail draft to `info@seitenschwung.com`; nothing is sent to a server.
+- Booking: the form opens a mail draft to `aemsez08@gmail.com`; nothing is sent to a server.
 
 ## CI and deploy
 

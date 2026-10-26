@@ -23,10 +23,10 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
   open on a dark section start with `header.bar--fixed.on-photo`. Footer: dark, same markup on every page (brand,
   "Jetzt anfragen", pages, contact, Instagram https://www.instagram.com/habibihermanoshh/ as a link only, legal).
   Copy header/footer markup when adding a page.
-- `index.html`: hero (band name, claim, marquee, large logo) → Musik block (dark, muted `bar-loop.mp4` behind the
-  text while visible, "Ton an" unmutes; paused for reduced motion / Save-Data) → stage photo (`hero-stage.webp`,
-  pinned with `position:fixed` inside a `clip-path` section so scrolling uncovers it; keep the img eager) with the
-  about teaser bottom left and the white name bottom right → gigs (`#gigs`, `data-limit="3"`).
+- `index.html`: hero (band name, claim, marquee, large logo) → stage photo (`hero-stage.webp`, pinned with
+  `position:fixed` inside a `clip-path` section so scrolling uncovers it from behind the hero; keep the img eager)
+  with the about teaser bottom left and the white name bottom right → Musik block (dark, muted `bar-loop.mp4` behind
+  the text while visible, "Ton an" unmutes; paused for reduced motion / Save-Data) → gigs (`#gigs`, `data-limit="3"`).
 - Subpages (spec: `docs/superpowers/specs/2026-10-26-unterseiten-design.md`): a first-screen `.opener`, then
   `.block` / `.block--dark` sections (`.block--fit` = content height). `musik.html`: `.opener--split` (text + framed
   portrait loop), one-screen song block, clips + audio player. `fotos.html`: no opener, photos uncropped in CSS
@@ -55,7 +55,8 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 
 ## Conventions / pitfalls
 - UI language is German; keep copy honest (no invented dates, links or performers).
-- `BOOKING_EMAIL` in `site.js` is `info@seitenschwung.com` (form opens a mailto draft; empty value would make it copy text only).
+- Every Buchen/anfragen link points to `buchen.html#formular` (the form card; `scroll-margin-top` keeps it clear of the header).
+- `BOOKING_EMAIL` in `site.js` is `aemsez08@gmail.com` (form opens a mailto draft; empty value would make it copy text only).
 - Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are filled with the operator's details; the owner is responsible for their legal review.
