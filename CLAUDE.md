@@ -14,7 +14,7 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 
 ## Layout
 - `public/index.html`: one-pager start page: fixed top menu (`.bar--fixed`, gradient background; turns light over the photo and `[data-dark]` blocks via IntersectionObserver), hero with band name, claim and marquee, then then a full-screen photo (`hero-stage.webp`, pinned with `position:fixed` inside a `clip-path` section so scrolling uncovers it; keep the img eager, lazy never loads there)., then full-screen blocks: Musik (dark, muted `hero-loop.mp4` plays behind the text while visible, "Ton an" unmutes; paused for reduced motion / save-data), next gigs (`#gigs` from `termine.json`), Über uns teaser. `<html class="snap">` turns on section-by-section scrolling over every `main > section` in `site.js`
-- Menu: top bar with Musik, Fotos, Über uns, Live; Instagram (https://www.instagram.com/habibihermanoshh/) in every footer, link only, no embed; booking is a fixed `.btn.cta` "Jetzt buchen" bottom right on every page except `buchen.html`.
+- Menu: top bar with Musik, Fotos, Über uns, Live and a filled `Buchen` (`.pages .book`); on the start page the hero marquee also ends in a fixed `Buchen` field (`.marquee-book`). Instagram (https://www.instagram.com/habibihermanoshh/) in every footer, link only, no embed.
 - Subpages: `musik.html` (video poster tiles open a dark cinema `<dialog>`, plus audio player), `fotos.html` (masonry + lightbox), `ueber-uns.html`, `live.html` (gigs), `buchen.html` (form); same header/footer markup in each, copy it when adding a page
 - `public/assets/{css,js,media,images}`
 - `public/assets/js/site.js`: shared by all pages, each block guards for its elements (section snapping, audio waveform, lightbox, booking form, gigs)

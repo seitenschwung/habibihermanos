@@ -43,9 +43,6 @@ p{margin:0 0 16px;max-width:62ch}
   font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1;transition:background .2s,color .2s}
 .btn:hover{background:transparent;color:var(--ink)}
 .btn:active{transform:translateY(1px)}
-/* Booking button fixed bottom right on every page (not on the booking page) */
-.cta{position:fixed;right:var(--side);bottom:clamp(14px,3vh,28px);z-index:30;border-color:var(--sand);box-shadow:0 14px 30px -12px rgba(42,23,13,.6)}
-.cta:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
 .btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
 .btn:hover svg{transform:translateX(4px)}
 
@@ -58,7 +55,13 @@ p{margin:0 0 16px;max-width:62ch}
 .band-tag{margin:22px 0 0;font-size:clamp(17px,1.5vw,21px);font-weight:500}
 
 /* Marquee at the foot of the hero: big type running endlessly */
-.marquee{margin:0 calc(-1 * var(--frame)) calc(-1 * var(--frame));overflow:hidden;padding:clamp(10px,2vh,18px) 0;background:var(--ink);color:var(--sand)}
+.marquee{display:flex;align-items:stretch;margin:0 calc(-1 * var(--frame)) calc(-1 * var(--frame));background:var(--ink);color:var(--sand)}
+.marquee-run{flex:1;min-width:0;overflow:hidden;padding:clamp(10px,2vh,18px) 0}
+/* Booking sits in the band like a ticket window */
+.marquee-book{flex:none;display:flex;align-items:center;gap:12px;padding:0 clamp(18px,3vw,36px);background:var(--sand);color:var(--ink);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;transition:background .2s,color .2s}
+.marquee-book svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+.marquee-book:hover{background:var(--cream)}
+.marquee-book:hover svg{transform:translateX(4px)}
 .marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
 .marquee-track>div{display:flex;flex:none}
 .marquee span{padding-right:.45em;font:400 clamp(34px,5.5vw,76px)/1 var(--font-display);text-transform:uppercase;white-space:nowrap}
@@ -116,6 +119,9 @@ p{margin:0 0 16px;max-width:62ch}
 .pages a{display:flex;align-items:center;padding:12px 16px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;transition:background .2s,color .2s}
 .pages a:hover{background:rgba(42,23,13,.1)}
 .pages a[aria-current=page]{background:var(--ink);color:var(--cream)}
+.pages .book{background:var(--ink);color:var(--cream);font-weight:700}
+.pages .book:hover{background:var(--ink-soft)}
+.bar--fixed.on-photo .pages .book{background:var(--cream);color:var(--ink)}
 
 .page{padding:clamp(36px,7vh,80px) 0 clamp(64px,10vh,110px)}
 .page-head{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px 5vw;align-items:end;margin-bottom:clamp(36px,7vh,72px)}
@@ -250,5 +256,3 @@ body.dialog-open{overflow:hidden}
   .marquee-track{animation:none}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
-/* Room for the fixed booking button at the page end */
-.footer,.home-foot{padding-bottom:calc(var(--frame) + 72px)}
