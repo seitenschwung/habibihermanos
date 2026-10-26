@@ -98,3 +98,75 @@ export function createLimiter({ max, windowMs, now = Date.now }) {
     },
   };
 }
+
+const MAX_BODY = 16 * 1024;
+
+const reply = (res, status, payload, extra = {}) => {
+  const body = JSON.stringify(payload);
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Length': Buffer.byteLength(body),
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff',
+    ...extra,
+  });
+  res.end(body);
+};
+
+// Reads at most MAX_BODY bytes within readTimeoutMs. Resolves with the text, or with a status code to answer.
+const readBody = (req, readTimeoutMs) => new Promise((resolve) => {
+  if (Number(req.headers['content-length'] ?? 0) > MAX_BODY) return resolve({ status: 413 });
+  const chunks = [];
+  let size = 0;
+  let done = false;
+  const finish = (result) => { if (!done) { done = true; clearTimeout(timer); resolve(result); } };
+  const timer = setTimeout(() => finish({ status: 408 }), readTimeoutMs);
+  req.on('data', (chunk) => {
+    size += chunk.length;
+    if (size > MAX_BODY) return finish({ status: 413 });
+    chunks.push(chunk);
+  });
+  req.on('end', () => finish({ text: Buffer.concat(chunks).toString('utf8') }));
+  req.on('error', () => finish({ status: 400 }));
+});
+
+// HTTP handler for the mailer service. Only POST /api/anfrage (via nginx) and GET /healthz exist.
+// Responses never contain submitted values; logs never contain content, addresses or SMTP messages.
+export function createHandler({ config, transport, limiter, maxConcurrent = 2, log = console.log, readTimeoutMs = 10_000 }) {
+  let active = 0;
+  return async (req, res) => {
+    const path = (req.url ?? '').split('?')[0];
+    if (path === '/healthz' && req.method === 'GET') return reply(res, 200, { ok: true });
+    if (path !== '/api/anfrage') return reply(res, 404, { ok: false });
+    if (req.method !== 'POST') return reply(res, 405, { ok: false }, { Allow: 'POST' });
+    if (!config.origins.has(req.headers.origin ?? '')) return reply(res, 403, { ok: false });
+    if (!String(req.headers['content-type'] ?? '').toLowerCase().startsWith('application/json')) return reply(res, 415, { ok: false });
+    if (config.disabled) return reply(res, 503, { ok: false });
+    const ip = String(req.headers['x-real-ip'] ?? req.socket.remoteAddress ?? '');
+    if (!limiter.hit(ip)) return reply(res, 429, { ok: false });
+
+    const body = await readBody(req, readTimeoutMs);
+    if (body.status) {
+      reply(res, body.status, { ok: false }, { Connection: 'close' });
+      return req.resume();
+    }
+    let parsed;
+    try { parsed = JSON.parse(body.text); } catch { return reply(res, 400, { ok: false, field: 'body' }); }
+    const checked = validate(parsed);
+    if (!checked.ok) return reply(res, 400, { ok: false, field: checked.field });
+    if (checked.data.website) return reply(res, 200, { ok: true }); // honeypot: pretend success, send nothing
+
+    if (active >= maxConcurrent) return reply(res, 503, { ok: false });
+    active++;
+    try {
+      await transport.sendMail(buildMail(checked.data, config));
+      log('anfrage sent');
+      return reply(res, 200, { ok: true });
+    } catch (error) {
+      log(`anfrage failed: ${String(error?.code ?? 'ERROR').replace(/[^A-Z0-9_]/gi, '')}`);
+      return reply(res, 502, { ok: false });
+    } finally {
+      active--;
+    }
+  };
+}
