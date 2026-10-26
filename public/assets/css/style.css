@@ -20,6 +20,11 @@
 }
 *{box-sizing:border-box;border-radius:0}
 html{scroll-behavior:smooth}
+/* Start page: native snapping, so the page follows finger and trackpad and settles on a section.
+   Sections taller than the screen stay freely scrollable. */
+html.snap{scroll-snap-type:y mandatory}
+.snap main>section{scroll-snap-align:start}
+.snap .home-foot{scroll-snap-align:end}
 /* The gradient is the stage: fixed behind every page, no other motifs */
 body{margin:0;min-height:100dvh;color:var(--ink);font:400 17px/1.6 var(--font-body);-webkit-font-smoothing:antialiased;font-synthesis:none;
   background:var(--stage-bg) fixed;background-color:var(--clay)}

@@ -4,47 +4,6 @@ const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 
-// Start page: a small scroll (wheel, swipe, keys) glides on to the next section.
-if(document.documentElement.classList.contains('snap')){
-const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let busy=false,lastInput=0,acc=0,fired=false,touchY=null;
-// Stop at each section's top, and at its bottom too when it is taller than the screen (phones).
-const stops=()=>{const max=document.documentElement.scrollHeight-innerHeight,out=[];
-$$('main > section').forEach(sec=>{out.push(sec.offsetTop);if(sec.offsetHeight>innerHeight+10)out.push(sec.offsetTop+sec.offsetHeight-innerHeight)});
-out.push(max);return [...new Set(out.map(t=>Math.min(Math.round(t),max)))].sort((a,b)=>a-b)};
-// html has scroll-behavior:smooth, which would turn each animation step into its own smooth scroll;
-// switch it off on this page (behavior:'instant' is not understood by every browser).
-document.documentElement.style.scrollBehavior='auto';
-const jump=y=>scrollTo(0,y);
-function nearest(){const s=stops();let best=0;s.forEach((t,i)=>{if(Math.abs(scrollY-t)<Math.abs(scrollY-s[best]))best=i});return best}
-function glide(dir){
-const s=stops(),target=s[Math.max(0,Math.min(s.length-1,nearest()+dir))];
-if(Math.abs(target-scrollY)<2)return;
-if(reduce){jump(target);return}
-busy=true;const from=scrollY,dist=target-from,dur=650,t0=performance.now();
-const ease=t=>1-Math.pow(1-t,4);
-let done=false;const finish=()=>{if(!done){done=true;jump(target);busy=false}};
-(function step(now){if(done)return;const t=Math.min(1,(now-t0)/dur);jump(from+dist*ease(t));if(t<1)requestAnimationFrame(step);else finish()})(t0);
-setTimeout(finish,dur+80); // in case frames are throttled (background tab)
-}
-// Trackpads fire a long momentum tail after each swipe, and a new swipe often starts before the tail ends,
-// so a pause cannot mark a new gesture. A new swipe shows as deltas rising again above the decaying tail.
-const hist=[];
-addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();const now=performance.now(),gap=now-lastInput;lastInput=now;
-const dy=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1),v=Math.abs(dy);
-const prevDir=hist.length?Math.sign(hist[hist.length-1]):0;
-if(gap>200)hist.length=0;hist.push(dy);if(hist.length>12)hist.shift();
-const avg=a=>a.reduce((x,y)=>x+Math.abs(y),0)/a.length;
-const rising=hist.length>=6&&avg(hist.slice(-3))>avg(hist.slice(0,-3))*1.3&&v>6;
-if(hist.length===1||rising||(prevDir&&Math.sign(dy)!==prevDir&&v>6)){acc=0;fired=false}
-if(busy||fired)return;
-acc+=dy;if(Math.abs(acc)<25)return;fired=true;glide(acc>0?1:-1)},{passive:false});
-addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
-addEventListener('touchmove',e=>{if(e.touches.length>1)touchY=null;else if(touchY!==null)e.preventDefault()},{passive:false}); // pinch zoom stays native
-addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.changedTouches[0].clientY;touchY=null;if(!busy&&Math.abs(dy)>24)glide(dy>0?1:-1)});
-addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const down=['ArrowDown','PageDown',' '].includes(e.key),up=['ArrowUp','PageUp'].includes(e.key);if(!down&&!up)return;e.preventDefault();if(!busy)glide(down?1:-1)});
-}
-
 // Start page menu: light text while it sits over the photo or a dark block.
 const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark]');
 if(fixedBar&&darkSecs.length&&'IntersectionObserver' in window){
