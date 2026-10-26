@@ -109,14 +109,27 @@ function closePhoto(){if(photoDialog.open)photoDialog.close();document.body.clas
 $('#close-photo').addEventListener('click',closePhoto);photoDialog.addEventListener('cancel',e=>{e.preventDefault();closePhoto()});photoDialog.addEventListener('click',e=>{if(e.target===photoDialog)closePhoto()});
 }
 
-// Booking uses the email client; it never transmits to a server or pretends to have done so.
+// Booking form posts JSON to /api/anfrage (mailer service, see mailer/); if that fails it offers the address and the copy button.
 const form=$('#booking-form');
 if(form){
 const status=$('#form-status');
 function bookingText(){const d=new FormData(form);return `Hallo Habibi Hermanos,\n\nich möchte euch für eine Veranstaltung anfragen.\n\nName: ${d.get('name')||'-'}\nE-Mail: ${d.get('email')||'-'}\nOrt / Veranstaltung: ${d.get('event')||'-'}\nWunschtermin: ${d.get('date')||'noch offen'}\n\n${d.get('message')||''}\n\nViele Grüße\n${d.get('name')||''}`}
 function markInvalid(){$$('input,textarea',form).forEach(f=>f.setAttribute('aria-invalid',String(!f.checkValidity())))}
 $$('input,textarea',form).forEach(f=>f.addEventListener('input',()=>{if(f.hasAttribute('aria-invalid'))f.setAttribute('aria-invalid',String(!f.checkValidity()))}));
-form.addEventListener('submit',e=>{e.preventDefault();markInvalid();if(!form.checkValidity()){status.textContent='Bitte fülle die markierten Felder aus (E-Mail im Format name@beispiel.de).';status.className='form-status error';const first=$(':invalid',form);if(first)first.focus();return}if(!BOOKING_EMAIL){status.textContent='Die Booking-E-Mail-Adresse fehlt noch. Bitte zunächst die Anfrage kopieren.';status.className='form-status error';return}status.textContent='Dein E-Mail-Programm öffnet sich. Bitte bestätige dort noch den Versand.';status.className='form-status success';window.location.href=`mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent('Booking-Anfrage | Habibi Hermanos')}&body=${encodeURIComponent(bookingText())}`});
+const labels={name:'Name',email:'E-Mail',event:'Ort / Veranstaltung',date:'Wunschtermin',message:'Nachricht'};
+const say=(cls,...parts)=>{status.replaceChildren(...parts);status.className='form-status'+(cls?' '+cls:'')};
+form.addEventListener('submit',async e=>{e.preventDefault();markInvalid();if(!form.checkValidity()){say('error','Bitte fülle die markierten Felder aus (E-Mail im Format name@beispiel.de).');const first=$(':invalid',form);if(first)first.focus();return}
+const button=$('button[type=submit]',form),d=new FormData(form);
+const data=Object.fromEntries(['name','email','event','date','message','website'].map(k=>[k,String(d.get(k)??'')]));
+button.disabled=true;say('','Wird gesendet …');
+let res=null;try{res=await fetch('/api/anfrage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),signal:AbortSignal.timeout?AbortSignal.timeout(25000):undefined})}catch(err){}
+button.disabled=false;
+if(res&&res.ok){form.reset();$$('[aria-invalid]',form).forEach(f=>f.removeAttribute('aria-invalid'));return say('success','Danke! Deine Anfrage ist angekommen. Wir melden uns per E-Mail.')}
+if(res&&res.status===400){const field=(await res.json().catch(()=>({}))).field,f=labels[field]&&form.elements[field];if(f){f.setAttribute('aria-invalid','true');f.focus()}return say('error',`Bitte prüfe deine Angaben${labels[field]?` (${labels[field]})`:''}.`)}
+if(res&&res.status===429)return say('error','Zu viele Anfragen in kurzer Zeit. Bitte versuch es in ein paar Minuten noch einmal.');
+// Mailer unreachable or failing: offer the address directly (as a link with the request filled in) and the copy button.
+const link=document.createElement('a');link.href=`mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent('Booking-Anfrage | Habibi Hermanos')}&body=${encodeURIComponent(bookingText())}`;link.textContent=BOOKING_EMAIL;
+say('error','Gerade klappt der Versand nicht. Schreib uns direkt an ',link,' oder kopiere deine Anfrage mit „Als Text kopieren“.')});
 $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();try{await navigator.clipboard.writeText(text);status.textContent='Anfrage kopiert – jetzt in eine E-Mail oder Nachricht einfügen.';status.className='form-status success'}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();status.textContent=ok?'Anfrage kopiert.':'Automatisches Kopieren nicht möglich – bitte Nachricht manuell markieren.';status.className='form-status '+(ok?'success':'error')}});
 }
 

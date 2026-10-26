@@ -327,6 +327,9 @@ html.no-anim .reveal,html.no-anim .reveal-rise,html.no-anim .reveal-img{opacity:
 .field input[aria-invalid=true],.field textarea[aria-invalid=true]{border-color:#8a0f1d;box-shadow:inset 0 0 0 1px #8a0f1d}
 .form-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
 .copy-button{border:0;background:none;padding:12px 4px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+/* Honeypot for bots: off-screen, skipped by keyboard and screen readers */
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.form-actions .btn:disabled{opacity:.6;cursor:progress}
 .form-status{margin:14px 0 0;min-height:1.5em;font-size:15px;font-weight:500}
 .form-status.error{color:#6e0a15}
 

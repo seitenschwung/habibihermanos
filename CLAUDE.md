@@ -6,7 +6,8 @@ dates, photos, booking form. Production: https://habibi.seitenschwung.com, also 
 (+ `www.` for both, Coolify on Hetzner). Canonical/og URLs in the pages still point to habibi.seitenschwung.com.
 
 ## Stack
-Plain static HTML/CSS/JS, no build step, no dependencies. Served by unprivileged nginx. `package.json` exists only so the
+Plain static HTML/CSS/JS, no build step. Served by unprivileged nginx. One server part: the booking mailer
+(`mailer/`, Node + `nodemailer`, second Compose service from the same image, reached only via nginx `/api/anfrage`). `package.json` exists only so the
 shared CI runs `npm test` (the gig check); keep it dependency-free.
 
 ## Commands
@@ -46,7 +47,8 @@ shared CI runs `npm test` (the gig check); keep it dependency-free.
 - All motion is off for `prefers-reduced-motion`. Debug: `?debug=1` opens a panel on every page (kept per browser
   tab, `?debug=0` closes) to switch snapping, background drift and animations (`html.snap*`, `html.bg-still`,
   `html.no-anim`); `window.habibiDebug.setSnap/setFlow/setAnim(bool)` do the same.
-- `Dockerfile` + `nginx.conf`: port 8080, `/healthz`, `/version.txt` (from `APP_VERSION`); only `public/` is copied.
+- `Dockerfile` + `nginx.conf`: port 8080, `/healthz`, `/version.txt` (from `APP_VERSION`); copies `public/` and the mailer
+  (`node /app/mailer/server.mjs`, port 3000, internal only). nginx proxies `POST /api/anfrage` with a rate limit.
 - `docker-compose.yml`: what Coolify runs (`image: ${IMAGE}`, CrowdSec labels, log rotation).
 
 ## CI and deploy contract
@@ -57,7 +59,7 @@ shared CI runs `npm test` (the gig check); keep it dependency-free.
 ## Conventions / pitfalls
 - UI language is German; keep copy honest (no invented dates, links or performers).
 - Every Buchen/anfragen link points to `buchen.html#formular` (the form card; `scroll-margin-top` keeps it clear of the header).
-- `BOOKING_EMAIL` in `site.js` is `aemsez08@gmail.com` (form opens a mailto draft; empty value would make it copy text only).
+- The form posts to `/api/anfrage` (mailer, SMTP via `booking.habibihermanos@seitenschwung.com` to `aemsez08@gmail.com`); `BOOKING_EMAIL` in `site.js` is only the fallback address shown when that fails. Mailer security rules and their tests: spec `2026-10-27-booking-mailer-design.md`, `mailer/*.test.mjs`; keep form `maxlength`s in sync with `mailer/lib.mjs`. Owner setup (mailbox, `SMTP_PASS` in Coolify): `README.md`.
 - Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are filled with the operator's details; the owner is responsible for their legal review.
