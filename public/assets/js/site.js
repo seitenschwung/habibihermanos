@@ -80,6 +80,7 @@ $('#copy-booking').addEventListener('click',async()=>{const text=bookingText();t
 
 // Gigs come from assets/termine.json; past dates are hidden automatically.
 // Live page lists all upcoming gigs (#gigs), the start page shows the next one (#next-gig).
+// ?demo in the URL loads made-up example gigs from termine.demo.json, for layout reviews only.
 const box=$('#gigs'),nextGig=$('#next-gig');
 if(box||nextGig)(async()=>{
 const layout=$('#dates-layout');
@@ -87,11 +88,13 @@ const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className
 const day=g=>g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'');
 const meta=g=>{const m=el('span','gig-meta');[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)m.append(document.createElement('br'));m.append(t)});return m};
 try{
-const res=await fetch('assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
+const demo=new URLSearchParams(location.search).has('demo');
+const res=await fetch(demo?'assets/termine.demo.json':'assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
 const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
 if(box){
-box.replaceChildren(...gigs.map(g=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
+const shown=box.dataset.limit?gigs.slice(0,+box.dataset.limit):gigs;
+box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map(g=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
 const card=el('article','gig');card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }
