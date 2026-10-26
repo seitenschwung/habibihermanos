@@ -54,13 +54,33 @@ io=new IntersectionObserver(es=>{es.forEach(en=>en.isIntersecting&&en.intersecti
 watch();addEventListener('resize',watch);
 }
 
+// Music block on the start page: muted loop plays while visible; "Ton an" unmutes it.
+const bgVideo=$('#bg-video'),bgSound=$('#bg-sound');
+if(bgVideo){
+const still=matchMedia('(prefers-reduced-motion:reduce)').matches||(navigator.connection&&navigator.connection.saveData);
+let visible=false;
+const run=()=>{if(visible&&(!still||!bgVideo.muted))bgVideo.play().catch(()=>{});else bgVideo.pause()};
+if('IntersectionObserver' in window)new IntersectionObserver(([en])=>{visible=en.isIntersecting;run()},{threshold:.25}).observe(bgVideo);
+bgSound.addEventListener('click',()=>{bgVideo.muted=!bgVideo.muted;bgSound.setAttribute('aria-pressed',String(!bgVideo.muted));bgSound.textContent=bgVideo.muted?'Ton an':'Ton aus';if(!bgVideo.muted){visible=true;bgVideo.play().catch(()=>{})}else run()});
+bgVideo.addEventListener('pause',()=>{if(!bgVideo.muted&&!visible){bgVideo.muted=true;bgSound.setAttribute('aria-pressed','false');bgSound.textContent='Ton an'}});
+}
+
+// Cinema overlay for the videos on the music page.
+const cinema=$('#video-dialog');
+if(cinema){
+const cv=$('#cinema-video');
+const close=()=>{cv.pause();cv.removeAttribute('src');cv.load();if(cinema.open)cinema.close();document.body.classList.remove('dialog-open')};
+$$('[data-video]').forEach(btn=>btn.addEventListener('click',()=>{cv.src=btn.dataset.video;$('#cinema-caption').textContent=btn.dataset.caption||'';cinema.showModal();document.body.classList.add('dialog-open');cv.play().catch(()=>{})}));
+$('#close-video').addEventListener('click',close);cinema.addEventListener('cancel',e=>{e.preventDefault();close()});cinema.addEventListener('click',e=>{if(e.target===cinema)close()});
+}
+
 // Subpage tabs scroll sideways on phones: keep the current page in view.
 const currentTab=$('.pages [aria-current=page]');
 if(currentTab)currentTab.scrollIntoView({inline:'center',block:'nearest'});
 
 // Only one medium plays at a time.
 const media=$$('audio,video');
-media.forEach(m=>m.addEventListener('play',()=>media.forEach(o=>{if(o!==m)o.pause()})));
+media.forEach(m=>m.addEventListener('play',()=>{if(m.muted)return;media.forEach(o=>{if(o!==m&&!o.muted)o.pause()})})); // muted loops keep running
 
 // Audio player with waveform (Musik).
 const audio=$('#song-audio');

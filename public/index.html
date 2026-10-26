@@ -36,10 +36,11 @@
 <img src="assets/images/hero-stage.webp" alt="Habibi Hermanos live auf einer Bühne: einer am Cajón, einer mit Gitarre, beide lachen sich an" width="1066" height="1600" decoding="async">
 <p class="stage-name" aria-hidden="true"><span>Habibi</span><span>Hermanos</span></p>
 </section>
-<section class="block block--dark" data-dark aria-labelledby="home-music">
-<div class="wrap block-grid">
-<div><p class="kicker">Unser Sound</p><h2 class="title" id="home-music">Hör selbst.</h2><p class="lead">Originalmitschnitte aus echten Räumen. Gitarre, Gesang und Cajón.</p><a class="btn btn-light" href="musik.html">Videos ansehen <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
-<div class="player"><div class="player-top"><strong>Live aus dem Café</strong><span class="label">Audio</span></div><div class="player-row"><button type="button" id="audio-play" class="audio-button" aria-label="Audiomitschnitt abspielen"></button><div class="audio-timeline"><div class="waveform" id="waveform" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wave-bars" id="wave-bars"></div></div><div class="time-row"><span id="audio-now">0:00</span><span id="audio-end">0:00</span></div></div></div><audio id="song-audio" src="assets/media/live-audio.m4a" preload="metadata"></audio></div>
+<section class="block block--dark block--video" data-dark aria-labelledby="home-music">
+<video class="bg-video" id="bg-video" muted loop playsinline preload="none" poster="assets/images/live-cover.jpg" aria-label="Kurzer Live-Ausschnitt von Habibi Hermanos"><source src="assets/media/hero-loop.mp4" type="video/mp4"></video>
+<div class="wrap">
+<p class="kicker">Unser Sound</p><h2 class="title" id="home-music">Hör selbst.</h2><p class="lead">Originalmitschnitte aus echten Räumen. Gitarre, Gesang und Cajón.</p>
+<div class="block-actions"><button type="button" class="btn btn-light" id="bg-sound" aria-pressed="false">Ton an</button><a class="btn btn-ghost-light" href="musik.html">Alle Videos <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
 </div>
 </section>
 <section class="block" aria-labelledby="home-dates">
