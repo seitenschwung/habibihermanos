@@ -29,12 +29,13 @@
 <div class="wrap booking">
 <ul class="occasions"><li><strong>Café &amp; Bar</strong><span>Akustisch, nah, ohne große Technik.</span></li><li><strong>Konzert &amp; Kultur</strong><span>Ein Abend mit Gesang, Gitarre und Cajón.</span></li><li><strong>Fest &amp; privat</strong><span>Für Hochzeit, Geburtstag oder Straßenfest.</span></li></ul>
 <div class="form-card" id="formular"><h2 class="form-title" id="form-title">Macht den ersten Ton.</h2><form id="booking-form" novalidate>
-<div class="field"><label for="contact-name">Name *</label><input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Dein Name" required></div>
-<div class="field"><label for="contact-email">E-Mail *</label><input id="contact-email" name="email" type="email" autocomplete="email" placeholder="deine@email.de" required></div>
-<div class="field"><label for="contact-event">Ort / Veranstaltung *</label><input id="contact-event" name="event" type="text" placeholder="Wo soll gespielt werden?" required></div>
+<div class="field"><label for="contact-name">Name *</label><input id="contact-name" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Dein Name" required></div>
+<div class="field"><label for="contact-email">E-Mail *</label><input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="deine@email.de" required></div>
+<div class="field"><label for="contact-event">Ort / Veranstaltung *</label><input id="contact-event" name="event" type="text" maxlength="200" placeholder="Wo soll gespielt werden?" required></div>
 <div class="field"><label for="contact-date">Wunschtermin</label><input id="contact-date" name="date" type="date"></div>
-<div class="field"><label for="contact-message">Deine Nachricht *</label><textarea id="contact-message" name="message" rows="4" placeholder="Erzähl uns von deiner Idee …" required></textarea></div>
-<div class="form-actions"><button type="submit" class="btn">Anfrage vorbereiten <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button><button type="button" id="copy-booking" class="copy-button">Als Text kopieren</button></div>
+<div class="field"><label for="contact-message">Deine Nachricht *</label><textarea id="contact-message" name="message" rows="4" maxlength="4000" placeholder="Erzähl uns von deiner Idee …" required></textarea></div>
+<div class="hp" aria-hidden="true"><label for="contact-website">Website (bitte leer lassen)</label><input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<div class="form-actions"><button type="submit" class="btn">Anfrage senden <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button><button type="button" id="copy-booking" class="copy-button">Als Text kopieren</button></div>
 <p id="form-status" class="form-status" role="status"></p>
 </form></div>
 </div>

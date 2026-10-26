@@ -16,7 +16,9 @@ Open http://localhost:8080. On localhost the gig lists show labelled example dat
 drift and the animations. Structure and conventions: `CLAUDE.md`.
 
 - Gigs: the band edits them in Pages CMS (below), or edit `public/assets/termine.json` by hand. Past dates hide themselves.
-- Booking: the form opens a mail draft to `aemsez08@gmail.com`; nothing is sent to a server.
+- Booking: the form posts to `/api/anfrage`; the mailer service (`mailer/`) sends it as a plain-text mail via the
+  Hetzner mailbox to `aemsez08@gmail.com` (Reply-To = visitor). Locally (python server) there is no mailer, so the
+  page shows the fallback with the address.
 
 ## Termine pflegen (Pages CMS)
 
@@ -34,6 +36,21 @@ Setup (owner, once):
 
 Saving on `main` publishes after CI (a few minutes). `main` has no branch protection, so the commit lands directly;
 to review first, let them save on another branch and merge it as a PR.
+
+## Booking mail (owner, once)
+
+The `mailer` service in `docker-compose.yml` sends the form via SMTP. Design and security rules:
+`docs/superpowers/specs/2026-10-27-booking-mailer-design.md`.
+
+1. Create the mailbox `booking.habibihermanos@seitenschwung.com` in konsoleH (Hetzner webhosting `www790`).
+2. In Coolify, for this resource, set the environment variable `SMTP_PASS` (mark it secret) to that mailbox's
+   password. Defaults that can be overridden: `SMTP_HOST=mail.your-server.de`, `SMTP_PORT=587`,
+   `SMTP_USER`/`MAIL_FROM=booking.habibihermanos@seitenschwung.com`, `MAIL_TO=aemsez08@gmail.com`,
+   `ALLOWED_ORIGINS` (both domains with and without `www.`).
+3. Redeploy and send one test request from the live site.
+
+Without `SMTP_PASS` the mailer answers 503 and the page offers the address directly, so deploying first is safe.
+`npm test` runs the mailer tests; locally `MAIL_DRY_RUN=1` builds mails without sending.
 
 ## CI and deploy
 

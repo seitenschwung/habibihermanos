@@ -33,3 +33,41 @@ services:
       timeout: 3s
       start_period: 10s
       retries: 3
+
+  # Booking mailer (POST /api/anfrage via nginx): same image, its own process, no domain and no published port.
+  # Set in Coolify: SMTP_USER, SMTP_PASS (secret); the rest has defaults. Without SMTP_PASS it answers 503 and the
+  # site falls back to the mail address, so deploying before configuring is safe.
+  mailer:
+    image: ${IMAGE:?set by the CI deploy job}
+    command: ["node", "/app/mailer/server.mjs"]
+    user: "101"
+    restart: unless-stopped
+    environment:
+      SMTP_HOST: ${SMTP_HOST:-mail.your-server.de}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-booking.habibihermanos@seitenschwung.com}
+      SMTP_PASS: ${SMTP_PASS:-}
+      MAIL_FROM: ${MAIL_FROM:-booking.habibihermanos@seitenschwung.com}
+      MAIL_TO: ${MAIL_TO:-aemsez08@gmail.com}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://habibihermanos.de,https://www.habibihermanos.de,https://habibi.seitenschwung.com,https://www.habibi.seitenschwung.com}
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    expose:
+      - "3000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 50
+    mem_limit: 128m
+    cpus: 0.5
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/healthz"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3

@@ -1,8 +1,8 @@
 {
   "name": "habibihermanos",
   "private": true,
-  "description": "No build and no dependencies; only the CI check for the gig files (termine.json).",
+  "description": "No build; only CI checks: the gig files (termine.json) and the booking mailer tests.",
   "scripts": {
-    "test": "node scripts/check-termine.mjs"
+    "test": "node scripts/check-termine.mjs && npm --prefix mailer ci --no-audit --no-fund && node --test mailer/*.test.mjs"
   }
 }
