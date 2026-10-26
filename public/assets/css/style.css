@@ -7,24 +7,22 @@
 @font-face{font-family:"Noto Naskh Arabic";font-weight:600;font-style:normal;font-display:swap;src:url(../fonts/noto-naskh-arabic-arabic-600-normal.woff2) format("woff2")}
 
 :root{
-  --rose:#ff4f6d;--coral:#ff6a4a;--orange:#ff8a2b;--amber:#ffb238;--gold:#ffd166;
-  --ink:#3a2215;--ink-soft:#5a3823;--cream:#fff6ee;
+  --terracotta:#e2725b;--clay:#ef9a5a;--sand:#f6c58c;
+  --ink:#2a170d;--ink-soft:#2a170d;--cream:#fff6ee;
   --side:clamp(16px,4vw,56px);--frame:clamp(10px,1.4vw,18px);
   --font-display:Anton,Impact,"Arial Narrow",sans-serif;
   --font-body:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-ar:"Noto Naskh Arabic","Noto Sans Arabic",serif;
   --ease:cubic-bezier(.16,1,.3,1);
   --stage-bg:
-    radial-gradient(55% 45% at 12% 18%,var(--rose) 0%,transparent 70%),
-    radial-gradient(50% 45% at 88% 28%,var(--amber) 0%,transparent 70%),
-    radial-gradient(70% 55% at 50% 100%,var(--orange) 0%,transparent 75%),
-    linear-gradient(160deg,var(--coral) 0%,var(--orange) 55%,var(--gold) 100%)
+    radial-gradient(60% 50% at 10% 15%,rgb(200 85 61 / .45) 0%,transparent 70%),
+    linear-gradient(165deg,var(--terracotta) 0%,var(--clay) 55%,var(--sand) 100%)
 }
 *{box-sizing:border-box;border-radius:0}
 html{scroll-behavior:smooth}
 /* The gradient is the stage: fixed behind every page, no other motifs */
 body{margin:0;min-height:100dvh;color:var(--ink);font:400 17px/1.6 var(--font-body);-webkit-font-smoothing:antialiased;font-synthesis:none;
-  background:var(--stage-bg) fixed;background-color:var(--orange)}
+  background:var(--stage-bg) fixed;background-color:var(--clay)}
 img,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button,input,textarea{font:inherit;color:inherit}
@@ -50,14 +48,11 @@ p{margin:0 0 16px;max-width:62ch}
 
 /* ---------- Start page: the poster ---------- */
 .home{position:relative;z-index:1;min-height:100dvh;padding:var(--frame);display:flex;
-  background:var(--stage-bg) fixed;background-color:var(--orange);box-shadow:0 30px 60px -10px rgba(58,34,21,.45)}
+  background:var(--stage-bg) fixed;background-color:var(--clay);box-shadow:0 30px 60px -10px rgba(42,23,13,.45)}
 .home-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vh,72px) calc(var(--side) - var(--frame))}
 .band-name{margin:0;font:400 clamp(64px,min(15vw,26vh),260px)/.86 var(--font-display);text-transform:uppercase;letter-spacing:-.005em}
 .band-name span{display:block}
 .band-tag{margin:22px 0 0;font-size:clamp(17px,1.5vw,21px);font-weight:500}
-.links{display:flex;flex-wrap:wrap;gap:10px;margin:clamp(32px,6vh,56px) 0 0;padding:0;list-style:none}
-.btn-line{background:transparent;color:var(--ink)}
-.btn-line:hover{background:var(--ink);color:var(--cream)}
 
 /* Stage photo below the first section: the photo is pinned to the viewport and the section clips it,
    so it looks as if it lay behind the first section and is uncovered while scrolling */
@@ -73,12 +68,17 @@ p{margin:0 0 16px;max-width:62ch}
 
 /* ---------- Subpages ---------- */
 .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:var(--frame) var(--side) 0}
+/* Start page: the menu stays on top over hero and photo; over the photo it turns light */
+.bar--fixed{position:fixed;top:0;left:0;right:0;z-index:20;padding-bottom:var(--frame);transition:color .3s}
+.bar--fixed.on-photo{color:var(--cream)}
+.bar--fixed.on-photo .pages a:hover{background:rgba(255,246,238,.18)}
+.bar--fixed.on-photo .brand:hover{background:var(--cream);color:var(--ink)}
 .brand{display:flex;align-items:center;gap:.35em;padding:12px 18px;font:400 22px/1 var(--font-display);text-transform:uppercase;transition:background .2s,color .2s}
 .brand:hover{background:var(--ink);color:var(--cream)}
 .pages{display:flex;gap:6px;margin:0;padding:0;list-style:none}
 .pages li{display:flex}
 .pages a{display:flex;align-items:center;padding:12px 16px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;transition:background .2s,color .2s}
-.pages a:hover{background:rgba(58,34,21,.1)}
+.pages a:hover{background:rgba(42,23,13,.1)}
 .pages a[aria-current=page]{background:var(--ink);color:var(--cream)}
 
 .page{padding:clamp(36px,7vh,80px) 0 clamp(64px,10vh,110px)}
@@ -103,14 +103,14 @@ p{margin:0 0 16px;max-width:62ch}
 .audio-timeline{flex:1;min-width:0}
 .waveform{position:relative;height:50px;cursor:pointer}
 .wave-bars{position:absolute;inset:0;display:flex;align-items:center;gap:2px}
-.wave-bars span{flex:1;min-width:1px;background:rgba(58,34,21,.25)}
+.wave-bars span{flex:1;min-width:1px;background:rgba(42,23,13,.25)}
 .wave-bars span.played{background:var(--ink)}
 .time-row{display:flex;justify-content:space-between;margin-top:6px;font-size:13px;font-variant-numeric:tabular-nums}
 
 /* Fotos: even grid, all photos the same size */
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
 .photo{display:block;padding:0;border:0;background:none;text-align:left}
-.photo .frame{display:block;aspect-ratio:4/5;overflow:hidden;background:rgba(58,34,21,.15)}
+.photo .frame{display:block;aspect-ratio:4/5;overflow:hidden;background:rgba(42,23,13,.15)}
 .photo img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .photo:hover img{transform:scale(1.04)}
 .photo .label{margin:10px 0 0;color:var(--ink)}
@@ -171,7 +171,7 @@ p{margin:0 0 16px;max-width:62ch}
 
 /* Photo dialog */
 .photo-modal{border:0;padding:0;background:transparent;max-width:min(92vw,1000px);max-height:92dvh}
-.photo-modal::backdrop{background:rgba(58,34,21,.9)}
+.photo-modal::backdrop{background:rgba(42,23,13,.9)}
 .photo-modal img{max-height:80dvh;width:auto;margin-inline:auto}
 .photo-modal p{margin:10px auto 0;text-align:center;color:var(--cream);font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
 .close-modal{display:block;margin:0 0 10px auto;padding:12px 16px;border:1.5px solid var(--cream);background:var(--cream);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
@@ -195,8 +195,6 @@ body.dialog-open{overflow:hidden}
   .clip:nth-child(2){margin-top:0}
   .gig{grid-template-columns:1fr;gap:8px}
   .stage-name{right:auto;left:var(--side);font-size:clamp(56px,18vw,96px)}
-  .links{flex-direction:column}
-  .links .btn{width:100%}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

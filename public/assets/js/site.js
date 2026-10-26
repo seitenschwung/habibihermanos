@@ -45,6 +45,14 @@ addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.change
 addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const down=['ArrowDown','PageDown',' '].includes(e.key),up=['ArrowUp','PageUp'].includes(e.key);if(!down&&!up)return;e.preventDefault();if(!busy)glide(down?1:-1)});
 }
 
+// Start page menu: light text while it sits over the stage photo.
+const fixedBar=$('.bar--fixed'),stage=$('.stage-photo');
+if(fixedBar&&stage&&'IntersectionObserver' in window){
+let io;const watch=()=>{if(io)io.disconnect();
+io=new IntersectionObserver(([en])=>fixedBar.classList.toggle('on-photo',en.isIntersecting),{rootMargin:`0px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});io.observe(stage)};
+watch();addEventListener('resize',watch);
+}
+
 // Subpage tabs scroll sideways on phones: keep the current page in view.
 const currentTab=$('.pages [aria-current=page]');
 if(currentTab)currentTab.scrollIntoView({inline:'center',block:'nearest'});
