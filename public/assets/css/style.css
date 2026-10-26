@@ -180,10 +180,13 @@ p{margin:0 0 16px;max-width:62ch}
 /* ---------- Subpages ---------- */
 .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:var(--frame) var(--side) 0}
 /* The menu stays on top; over photos and dark blocks it turns dark with light text, so nothing shows through */
-.bar--fixed{position:fixed;top:0;left:0;right:0;z-index:20;padding-bottom:var(--frame)}
+.bar--fixed{position:fixed;top:0;left:0;right:0;z-index:20;padding-bottom:var(--frame);transition:color .25s}
+/* The dark state fades in as a layer over the gradient, together with the text colour */
+.bar--fixed::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);opacity:0;transition:opacity .25s}
+.bar--fixed.on-photo::before{opacity:1}
 /* Same fixed gradient as the page, so the bar is invisible on it but hides content scrolling under it */
-.bar--fixed:not(.on-photo){background:var(--stage-bg) fixed;background-color:var(--clay)}
-.bar--fixed.on-photo{color:var(--cream);background:var(--ink)}
+.bar--fixed{background:var(--stage-bg) fixed;background-color:var(--clay)}
+.bar--fixed.on-photo{color:var(--cream)}
 .bar--fixed.on-photo .pages a:hover{background:rgba(255,246,238,.18)}
 .bar--fixed.on-photo .brand:hover{background:var(--cream);color:var(--ink)}
 .brand{display:flex;align-items:center;gap:.35em;padding:12px 18px;font:400 22px/1 var(--font-display);text-transform:uppercase;transition:background .2s,color .2s}

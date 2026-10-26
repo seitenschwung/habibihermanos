@@ -4,13 +4,14 @@ const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 
-// Start page menu: light text while it sits over the photo or a dark block.
-const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark]');
-if(fixedBar&&darkSecs.length&&'IntersectionObserver' in window){
-const under=new Set();let io;const watch=()=>{if(io)io.disconnect();under.clear();
-io=new IntersectionObserver(es=>{es.forEach(en=>en.isIntersecting&&en.intersectionRect.height>0?under.add(en.target):under.delete(en.target)) /* a section that only touches the strip does not count */;fixedBar.classList.toggle('on-photo',under.size>0)},
-{rootMargin:`-1px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});darkSecs.forEach(s=>io.observe(s))};
-watch();addEventListener('resize',watch);
+// Fixed menu: dark with light text while the section under its middle line is dark (photo, [data-dark], footer).
+// Checked on every scroll frame, so fast jumps, snapping and mobile toolbar resizes cannot leave a stale colour.
+const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark],.footer');
+if(fixedBar){
+let queued=false;
+const update=()=>{queued=false;const y=fixedBar.offsetHeight/2;fixedBar.classList.toggle('on-photo',darkSecs.some(sec=>{const r=sec.getBoundingClientRect();return r.top<=y&&r.bottom>y}))};
+const queue=()=>{if(!queued){queued=true;requestAnimationFrame(update)}};
+addEventListener('scroll',queue,{passive:true});addEventListener('resize',queue);addEventListener('load',queue);update();
 }
 
 // Debug panel: ?debug=1 opens it on every page for this browser tab, ?debug=0 closes it.
