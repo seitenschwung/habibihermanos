@@ -14,22 +14,25 @@ watch();addEventListener('resize',watch);
 }
 
 // Debug panel: ?debug=1 opens it on every page for this browser tab, ?debug=0 closes it.
-// It toggles the section snapping (html.snap / html.snap-soft); the choice is kept for the tab.
+// It toggles the section snapping (html.snap / html.snap-soft) and the drifting background (html.bg-still); choices are kept for the tab.
 const store={get:k=>{try{return sessionStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{v===null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch(e){}}};
 const debugParam=new URLSearchParams(location.search).get('debug');
-if(debugParam==='1')store.set('hh-debug','1');else if(debugParam==='0'){store.set('hh-debug',null);store.set('hh-snap',null)}
+if(debugParam==='1')store.set('hh-debug','1');else if(debugParam==='0'){store.set('hh-debug',null);store.set('hh-snap',null);store.set('hh-flow',null)}
 if(store.get('hh-debug')==='1'){
 const root=document.documentElement,snapClass=['snap','snap-soft'].find(c=>root.classList.contains(c));
 const setSnap=on=>{if(snapClass)root.classList.toggle(snapClass,on);store.set('hh-snap',on?null:'off')};
 const panel=document.createElement('aside');panel.className='debug';panel.setAttribute('aria-label','Debug');
-panel.innerHTML='<strong>Debug</strong><label><input type="checkbox"> Auto-Scroll</label><span class="debug-note"></span><a href="?debug=0">Schließen</a>';
-const box=$('input',panel),note=$('.debug-note',panel);
+panel.innerHTML='<strong>Debug</strong><label><input type="checkbox" name="snap"> Auto-Scroll</label><span class="debug-note"></span><label><input type="checkbox" name="flow"> Hintergrund fließt</label><a href="?debug=0">Schließen</a>';
+const box=$('[name=snap]',panel),note=$('.debug-note',panel),flow=$('[name=flow]',panel);
+const setFlow=on=>{root.classList.toggle('bg-still',!on);store.set('hh-flow',on?null:'off')};
+flow.checked=store.get('hh-flow')!=='off';setFlow(flow.checked);
+flow.addEventListener('change',()=>setFlow(flow.checked));
 box.checked=store.get('hh-snap')!=='off';box.disabled=!snapClass;
 note.textContent=snapClass?(snapClass==='snap'?'Einrasten: stark':'Einrasten: sanft'):'Kein Einrasten auf dieser Seite';
 box.addEventListener('change',()=>setSnap(box.checked));
 if(snapClass&&!box.checked)root.classList.remove(snapClass);
 document.body.append(panel);
-window.habibiDebug={setSnap:on=>{box.checked=!!on;setSnap(!!on)}};
+window.habibiDebug={setSnap:on=>{box.checked=!!on;setSnap(!!on)},setFlow:on=>{flow.checked=!!on;setFlow(!!on)}};
 }
 
 // Muted background loops (start page music block, Musik opener): play while visible;
