@@ -409,6 +409,9 @@ body.dialog-open{overflow:hidden}
   .photos{padding-top:150px}
 }
 @media (max-width:640px){
+  /* Four page links fit one row down to 360px wide phones */
+  .pages{justify-content:space-between}
+  .pages a{padding:12px 10px}
   .music{grid-template-columns:1fr}
   .gigs{grid-template-columns:1fr}
   .gig{grid-template-columns:1fr;gap:8px}
