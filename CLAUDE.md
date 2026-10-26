@@ -13,8 +13,8 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 - Local check: `lighthouse http://localhost:8080 --chrome-flags="--no-sandbox --headless"`
 
 ## Layout
-- `public/index.html`: start page: fixed top menu (`.bar--fixed`, turns light over the photo via IntersectionObserver), band name and claim on the gradient, then a full-screen photo (`hero-stage.webp`, pinned with `position:fixed` inside a `clip-path` section so scrolling uncovers it; keep the img eager, lazy never loads there). `<html class="snap">` turns on section-by-section scrolling in `site.js`
-- Menu: top bar with Musik, Fotos, Über uns, Live; booking is a fixed `.btn.cta` "Jetzt buchen" bottom right on every page except `buchen.html`.
+- `public/index.html`: one-pager start page: fixed top menu (`.bar--fixed`, gradient background; turns light over the photo and `[data-dark]` blocks via IntersectionObserver), hero with band name, claim and marquee, then then a full-screen photo (`hero-stage.webp`, pinned with `position:fixed` inside a `clip-path` section so scrolling uncovers it; keep the img eager, lazy never loads there)., then full-screen blocks: Musik (dark, audio player), next gigs (`#gigs` from `termine.json`), Über uns teaser. `<html class="snap">` turns on section-by-section scrolling over every `main > section` in `site.js`
+- Menu: top bar with Musik, Fotos, Über uns, Live; Instagram (https://www.instagram.com/habibihermanoshh/) in every footer, link only, no embed; booking is a fixed `.btn.cta` "Jetzt buchen" bottom right on every page except `buchen.html`.
 - Subpages: `musik.html` (videos + audio), `fotos.html` (masonry + lightbox), `ueber-uns.html`, `live.html` (gigs), `buchen.html` (form); same header/footer markup in each, copy it when adding a page
 - `public/assets/{css,js,media,images}`
 - `public/assets/js/site.js`: shared by all pages, each block guards for its elements (section snapping, audio waveform, lightbox, booking form, gigs)

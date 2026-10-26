@@ -44,18 +44,26 @@ p{margin:0 0 16px;max-width:62ch}
 .btn:hover{background:transparent;color:var(--ink)}
 .btn:active{transform:translateY(1px)}
 /* Booking button fixed bottom right on every page (not on the booking page) */
-.cta{position:fixed;right:var(--side);bottom:clamp(14px,3vh,28px);z-index:30;box-shadow:0 14px 30px -12px rgba(42,23,13,.6)}
+.cta{position:fixed;right:var(--side);bottom:clamp(14px,3vh,28px);z-index:30;border-color:var(--sand);box-shadow:0 14px 30px -12px rgba(42,23,13,.6)}
 .cta:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
 .btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
 .btn:hover svg{transform:translateX(4px)}
 
 /* ---------- Start page: the poster ---------- */
-.home{position:relative;z-index:1;min-height:100dvh;padding:var(--frame);display:flex;
+.home{position:relative;z-index:1;min-height:100dvh;padding:var(--frame);display:flex;flex-direction:column;
   background:var(--stage-bg) fixed;background-color:var(--clay);box-shadow:0 30px 60px -10px rgba(42,23,13,.45)}
 .home-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vh,72px) calc(var(--side) - var(--frame))}
 .band-name{margin:0;font:400 clamp(64px,min(15vw,26vh),260px)/.86 var(--font-display);text-transform:uppercase;letter-spacing:-.005em}
 .band-name span{display:block}
 .band-tag{margin:22px 0 0;font-size:clamp(17px,1.5vw,21px);font-weight:500}
+
+/* Marquee at the foot of the hero: big type running endlessly */
+.marquee{margin:0 calc(-1 * var(--frame)) calc(-1 * var(--frame));overflow:hidden;padding:clamp(10px,2vh,18px) 0;background:var(--ink);color:var(--sand)}
+.marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.marquee-track>div{display:flex;flex:none}
+.marquee span{padding-right:.45em;font:400 clamp(34px,5.5vw,76px)/1 var(--font-display);text-transform:uppercase;white-space:nowrap}
+.marquee .sep{color:var(--clay)}
+@keyframes marquee{to{transform:translateX(-50%)}}
 
 /* Stage photo below the first section: the photo is pinned to the viewport and the section clips it,
    so it looks as if it lay behind the first section and is uncovered while scrolling */
@@ -65,14 +73,36 @@ p{margin:0 0 16px;max-width:62ch}
 .stage-name{position:absolute;z-index:1;right:var(--side);bottom:clamp(36px,8vh,96px);margin:0;max-width:none;
   font:400 clamp(64px,min(11vw,19vh),200px)/.86 var(--font-display);text-transform:uppercase;color:#fff;text-shadow:0 4px 30px rgba(20,8,12,.35)}
 .stage-name span{display:block}
-.home-foot{display:flex;justify-content:space-between;gap:20px;padding:18px var(--side) 22px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.home-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding:18px var(--side) 22px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
 .home-foot nav{display:flex;gap:22px}
 .home-foot a{padding:6px 0;text-decoration:underline;text-underline-offset:4px}
+
+/* Start page blocks below the photo: one screen each */
+.block{position:relative;min-height:100dvh;display:flex;align-items:center;padding:clamp(96px,14vh,140px) 0 clamp(72px,12vh,120px)}
+.block .title{margin-bottom:18px;font-size:clamp(48px,6.5vw,104px)}
+.block .kicker{margin-bottom:20px}
+.block .lead{margin-bottom:28px}
+.block--dark{background:var(--ink);color:var(--cream)}
+.block--dark .kicker,.block--dark .label{color:var(--sand)}
+.block--dark .player{background:rgba(255,246,238,.06)}
+.block--dark .audio-button{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.block--dark .audio-button:hover{background:transparent;color:var(--cream)}
+.block--dark .wave-bars span{background:rgba(255,246,238,.25)}
+.block--dark .wave-bars span.played{background:var(--sand)}
+.btn-light{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.btn-light:hover{background:transparent;color:var(--cream)}
+.block-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,6vw,96px);align-items:center}
+.block-grid--media img{width:100%;max-height:72vh;object-fit:cover}
+.block-actions{margin-top:28px}
+.social{display:inline-flex;align-items:center;gap:10px}
+.social svg{width:22px;height:22px}
 
 /* ---------- Subpages ---------- */
 .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:var(--frame) var(--side) 0}
 /* Start page: the menu stays on top over hero and photo; over the photo it turns light */
 .bar--fixed{position:fixed;top:0;left:0;right:0;z-index:20;padding-bottom:var(--frame);transition:color .3s}
+/* Same fixed gradient as the page, so the bar is invisible on it but hides content scrolling under it */
+.bar--fixed:not(.on-photo){background:var(--stage-bg) fixed;background-color:var(--clay)}
 .bar--fixed.on-photo{color:var(--cream)}
 .bar--fixed.on-photo .pages a:hover{background:rgba(255,246,238,.18)}
 .bar--fixed.on-photo .brand:hover{background:var(--cream);color:var(--ink)}
@@ -188,7 +218,8 @@ body.dialog-open{overflow:hidden}
   .pages{overflow-x:auto;scrollbar-width:none}
   .pages::-webkit-scrollbar{display:none}
   .pages a{white-space:nowrap}
-  .page-head,.story,.booking{grid-template-columns:1fr}
+  .page-head,.story,.booking,.block-grid{grid-template-columns:1fr}
+  .block-grid--media img{max-height:50vh}
 }
 @media (max-width:860px){
   .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -200,6 +231,7 @@ body.dialog-open{overflow:hidden}
   .stage-name{right:auto;left:var(--side);font-size:clamp(56px,18vw,96px)}
 }
 @media (prefers-reduced-motion:reduce){
+  .marquee-track{animation:none}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 /* Room for the fixed booking button at the page end */

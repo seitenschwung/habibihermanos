@@ -10,7 +10,7 @@ const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 let busy=false,lastInput=0,acc=0,fired=false,touchY=null;
 // Stop at each section's top, and at its bottom too when it is taller than the screen (phones).
 const stops=()=>{const max=document.documentElement.scrollHeight-innerHeight,out=[];
-$$('.home,.stage-photo').forEach(sec=>{out.push(sec.offsetTop);if(sec.offsetHeight>innerHeight+10)out.push(sec.offsetTop+sec.offsetHeight-innerHeight)});
+$$('main > section').forEach(sec=>{out.push(sec.offsetTop);if(sec.offsetHeight>innerHeight+10)out.push(sec.offsetTop+sec.offsetHeight-innerHeight)});
 out.push(max);return [...new Set(out.map(t=>Math.min(Math.round(t),max)))].sort((a,b)=>a-b)};
 // html has scroll-behavior:smooth, which would turn each animation step into its own smooth scroll;
 // switch it off on this page (behavior:'instant' is not understood by every browser).
@@ -45,11 +45,12 @@ addEventListener('touchend',e=>{if(touchY===null)return;const dy=touchY-e.change
 addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const down=['ArrowDown','PageDown',' '].includes(e.key),up=['ArrowUp','PageUp'].includes(e.key);if(!down&&!up)return;e.preventDefault();if(!busy)glide(down?1:-1)});
 }
 
-// Start page menu: light text while it sits over the stage photo.
-const fixedBar=$('.bar--fixed'),stage=$('.stage-photo');
-if(fixedBar&&stage&&'IntersectionObserver' in window){
-let io;const watch=()=>{if(io)io.disconnect();
-io=new IntersectionObserver(([en])=>fixedBar.classList.toggle('on-photo',en.isIntersecting),{rootMargin:`0px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});io.observe(stage)};
+// Start page menu: light text while it sits over the photo or a dark block.
+const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark]');
+if(fixedBar&&darkSecs.length&&'IntersectionObserver' in window){
+const under=new Set();let io;const watch=()=>{if(io)io.disconnect();under.clear();
+io=new IntersectionObserver(es=>{es.forEach(en=>en.isIntersecting&&en.intersectionRect.height>0?under.add(en.target):under.delete(en.target)) /* a section that only touches the strip does not count */;fixedBar.classList.toggle('on-photo',under.size>0)},
+{rootMargin:`0px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});darkSecs.forEach(s=>io.observe(s))};
 watch();addEventListener('resize',watch);
 }
 
