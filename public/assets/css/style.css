@@ -43,6 +43,9 @@ p{margin:0 0 16px;max-width:62ch}
   font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1;transition:background .2s,color .2s}
 .btn:hover{background:transparent;color:var(--ink)}
 .btn:active{transform:translateY(1px)}
+/* Booking button fixed bottom right on every page (not on the booking page) */
+.cta{position:fixed;right:var(--side);bottom:clamp(14px,3vh,28px);z-index:30;box-shadow:0 14px 30px -12px rgba(42,23,13,.6)}
+.cta:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
 .btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
 .btn:hover svg{transform:translateX(4px)}
 
@@ -199,3 +202,5 @@ body.dialog-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+/* Room for the fixed booking button at the page end */
+.footer,.home-foot{padding-bottom:calc(var(--frame) + 72px)}

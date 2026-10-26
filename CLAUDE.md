@@ -14,6 +14,7 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
 
 ## Layout
 - `public/index.html`: start page: fixed top menu (`.bar--fixed`, turns light over the photo via IntersectionObserver), band name and claim on the gradient, then a full-screen photo (`hero-stage.webp`, pinned with `position:fixed` inside a `clip-path` section so scrolling uncovers it; keep the img eager, lazy never loads there). `<html class="snap">` turns on section-by-section scrolling in `site.js`
+- Menu: top bar with Musik, Fotos, Über uns, Live; booking is a fixed `.btn.cta` "Jetzt buchen" bottom right on every page except `buchen.html`.
 - Subpages: `musik.html` (videos + audio), `fotos.html` (masonry + lightbox), `ueber-uns.html`, `live.html` (gigs), `buchen.html` (form); same header/footer markup in each, copy it when adding a page
 - `public/assets/{css,js,media,images}`
 - `public/assets/js/site.js`: shared by all pages, each block guards for its elements (section snapping, audio waveform, lightbox, booking form, gigs)
