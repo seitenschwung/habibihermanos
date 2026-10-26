@@ -57,11 +57,6 @@ p{margin:0 0 16px;max-width:62ch}
 /* Marquee at the foot of the hero: big type running endlessly */
 .marquee{display:flex;align-items:stretch;margin:0 calc(-1 * var(--frame)) calc(-1 * var(--frame));background:var(--ink);color:var(--sand)}
 .marquee-run{flex:1;min-width:0;overflow:hidden;padding:clamp(10px,2vh,18px) 0}
-/* Booking sits in the band like a ticket window */
-.marquee-book{flex:none;display:flex;align-items:center;gap:12px;padding:0 clamp(18px,3vw,36px);background:var(--sand);color:var(--ink);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;transition:background .2s,color .2s}
-.marquee-book svg{width:16px;height:16px;transition:transform .3s var(--ease)}
-.marquee-book:hover{background:var(--cream)}
-.marquee-book:hover svg{transform:translateX(4px)}
 .marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
 .marquee-track>div{display:flex;flex:none}
 .marquee span{padding-right:.45em;font:400 clamp(34px,5.5vw,76px)/1 var(--font-display);text-transform:uppercase;white-space:nowrap}
