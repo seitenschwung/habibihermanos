@@ -4,11 +4,16 @@ const BOOKING_EMAIL = 'info@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 
-// Scroll reveal: a [data-reveal] section gets .is-in once it is in view; its .reveal children fade up (CSS).
+// Scroll reveal. Sections after the first screen get their text, cards and images marked automatically
+// (the start page sets its own classes via [data-reveal]); each marked element gets .is-in once it is in view.
 document.documentElement.classList.add('js');
-const revealSecs=$$('[data-reveal]');
-if('IntersectionObserver' in window){const ro=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('is-in');ro.unobserve(en.target)}}),{threshold:.35});revealSecs.forEach(sec=>ro.observe(sec))}
-else revealSecs.forEach(sec=>sec.classList.add('is-in'));
+const revealParts='.kicker,.title,.lead,.story-text>p,.block-actions,.gig,.clip,.player,.photo,.occasions li,.form-card,.story-photo,.dates-empty,.social,.motto-mark,.motto-text>*,.cta-card>*,.block-grid>div>*';
+$$('main>section:not(.opener):not(.home):not([data-reveal])').forEach(sec=>{let i=0;
+$$(revealParts,sec).forEach(part=>{if(part.parentElement.closest('.reveal,.reveal-img'))return;
+part.classList.add(part.matches('.story-photo,.photo')?'reveal-img':'reveal');part.style.setProperty('--i',Math.min(i++,4))})});
+const ro='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('is-in');ro.unobserve(en.target)}}),{threshold:.15}):null;
+const reveal=part=>ro?ro.observe(part):part.classList.add('is-in');
+$$('.reveal,.reveal-rise,.reveal-img').forEach(reveal);
 
 // Fixed menu: dark with light text while the section under its middle line is dark (photo, [data-dark], footer).
 // Checked on every scroll frame, so fast jumps, snapping and mobile toolbar resizes cannot leave a stale colour.
@@ -21,25 +26,28 @@ addEventListener('scroll',queue,{passive:true});addEventListener('resize',queue)
 }
 
 // Debug panel: ?debug=1 opens it on every page for this browser tab, ?debug=0 closes it.
-// It toggles the section snapping (html.snap / html.snap-soft) and the drifting background (html.bg-still); choices are kept for the tab.
+// It toggles the section snapping (html.snap / html.snap-soft), the drifting background (html.bg-still) and the text/scroll animations (html.no-anim); choices are kept for the tab.
 const store={get:k=>{try{return sessionStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{v===null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch(e){}}};
 const debugParam=new URLSearchParams(location.search).get('debug');
-if(debugParam==='1')store.set('hh-debug','1');else if(debugParam==='0'){store.set('hh-debug',null);store.set('hh-snap',null);store.set('hh-flow',null)}
+if(debugParam==='1')store.set('hh-debug','1');else if(debugParam==='0'){store.set('hh-debug',null);store.set('hh-snap',null);store.set('hh-flow',null);store.set('hh-anim',null)}
 if(store.get('hh-debug')==='1'){
 const root=document.documentElement,snapClass=['snap','snap-soft'].find(c=>root.classList.contains(c));
 const setSnap=on=>{if(snapClass)root.classList.toggle(snapClass,on);store.set('hh-snap',on?null:'off')};
 const panel=document.createElement('aside');panel.className='debug';panel.setAttribute('aria-label','Debug');
-panel.innerHTML='<strong>Debug</strong><label><input type="checkbox" name="snap"> Auto-Scroll</label><span class="debug-note"></span><label><input type="checkbox" name="flow"> Hintergrund fließt</label><a href="?debug=0">Schließen</a>';
+panel.innerHTML='<strong>Debug</strong><label><input type="checkbox" name="snap"> Auto-Scroll</label><span class="debug-note"></span><label><input type="checkbox" name="flow"> Hintergrund fließt</label><label><input type="checkbox" name="anim"> Animationen</label><a href="?debug=0">Schließen</a>';
 const box=$('[name=snap]',panel),note=$('.debug-note',panel),flow=$('[name=flow]',panel);
 const setFlow=on=>{root.classList.toggle('bg-still',!on);store.set('hh-flow',on?null:'off')};
 flow.checked=store.get('hh-flow')!=='off';setFlow(flow.checked);
 flow.addEventListener('change',()=>setFlow(flow.checked));
+const anim=$('[name=anim]',panel),setAnim=on=>{root.classList.toggle('no-anim',!on);store.set('hh-anim',on?null:'off')};
+anim.checked=store.get('hh-anim')!=='off';setAnim(anim.checked);
+anim.addEventListener('change',()=>setAnim(anim.checked));
 box.checked=store.get('hh-snap')!=='off';box.disabled=!snapClass;
 note.textContent=snapClass?(snapClass==='snap'?'Einrasten: stark':'Einrasten: sanft'):'Kein Einrasten auf dieser Seite';
 box.addEventListener('change',()=>setSnap(box.checked));
 if(snapClass&&!box.checked)root.classList.remove(snapClass);
 document.body.append(panel);
-window.habibiDebug={setSnap:on=>{box.checked=!!on;setSnap(!!on)},setFlow:on=>{flow.checked=!!on;setFlow(!!on)}};
+window.habibiDebug={setSnap:on=>{box.checked=!!on;setSnap(!!on)},setFlow:on=>{flow.checked=!!on;setFlow(!!on)},setAnim:on=>{anim.checked=!!on;setAnim(!!on)}};
 }
 
 // Muted background loops (start page music block, Musik opener): play while visible;
@@ -127,7 +135,7 @@ const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).
 if(box){
 const shown=box.dataset.limit?gigs.slice(0,+box.dataset.limit):gigs;
 box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map((g,i)=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
-const card=el('article','gig reveal');card.style.setProperty('--i',i+2);card.append(el('span','gig-day',day(g)),meta(g),body);return card}));
+const card=el('article','gig reveal');card.style.setProperty('--i',Math.min(i+2,5));card.append(el('span','gig-day',day(g)),meta(g),body);reveal(card);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }
 if(nextGig&&gigs.length){const g=gigs[0],info=meta(g);info.className='ticket-info';nextGig.replaceChildren(el('span','ticket-date',day(g)),info,$('.ticket-more',nextGig));nextGig.setAttribute('aria-label',`Nächster Auftritt: ${day(g)}, ${g.venue||''}. Alle Termine`);nextGig.classList.add('is-set')}
