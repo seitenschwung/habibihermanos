@@ -6,11 +6,12 @@ dates, photos, booking form. Production: https://habibi.seitenschwung.com, also 
 (+ `www.` for both, Coolify on Hetzner). Canonical/og URLs in the pages still point to habibi.seitenschwung.com.
 
 ## Stack
-Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged nginx.
+Plain static HTML/CSS/JS, no build step, no dependencies. Served by unprivileged nginx. `package.json` exists only so the
+shared CI runs `npm test` (the gig check); keep it dependency-free.
 
 ## Commands
 - Dev server: `cd public && python3 -m http.server 8080 --bind 0.0.0.0`
-- Tests/build: none locally; CI builds the Docker image and crawls the site (axe + Lighthouse).
+- Tests: `npm test` checks `termine.json` / `termine.demo.json`; CI also builds the Docker image and crawls the site (axe + Lighthouse).
 - Local check: `lighthouse http://localhost:8080 --chrome-flags="--no-sandbox --headless"`
 
 ## Layout
@@ -61,6 +62,7 @@ Plain static HTML/CSS/JS, no build step, no package.json. Served by unprivileged
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are filled with the operator's details; the owner is responsible for their legal review.
 - Design: terracotta gradient (`--terracotta`, `--clay`, `--sand` plus a soft brick glow top left; no motifs), dark brown text `#2a170d` (keep ≥ 4.5:1 on the darkest gradient spot), everything square (no border-radius), no hairlines or frames, square buttons, small tracked caps labels, Anton headlines. History: `docs/design-concept-v2.md`, `docs/design-critique.md`; brand concept `docs/design-concept.md`. Brand spelling is "Habibi" (one b).
+- The band edits gigs in Pages CMS (`.pages.yml`, setup in `README.md`); keep its fields in sync with `scripts/check-termine.mjs` and `site.js`.
 - Gigs live in `public/assets/termine.json` (`date` YYYY-MM-DD, `time`, `venue`, `label`, `text`); `site.js` renders them into `#gigs` (start page: `data-limit="3"`) and `#next-gig` and hides past dates; made-up gigs from `termine.demo.json` show on localhost and with `?demo` (labelled; `?demo=0` turns them off; never on the production host). `<noscript>` holds a static fallback card (29.10) to delete after the date.
 - Media is ~45 MB, most of it `arches-live.mp4` (4:49 song, 540x960, 750 kbit/s); videos are H.264 + 64k mono AAC, photos webp q72–80. No ffmpeg on this Mac: re-encode with an AVFoundation AVAssetWriter script at a set bitrate (`avconvert` presets give 100+ MB). Strip location metadata (writer and PIL do). `duo-mark.webp` is the source drawing (not used by a page): favicons `mark-64.png` / `mark-180.png` and the logo `duo-mark.svg` (potrace vector, used as a CSS mask `.mark` so it takes `currentColor`) come from it.
 - Caching (`nginx.conf`): HTML/CSS/JS `no-cache` (revalidate), fonts/images/media 1 day. Files are not fingerprinted, so replaced media may show old for up to a day; rename the file to force it.

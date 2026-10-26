@@ -15,8 +15,25 @@ Open http://localhost:8080. On localhost the gig lists show labelled example dat
 (`?demo=0` shows the real `termine.json`); `?debug=1` opens a panel to switch scroll-snapping, the background
 drift and the animations. Structure and conventions: `CLAUDE.md`.
 
-- Gigs: edit `public/assets/termine.json` (past dates hide themselves).
+- Gigs: the band edits them in Pages CMS (below), or edit `public/assets/termine.json` by hand. Past dates hide themselves.
 - Booking: the form opens a mail draft to `aemsez08@gmail.com`; nothing is sent to a server.
+
+## Termine pflegen (Pages CMS)
+
+`.pages.yml` gives the band a form for `public/assets/termine.json` in [Pages CMS](https://pagescms.org)
+(fields: Datum, Uhrzeit, Ort, Label, Text). Saving commits the file; CI checks it (`npm test` →
+`scripts/check-termine.mjs`: valid JSON, date `YYYY-MM-DD`, time `HH:MM`, venue set) and deploys `main` only when
+the check passes, so a broken entry never goes live.
+
+Setup (owner, once):
+1. Open https://app.pagescms.org, sign in with GitHub and install the Pages CMS GitHub App for
+   `seitenschwung/habibihermanos` (this repository only).
+2. In Pages CMS open the repository, branch `main`, then "Termine": the form appears.
+3. Invite the band as collaborators by email (they need no GitHub account). They can edit content but not
+   `.pages.yml`.
+
+Saving on `main` publishes after CI (a few minutes). `main` has no branch protection, so the commit lands directly;
+to review first, let them save on another branch and merge it as a PR.
 
 ## CI and deploy
 

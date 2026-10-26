@@ -1,0 +1,8 @@
+{
+  "name": "habibihermanos",
+  "private": true,
+  "description": "No build and no dependencies; only the CI check for the gig files (termine.json).",
+  "scripts": {
+    "test": "node scripts/check-termine.mjs"
+  }
+}
