@@ -90,7 +90,7 @@ const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className
 const day=g=>g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'');
 const meta=g=>{const m=el('span','gig-meta');[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)m.append(document.createElement('br'));m.append(t)});return m};
 try{
-const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$|\.localhost$/.test(location.hostname);
 const demo=q.has('demo')?q.get('demo')!=='0':local;
 const res=await fetch(demo?'assets/termine.demo.json':'assets/termine.json',{cache:'no-cache'});if(!res.ok)throw new Error(res.status);
 const today=new Date();today.setHours(0,0,0,0);
