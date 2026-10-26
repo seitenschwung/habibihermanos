@@ -6,7 +6,8 @@
 <meta name="theme-color" content="#e2725b">
 <meta name="description" content="Live-Videos und Audiomitschnitte von Habibi Hermanos: Gitarre, Gesang und Cajón, aufgenommen in echten Räumen.">
 <link rel="canonical" href="https://habibi.seitenschwung.com/musik.html">
-<link rel="icon" href="assets/images/favicon.png" type="image/png">
+<link rel="icon" href="assets/images/mark-64.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/images/mark-180.png">
 <link rel="preload" href="assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/site.js" defer></script>
@@ -21,6 +22,8 @@
 <div class="music">
 <button type="button" class="clip" data-video="assets/media/live-session.mp4" data-caption="Live aus dem Café" aria-label="Video abspielen: Live aus dem Café"><span class="frame"><img src="assets/images/live-cover.jpg" alt="" width="576" height="1024"><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Live aus dem Café</span></button>
 <button type="button" class="clip" data-video="assets/media/second-session.mp4" data-caption="Zweiter Mitschnitt" aria-label="Video abspielen: Zweiter Mitschnitt"><span class="frame"><video muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"><source src="assets/media/second-session.mp4#t=0.5" type="video/mp4"></video><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Zweiter Mitschnitt</span></button>
+<button type="button" class="clip" data-video="assets/media/arches-live.mp4" data-caption="Ein ganzer Song, live" aria-label="Video abspielen: Ein ganzer Song, live"><span class="frame"><video muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"><source src="assets/media/arches-live.mp4#t=2" type="video/mp4"></video><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Ein ganzer Song, live · 4:49</span></button>
+<button type="button" class="clip clip--wide" data-video="assets/media/bar-loop.mp4" data-caption="Live in der Bar" aria-label="Video abspielen: Live in der Bar"><span class="frame"><img src="assets/images/bar-live.webp" alt="" width="1400" height="1050" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Live in der Bar</span></button>
 <div class="player"><div class="player-top"><strong>Nur zuhören</strong><span class="label">Audio</span></div><div class="player-row"><button type="button" id="audio-play" class="audio-button" aria-label="Audiomitschnitt abspielen"></button><div class="audio-timeline"><div class="waveform" id="waveform" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wave-bars" id="wave-bars"></div></div><div class="time-row"><span id="audio-now">0:00</span><span id="audio-end">0:00</span></div></div></div><audio id="song-audio" src="assets/media/live-audio.m4a" preload="metadata"></audio></div>
 </div>
 </div>
