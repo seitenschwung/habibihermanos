@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de" class="snap">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e2725b">
+<meta name="description" content="Live-Videos und Audiomitschnitte von Habibi Hermanos: Gitarre, Gesang und Cajón, aufgenommen in echten Räumen.">
+<link rel="canonical" href="https://habibi.seitenschwung.com/musik.html">
+<link rel="icon" href="assets/images/mark-64.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/images/mark-180.png">
+<link rel="preload" href="assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/site.js" defer></script>
+<title>Musik & Videos — Habibi Hermanos</title>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="bar bar--fixed"><a class="brand" href="index.html" aria-label="Habibi Hermanos, zur Startseite"><span class="mark" aria-hidden="true"></span><span>Habibi</span><span>Hermanos</span></a><nav aria-label="Seiten"><ul class="pages"><li><a href="musik.html" aria-current="page">Musik</a></li><li><a href="fotos.html">Fotos</a></li><li><a href="ueber-uns.html">Über uns</a></li><li><a href="live.html">Live</a></li><li><a href="buchen.html" class="book">Buchen</a></li></ul></nav></header>
+<main id="main">
+<section class="opener opener--split" aria-labelledby="musik-title">
+<div class="wrap opener-split">
+<div class="opener-text">
+<p class="kicker">Unser Sound</p><h1 class="title" id="musik-title">Hör selbst.</h1>
+<p class="lead">Originalmitschnitte aus echten Räumen. Gitarre, Gesang und Cajón.</p>
+<div class="block-actions"><button type="button" class="btn" data-sound-for="musik-loop" aria-pressed="false">Ton an</button><a class="btn btn-ghost" href="#mitschnitte">Alle Mitschnitte <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a></div>
+</div>
+<div class="opener-video"><video id="musik-loop" data-loop muted loop playsinline preload="none" poster="assets/images/live-cover.jpg" aria-label="Kurzer Live-Ausschnitt von Habibi Hermanos"><source src="assets/media/hero-loop.mp4" type="video/mp4"></video></div>
+</div>
+</section>
+<section class="block block--dark block--screen" data-dark aria-labelledby="song-title">
+<div class="wrap">
+<header class="section-head"><p class="kicker">Live</p><h2 class="title" id="song-title">Ein ganzer Song.</h2></header>
+<button type="button" class="clip clip--wide" data-video="assets/media/arches-live.mp4" data-caption="Ein ganzer Song, live" aria-label="Video abspielen: Ein ganzer Song, live"><span class="frame"><video muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"><source src="assets/media/arches-live.mp4#t=2" type="video/mp4"></video><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Ein ganzer Song, live · 4:49</span></button>
+</div>
+</section>
+<section class="block block--fit" id="mitschnitte" aria-labelledby="clips-title">
+<div class="wrap">
+<header class="section-head"><p class="kicker">Videos</p><h2 class="title" id="clips-title">Mitschnitte.</h2></header>
+<div class="music">
+<button type="button" class="clip" data-video="assets/media/live-session.mp4" data-caption="Live aus dem Café" aria-label="Video abspielen: Live aus dem Café"><span class="frame"><img src="assets/images/live-cover.jpg" alt="" width="576" height="1024" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Live aus dem Café</span></button>
+<button type="button" class="clip" data-video="assets/media/second-session.mp4" data-caption="Zweiter Mitschnitt" aria-label="Video abspielen: Zweiter Mitschnitt"><span class="frame"><video muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"><source src="assets/media/second-session.mp4#t=0.5" type="video/mp4"></video><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Zweiter Mitschnitt</span></button>
+<button type="button" class="clip" data-video="assets/media/bar-loop.mp4" data-caption="Live in der Bar" aria-label="Video abspielen: Live in der Bar"><span class="frame"><img src="assets/images/bar-live.webp" alt="" width="1400" height="1050" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Live in der Bar</span></button>
+</div>
+<div class="player"><h3 class="player-title" id="audio-title">Nur zuhören</h3><div class="player-row"><button type="button" id="audio-play" class="audio-button" aria-label="Audiomitschnitt abspielen"></button><div class="audio-timeline"><div class="waveform" id="waveform" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wave-bars" id="wave-bars"></div></div><div class="time-row"><span id="audio-now">0:00</span><span id="audio-end">0:00</span></div></div></div><audio id="song-audio" src="assets/media/live-audio.m4a" preload="metadata"></audio></div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="footer-top">
+<div><a class="footer-brand" href="index.html" aria-label="Habibi Hermanos, zur Startseite"><span class="mark" aria-hidden="true"></span><span>Habibi</span> <span>Hermanos</span></a>
+<p class="footer-tag">Spanisch-deutsche Musik mit arabischem Takt · Kiel</p></div>
+<a class="btn btn-light" href="buchen.html">Jetzt anfragen <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+</div>
+<div class="footer-cols">
+<nav aria-label="Seiten (Fußbereich)"><p class="label">Seiten</p><ul><li><a href="musik.html">Musik</a></li><li><a href="fotos.html">Fotos</a></li><li><a href="ueber-uns.html">Über uns</a></li><li><a href="live.html">Live</a></li><li><a href="buchen.html">Buchen</a></li></ul></nav>
+<div><p class="label">Kontakt</p><ul><li><a href="mailto:info@seitenschwung.com">info@seitenschwung.com</a></li><li>Kiel</li></ul></div>
+<div><p class="label">Folgen</p><ul><li><a class="social" href="https://www.instagram.com/habibihermanoshh/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li></ul></div>
+</div>
+<div class="footer-base"><p>© 2026 Habibi Hermanos</p><nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></div>
+</footer>
+<dialog id="video-dialog" class="cinema" aria-label="Video"><button type="button" class="close-modal" id="close-video">Schließen ×</button><video id="cinema-video" controls playsinline></video><p id="cinema-caption"></p></dialog>
+</body>
+</html>
