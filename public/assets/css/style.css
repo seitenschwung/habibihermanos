@@ -20,18 +20,18 @@
   --font-ar:"Noto Naskh Arabic","Noto Sans Arabic",serif;
   --ease:cubic-bezier(.16,1,.3,1);
   --stage-bg:
-    radial-gradient(60% 50% at var(--g1x) var(--g1y),rgb(200 85 61 / .45) 0%,transparent 70%),
-    radial-gradient(55% 45% at var(--g2x) var(--g2y),rgb(232 104 88 / .28) 0%,transparent 70%),
+    radial-gradient(60% 50% at var(--g1x) var(--g1y),rgb(196 78 56 / .55) 0%,transparent 70%),
+    radial-gradient(50% 45% at var(--g2x) var(--g2y),rgb(255 205 140 / .5) 0%,transparent 70%),
     linear-gradient(165deg,var(--terracotta) 0%,var(--clay) 55%,var(--sand) 100%);
   /* steps() repaints about 10 times a second instead of every frame; the drift is slow enough to look smooth */
-  animation:stage-drift 90s steps(900) infinite alternate
+  animation:stage-drift 48s steps(480) infinite alternate
 }
 html.bg-still{animation-play-state:paused}
 @keyframes stage-drift{
-  0%{--g1x:10%;--g1y:15%;--g2x:85%;--g2y:85%}
-  33%{--g1x:26%;--g1y:34%;--g2x:68%;--g2y:70%}
-  66%{--g1x:4%;--g1y:42%;--g2x:92%;--g2y:58%}
-  100%{--g1x:20%;--g1y:6%;--g2x:76%;--g2y:94%}
+  0%{--g1x:8%;--g1y:12%;--g2x:88%;--g2y:85%}
+  33%{--g1x:42%;--g1y:38%;--g2x:58%;--g2y:62%}
+  66%{--g1x:14%;--g1y:62%;--g2x:80%;--g2y:30%}
+  100%{--g1x:55%;--g1y:10%;--g2x:30%;--g2y:90%}
 }
 *{box-sizing:border-box;border-radius:0}
 html{scroll-behavior:smooth}
@@ -112,8 +112,8 @@ p{margin:0 0 16px;max-width:62ch}
 .block .title{margin-bottom:18px;font-size:clamp(48px,6.5vw,104px)}
 .block .kicker{margin-bottom:20px}
 .block .lead{margin-bottom:28px}
-.block--dark{color:var(--cream);background:radial-gradient(70% 60% at var(--g2x) 0%,rgb(226 114 91 / .24),transparent 70%),
-  radial-gradient(60% 55% at var(--g1x) 100%,rgb(239 154 90 / .14),transparent 70%),var(--ink)}
+.block--dark{color:var(--cream);background:radial-gradient(70% 65% at var(--g2x) 100%,rgb(226 114 91 / .22),transparent 70%),
+  radial-gradient(45% 50% at var(--g1x) 75%,rgb(239 154 90 / .12),transparent 70%),var(--ink)}
 .block--dark .kicker,.block--dark .label{color:var(--sand)}
 .btn-light{background:var(--cream);color:var(--ink);border-color:var(--cream)}
 .btn-light:hover{background:transparent;color:var(--cream)}
@@ -129,6 +129,12 @@ p{margin:0 0 16px;max-width:62ch}
 .block--video::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,23,13,.7) 0%,transparent 22%),linear-gradient(90deg,rgba(42,23,13,.85) 0%,rgba(42,23,13,.6) 55%,rgba(42,23,13,.45) 100%)}
 .block--video .wrap{position:relative;z-index:1}
 .block-actions{display:flex;flex-wrap:wrap;gap:10px}
+/* Closing call to action on the gradient, so no dark block sits right above the dark footer */
+.block.block--closing{padding-top:0}
+.cta-card .lead a{text-decoration:underline;text-decoration-color:rgba(42,23,13,.4);text-underline-offset:6px}
+.cta-card .lead a:hover{text-decoration-color:currentColor}
+.cta-card{padding:clamp(24px,4vw,48px);background:rgba(255,246,238,.28)}
+.cta-card .title{font-size:clamp(40px,5vw,72px)}
 .block-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,6vw,96px);align-items:center}
 .block-grid--media img{width:100%;max-height:72vh;object-fit:cover}
 .block-actions{margin-top:28px}
@@ -203,8 +209,13 @@ p{margin:0 0 16px;max-width:62ch}
 .clip:hover .play{background:var(--ink);color:var(--cream)}
 .clip .label{display:block;margin:12px 0 0;color:var(--ink)}
 .clip--wide{grid-column:1/-1;order:-1}
-/* The full song fits one screen with its heading and label, so its block snaps as one screen */
-.clip--wide{max-width:calc((100dvh - 400px) * 16 / 9);min-width:min(100%,520px)}
+/* .block--screen is exactly one screen tall (wide screens): a taller block would get a second snap stop at its end */
+@media (min-width:981px){
+  .block--screen{height:100dvh;min-height:0}
+  .block--screen .wrap{height:100%;display:flex;flex-direction:column}
+  .block--screen .clip--wide{flex:1;min-height:0;display:flex;flex-direction:column;order:0}
+  .block--screen .clip--wide .frame{flex:1;min-height:0;width:auto;max-width:100%;align-self:flex-start}
+}
 .clip--wide .frame{aspect-ratio:16/9}
 .player{margin-top:clamp(40px,7vh,72px);padding:22px;background:rgba(255,246,238,.28)}
 .player-title{margin:0 0 14px;font:400 clamp(26px,2.6vw,36px)/1 var(--font-display);text-transform:uppercase}
