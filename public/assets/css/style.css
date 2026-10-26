@@ -241,6 +241,9 @@ body.dialog-open{overflow:hidden}
   .pages{overflow-x:auto;scrollbar-width:none}
   .pages::-webkit-scrollbar{display:none}
   .pages a{white-space:nowrap}
+  /* Buchen sits next to the brand, so it never scrolls out of the page row */
+  .bar:not(.bar--fixed){position:relative}
+  .pages li:has(.book){position:absolute;top:var(--frame);right:var(--side)}
   .page-head,.story,.booking,.block-grid{grid-template-columns:1fr}
   .block-grid--media img{max-height:50vh}
 }

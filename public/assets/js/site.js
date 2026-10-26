@@ -9,7 +9,7 @@ const fixedBar=$('.bar--fixed'),darkSecs=$$('.stage-photo,[data-dark]');
 if(fixedBar&&darkSecs.length&&'IntersectionObserver' in window){
 const under=new Set();let io;const watch=()=>{if(io)io.disconnect();under.clear();
 io=new IntersectionObserver(es=>{es.forEach(en=>en.isIntersecting&&en.intersectionRect.height>0?under.add(en.target):under.delete(en.target)) /* a section that only touches the strip does not count */;fixedBar.classList.toggle('on-photo',under.size>0)},
-{rootMargin:`0px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});darkSecs.forEach(s=>io.observe(s))};
+{rootMargin:`-1px 0px -${Math.max(0,innerHeight-fixedBar.offsetHeight)}px 0px`});darkSecs.forEach(s=>io.observe(s))};
 watch();addEventListener('resize',watch);
 }
 
