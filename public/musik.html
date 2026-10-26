@@ -15,14 +15,16 @@
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
-<header class="bar bar--fixed on-photo"><a class="brand" href="index.html" aria-label="Habibi Hermanos, zur Startseite"><span class="mark" aria-hidden="true"></span><span>Habibi</span><span>Hermanos</span></a><nav aria-label="Seiten"><ul class="pages"><li><a href="musik.html" aria-current="page">Musik</a></li><li><a href="fotos.html">Fotos</a></li><li><a href="ueber-uns.html">Über uns</a></li><li><a href="live.html">Live</a></li><li><a href="buchen.html" class="book">Buchen</a></li></ul></nav></header>
+<header class="bar bar--fixed"><a class="brand" href="index.html" aria-label="Habibi Hermanos, zur Startseite"><span class="mark" aria-hidden="true"></span><span>Habibi</span><span>Hermanos</span></a><nav aria-label="Seiten"><ul class="pages"><li><a href="musik.html" aria-current="page">Musik</a></li><li><a href="fotos.html">Fotos</a></li><li><a href="ueber-uns.html">Über uns</a></li><li><a href="live.html">Live</a></li><li><a href="buchen.html" class="book">Buchen</a></li></ul></nav></header>
 <main id="main">
-<section class="opener opener--media opener--panel" data-dark aria-labelledby="musik-title">
-<video class="opener-bg" id="musik-loop" data-loop muted loop playsinline preload="none" poster="assets/images/live-cover.jpg" aria-label="Kurzer Live-Ausschnitt von Habibi Hermanos"><source src="assets/media/hero-loop.mp4" type="video/mp4"></video>
-<div class="wrap">
+<section class="opener opener--split" aria-labelledby="musik-title">
+<div class="wrap opener-split">
+<div class="opener-text">
 <p class="kicker">Unser Sound</p><h1 class="title" id="musik-title">Hör selbst.</h1>
 <p class="lead">Originalmitschnitte aus echten Räumen. Gitarre, Gesang und Cajón.</p>
-<div class="block-actions"><button type="button" class="btn btn-light" data-sound-for="musik-loop" aria-pressed="false">Ton an</button><a class="btn btn-ghost-light" href="#mitschnitte">Alle Mitschnitte <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a></div>
+<div class="block-actions"><button type="button" class="btn" data-sound-for="musik-loop" aria-pressed="false">Ton an</button><a class="btn btn-ghost" href="#mitschnitte">Alle Mitschnitte <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a></div>
+</div>
+<div class="opener-video"><video id="musik-loop" data-loop muted loop playsinline preload="none" poster="assets/images/live-cover.jpg" aria-label="Kurzer Live-Ausschnitt von Habibi Hermanos"><source src="assets/media/hero-loop.mp4" type="video/mp4"></video></div>
 </div>
 </section>
 <section class="block block--dark block--fit" data-dark aria-labelledby="song-title">
@@ -39,12 +41,7 @@
 <button type="button" class="clip" data-video="assets/media/second-session.mp4" data-caption="Zweiter Mitschnitt" aria-label="Video abspielen: Zweiter Mitschnitt"><span class="frame"><video muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"><source src="assets/media/second-session.mp4#t=0.5" type="video/mp4"></video><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Zweiter Mitschnitt</span></button>
 <button type="button" class="clip" data-video="assets/media/bar-loop.mp4" data-caption="Live in der Bar" aria-label="Video abspielen: Live in der Bar"><span class="frame"><img src="assets/images/bar-live.webp" alt="" width="1400" height="1050" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l11 6-11 6z"/></svg></span></span><span class="label">Live in der Bar</span></button>
 </div>
-</div>
-</section>
-<section class="block block--dark block--fit" data-dark aria-labelledby="audio-title">
-<div class="wrap">
-<header class="section-head"><p class="kicker">Audio</p><h2 class="title" id="audio-title">Nur zuhören.</h2></header>
-<div class="player"><div class="player-row"><button type="button" id="audio-play" class="audio-button" aria-label="Audiomitschnitt abspielen"></button><div class="audio-timeline"><div class="waveform" id="waveform" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wave-bars" id="wave-bars"></div></div><div class="time-row"><span id="audio-now">0:00</span><span id="audio-end">0:00</span></div></div></div><audio id="song-audio" src="assets/media/live-audio.m4a" preload="metadata"></audio></div>
+<div class="player"><h3 class="player-title" id="audio-title">Nur zuhören</h3><div class="player-row"><button type="button" id="audio-play" class="audio-button" aria-label="Audiomitschnitt abspielen"></button><div class="audio-timeline"><div class="waveform" id="waveform" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wave-bars" id="wave-bars"></div></div><div class="time-row"><span id="audio-now">0:00</span><span id="audio-end">0:00</span></div></div></div><audio id="song-audio" src="assets/media/live-audio.m4a" preload="metadata"></audio></div>
 </div>
 </section>
 </main>
