@@ -51,7 +51,7 @@ services:
       # so `${SMTP_PASS:-}` stayed empty although the value was set in Coolify. Unset still means "mailer off" (503).
       SMTP_PASS: ${SMTP_PASS}
       MAIL_FROM: ${MAIL_FROM:-booking.habibihermanos@seitenschwung.com}
-      MAIL_TO: ${MAIL_TO:-aemsez08@gmail.com}
+      MAIL_TO: ${MAIL_TO:-booking.habibihermanos@seitenschwung.com}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://habibihermanos.de,https://www.habibihermanos.de,https://habibi.seitenschwung.com,https://www.habibi.seitenschwung.com}
     logging:
       driver: journald

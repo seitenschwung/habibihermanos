@@ -17,7 +17,7 @@ drift and the animations. Structure and conventions: `CLAUDE.md`.
 
 - Gigs: the band edits them in Pages CMS (below), or edit `public/assets/termine.json` by hand. Past dates hide themselves.
 - Booking: the form posts to `/api/anfrage`; the mailer service (`mailer/`) sends it as a plain-text mail via the
-  Hetzner mailbox to `aemsez08@gmail.com` (Reply-To = visitor). Locally (python server) there is no mailer, so the
+  Hetzner mailbox to itself (`MAIL_TO`) (Reply-To = visitor). Locally (python server) there is no mailer, so the
   page shows the fallback with the address.
 
 ## Termine pflegen (Pages CMS)
@@ -75,7 +75,7 @@ The `mailer` service in `docker-compose.yml` sends the form via SMTP. Design and
 1. Create the mailbox `booking.habibihermanos@seitenschwung.com` in konsoleH (Hetzner webhosting `www790`).
 2. In Coolify, for this resource, set the environment variable `SMTP_PASS` (mark it secret) to that mailbox's
    password. Defaults that can be overridden: `SMTP_HOST=mail.your-server.de`, `SMTP_PORT=587`,
-   `SMTP_USER`/`MAIL_FROM=booking.habibihermanos@seitenschwung.com`, `MAIL_TO=aemsez08@gmail.com`,
+   `SMTP_USER`/`MAIL_FROM=booking.habibihermanos@seitenschwung.com`, `MAIL_TO=booking.habibihermanos@seitenschwung.com`,
    `ALLOWED_ORIGINS` (both domains with and without `www.`).
 3. Redeploy and send one test request from the live site.
 

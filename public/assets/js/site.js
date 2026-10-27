@@ -1,6 +1,6 @@
 'use strict';
 // Shared script for all pages; every block checks that its elements exist on the current page.
-const BOOKING_EMAIL = 'aemsez08@gmail.com';
+const BOOKING_EMAIL = 'booking.habibihermanos@seitenschwung.com';
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>Array.from(scope.querySelectorAll(selector));
 

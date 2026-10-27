@@ -30,7 +30,7 @@ Abschaltung (20.07.2025) nicht mehr nötig; ein VSBG-Hinweis ist erst ab mehr al
    Diensteanbieter nach § 5 DDG und Verantwortliche nach DSGVO: dann müssen ihre Namen und eine ladungsfähige
    Anschrift (GbR: Name der GbR und vertretungsberechtigte Gesellschafter) ins Impressum, und Philipp wird als
    technischer Dienstleister (Auftragsverarbeiter) geführt, mit einem AV-Vertrag zwischen Band und ihm.
-2. **Gmail als Postfach.** Ein privates Gmail-Konto hat keinen Auftragsverarbeitungsvertrag; Aufsichtsbehörden
+2. **Erledigt 27.10.2026** (`MAIL_TO` und Kontaktadresse = Hetzner-Postfach, Gmail-Absatz entfernt). **Gmail als Postfach.** Ein privates Gmail-Konto hat keinen Auftragsverarbeitungsvertrag; Aufsichtsbehörden
    sehen das für geschäftliche Anfragen kritisch. Der Text beschreibt es jetzt ehrlich, sauberer ist aber:
    `MAIL_TO` in Coolify auf das Hetzner-Postfach `booking.habibihermanos@seitenschwung.com` setzen (die Band liest es
    per App/IMAP) oder Google Workspace mit AV-Vertrag nutzen. Dann den Gmail-Absatz in § 4 anpassen und die
