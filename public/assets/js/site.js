@@ -141,6 +141,11 @@ if(box||nextGig)(async()=>{
 const layout=$('#dates-layout');
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
 const day=g=>g.when.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}).replace(/\.$/,'');
+// Ticket links come from the CMS: only full https addresses become a button, anything else is ignored.
+const tickets=g=>{let url;try{url=new URL(g.tickets)}catch{return null}if(url.protocol!=='https:')return null;
+const a=el('a','btn btn--ticket','Tickets buchen');a.href=url.href;a.target='_blank';a.rel='noopener noreferrer';
+a.setAttribute('aria-label',`Tickets buchen: ${g.venue||'Auftritt'}, ${day(g)} (externe Seite)`);
+a.insertAdjacentHTML('beforeend','<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>');return a};
 const meta=g=>{const m=el('span','gig-meta');[g.when.toLocaleDateString('de-DE',{weekday:'long'}),g.time,g.venue].filter(Boolean).forEach((t,j)=>{if(j)m.append(document.createElement('br'));m.append(t)});return m};
 try{
 const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$|\.localhost$/.test(location.hostname);
@@ -150,7 +155,7 @@ const today=new Date();today.setHours(0,0,0,0);
 const gigs=(await res.json()).map(g=>({...g,when:new Date(`${g.date}T00:00`)})).filter(g=>g.when>=today).sort((a,b)=>a.when-b.when);
 if(box){
 const shown=box.dataset.limit?gigs.slice(0,+box.dataset.limit):gigs;
-box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map((g,i)=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));
+box.replaceChildren(...(demo?[el('p','label','Demo · Beispieltermine, nicht echt')]:[]),...shown.map((g,i)=>{const body=el('div','gig-body');body.append(el('p','label',g.label||'Live'),el('p','',g.text||''));const t=g.tickets&&tickets(g);if(t)body.append(t);
 const card=el('article','gig reveal');card.style.setProperty('--i',Math.min(i+2,5));card.append(el('span','gig-day',day(g)),meta(g),body);reveal(card);return card}));
 layout.classList.toggle('is-empty',!gigs.length);
 }

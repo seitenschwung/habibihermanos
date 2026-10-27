@@ -18,7 +18,8 @@
     "time": "19:30",
     "venue": "Musterkneipe, Flensburg",
     "label": "Beispiel · Live",
-    "text": "Spanische und arabische Lieder im kleinen Raum."
+    "text": "Spanische und arabische Lieder im kleinen Raum.",
+    "tickets": "https://example.com/tickets"
   },
   {
     "date": "2026-12-12",

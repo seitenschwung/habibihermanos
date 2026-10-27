@@ -46,3 +46,9 @@ content:
         label: Text
         type: text
         description: "Ein, zwei Sätze zum Auftritt."
+      - name: tickets
+        label: Ticket-Link
+        type: string
+        description: "Vollständige Adresse zum Ticketverkauf, z. B. https://www.eventim.de/… Erscheint als Button „Tickets buchen“. Leer = kein Button."
+        options:
+          maxlength: 500

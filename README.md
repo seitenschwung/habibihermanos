@@ -23,8 +23,8 @@ drift and the animations. Structure and conventions: `CLAUDE.md`.
 ## Termine pflegen (Pages CMS)
 
 `.pages.yml` gives the band a form for `public/assets/termine.json` in [Pages CMS](https://pagescms.org)
-(fields: Datum, Uhrzeit, Ort, Label, Text). Saving commits the file; CI checks it (`npm test` →
-`scripts/check-termine.mjs`: valid JSON, date `YYYY-MM-DD`, time `HH:MM`, venue set) and deploys `main` only when
+(fields: Datum, Uhrzeit, Ort, Label, Text, Ticket-Link; a filled ticket link shows a "Tickets buchen" button on the card). Saving commits the file; CI checks it (`npm test` →
+`scripts/check-termine.mjs`: valid JSON, date `YYYY-MM-DD`, time `HH:MM`, venue set, ticket link a full `https://` address) and deploys `main` only when
 the check passes, so a broken entry never goes live.
 
 Setup (owner, once):
