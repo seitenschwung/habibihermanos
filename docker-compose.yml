@@ -47,7 +47,9 @@ services:
       SMTP_HOST: ${SMTP_HOST:-mail.your-server.de}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_USER: ${SMTP_USER:-booking.habibihermanos@seitenschwung.com}
-      SMTP_PASS: ${SMTP_PASS:-}
+      # No default here: Coolify only writes a variable into its .env when the compose file has no default for it,
+      # so `${SMTP_PASS:-}` stayed empty although the value was set in Coolify. Unset still means "mailer off" (503).
+      SMTP_PASS: ${SMTP_PASS}
       MAIL_FROM: ${MAIL_FROM:-booking.habibihermanos@seitenschwung.com}
       MAIL_TO: ${MAIL_TO:-aemsez08@gmail.com}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://habibihermanos.de,https://www.habibihermanos.de,https://habibi.seitenschwung.com,https://www.habibi.seitenschwung.com}
