@@ -22,20 +22,30 @@
 <p>Philipp Nirnberger, Wühren 35, 24794 Bünsdorf<br>
 E-Mail: <a href="mailto:aemsez08@gmail.com">aemsez08@gmail.com</a></p>
 
-<h2>2. Hosting und Server-Logfiles</h2>
-<p>Beim Aufruf der Seite verarbeitet der Webserver technisch notwendige Daten (z. B. IP-Adresse, Zeitpunkt, aufgerufene Datei). Die Seite läuft auf einem virtuellen Server (VPS) bei der Hetzner Online GmbH, verwaltet mit Coolify. Technischer Betrieb und Wartung: Philipp Nirnberger. Die Server stehen in Deutschland. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Betrieb und Sicherheit der Seite). Mit dem Hoster besteht ein Vertrag zur Auftragsverarbeitung.</p>
+<h2>2. Hosting, Server-Logfiles und Schutz vor Angriffen</h2>
+<p>Die Seite läuft auf einem virtuellen Server der Hetzner Online GmbH (Industriestr. 25, 91710 Gunzenhausen) in Deutschland, verwaltet mit Coolify. Technischer Betrieb und Wartung: Philipp Nirnberger. Mit Hetzner besteht ein Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO).</p>
+<p>Bei jedem Aufruf verarbeitet der Webserver technisch notwendige Daten: IP-Adresse, Datum und Uhrzeit, aufgerufene Datei, übertragene Datenmenge, Statuscode, Browser-Kennung (User-Agent) und die zuvor besuchte Seite (Referrer), soweit Ihr Browser sie sendet. Ohne diese Daten kann die Seite nicht ausgeliefert werden. Die Einträge landen in Protokolldateien und werden nach 14 Tagen automatisch gelöscht. Sie werden nicht mit anderen Daten zusammengeführt und nur ausgewertet, um Störungen und Angriffe zu erkennen.</p>
+<p>Zum Schutz vor Angriffen (z. B. automatisierten Einbruchsversuchen) wertet die Sicherheitssoftware CrowdSec diese Protokolle auf dem Server aus und sperrt auffällige IP-Adressen vorübergehend. Dabei können IP-Adressen, die als Angreifer erkannt wurden, zusammen mit Art und Zeitpunkt des Angriffs an die CrowdSec SAS (Paris, Frankreich) übermittelt werden, die daraus eine gemeinsame Sperrliste erstellt. Gewöhnliche Besuche werden nicht übermittelt.</p>
+<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse ist der sichere und stabile Betrieb der Seite.</p>
 
-<h2>3. Schriftarten</h2>
-<p>Alle Schriftarten werden von diesem Server selbst ausgeliefert. Es findet keine Verbindung zu Google oder anderen Schriftanbietern statt.</p>
+<h2>3. Cookies, Tracking und Schriftarten</h2>
+<p>Die Seite setzt keine Cookies und verwendet keine Analyse- oder Tracking-Dienste. Alle Schriftarten, Fotos, Videos und Audiodateien werden von diesem Server selbst ausgeliefert; es findet keine Verbindung zu Google, YouTube oder anderen Drittanbietern statt. Nur wenn Sie die Seite mit dem Zusatz <code>?debug=1</code> aufrufen (ein Werkzeug für die Entwicklung), merkt sich Ihr Browser diese Einstellung bis zum Schließen des Tabs im Sitzungsspeicher (sessionStorage); dabei wird nichts an uns übertragen.</p>
 
-<h2>4. Buchungsanfrage</h2>
-<p>Wenn Sie das Buchungsformular absenden, werden Ihre Angaben (Name, E-Mail-Adresse, Ort bzw. Veranstaltung, Wunschtermin, Nachricht) über unseren Server bei Hetzner in Deutschland als E-Mail an uns übermittelt. Die Website selbst speichert die Angaben nicht. Wir nutzen sie nur, um Ihre Anfrage zu beantworten und ein mögliches Engagement abzustimmen (Art. 6 Abs. 1 lit. b DSGVO), und bewahren die E-Mail nur so lange auf, wie es dafür nötig ist. Zum Schutz vor Missbrauch verarbeitet der Server kurzzeitig Ihre IP-Adresse, um zu viele Anfragen in kurzer Zeit zu begrenzen; sie wird nicht dauerhaft gespeichert (Art. 6 Abs. 1 lit. f DSGVO). Alternativ können Sie uns direkt per E-Mail schreiben.</p>
+<h2 id="anfrage">4. Buchungsanfrage über das Formular</h2>
+<p>Wenn Sie das Buchungsformular absenden, übermittelt unser Server Ihre Angaben (Name, E-Mail-Adresse, Ort bzw. Veranstaltung, Wunschtermin, Nachricht) als E-Mail über den Mailserver der Hetzner Online GmbH an das Postfach der Band. Die Website selbst speichert die Angaben nicht. Name, E-Mail-Adresse, Ort und Nachricht sind nötig, damit wir antworten können; ohne sie lässt sich das Formular nicht absenden. Sie können uns stattdessen auch direkt per E-Mail schreiben.</p>
+<p>Das Postfach der Band wird bei Google (Gmail) geführt. Empfänger der E-Mail ist daher auch die Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland). Dabei ist eine Übermittlung an die Google LLC in den USA nicht ausgeschlossen; Google ist nach dem EU-US Data Privacy Framework zertifiziert, für das die EU-Kommission ein angemessenes Datenschutzniveau festgestellt hat (Art. 45 DSGVO). Dasselbe gilt, wenn Sie uns direkt an die angegebene Gmail-Adresse schreiben.</p>
+<p>Wir nutzen Ihre Angaben nur, um Ihre Anfrage zu beantworten und einen möglichen Auftritt abzustimmen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags), bei Anfragen ohne Bezug zu einem Auftritt Art. 6 Abs. 1 lit. f DSGVO (Beantwortung Ihrer Nachricht). Wir löschen die E-Mail, wenn die Anfrage erledigt ist und kein Auftrag zustande kommt, spätestens nach einem Jahr; kommt ein Auftrag zustande, gelten die gesetzlichen Aufbewahrungsfristen (bis zu zehn Jahre für steuerlich relevante Unterlagen).</p>
+<p>Zum Schutz vor Missbrauch zählt der Server für jede IP-Adresse, wie viele Anfragen in kurzer Zeit eingehen, und lehnt zu viele ab. Die IP-Adresse wird dafür höchstens eine Stunde im Arbeitsspeicher gehalten und nicht dauerhaft gespeichert (Art. 6 Abs. 1 lit. f DSGVO). Ein für Menschen unsichtbares Zusatzfeld hält automatische Spam-Programme fern; es wird nichts weiter ausgewertet.</p>
 
-<h2>5. Eingebettete Medien</h2>
-<p>Videos und Audio liegen auf dieser Seite selbst. Es werden keine externen Dienste, Tracker oder Cookies eingesetzt.</p>
+<h2>5. Links zu Instagram</h2>
+<p>Die Seite verlinkt auf unser Instagram-Profil. Es handelt sich um einen einfachen Link, kein eingebettetes Element: Daten an Meta (Instagram) werden erst übertragen, wenn Sie den Link anklicken und Instagram öffnen. Dann gilt die Datenschutzerklärung von Instagram.</p>
 
 <h2>6. Ihre Rechte</h2>
-<p>Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit und Beschwerde bei einer Aufsichtsbehörde. Zuständig ist das Unabhängige Landeszentrum für Datenschutz Schleswig-Holstein (ULD), Holstenstraße 98, 24103 Kiel.</p>
+<p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20). Eine formlose E-Mail an die oben genannte Adresse genügt.</p>
+<p><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Soweit wir Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO verarbeiten, können Sie aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit widersprechen.</p>
+<p>Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel beim Unabhängigen Landeszentrum für Datenschutz Schleswig-Holstein (ULD), Holstenstraße 98, 24103 Kiel.</p>
+
+<p class="meta legal-date">Stand: Oktober 2026</p>
 
 <p><a href="index.html">← Zurück zur Startseite</a></p>
 </div>

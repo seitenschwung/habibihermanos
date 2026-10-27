@@ -37,6 +37,22 @@ Setup (owner, once):
 Saving on `main` publishes after CI (a few minutes). `main` has no branch protection, so the commit lands directly;
 to review first, let them save on another branch and merge it as a PR.
 
+## Log retention (owner, once, before deploying the journald change)
+
+Container logs (web and mailer) go to the server's journald (`docker-compose.yml`); the privacy policy says access
+logs with IP addresses are deleted after 14 days. journald must enforce that on the host. On the Coolify server, as root:
+
+```bash
+mkdir -p /etc/systemd/journald.conf.d
+printf '[Journal]\nMaxRetentionSec=14day\nMaxFileSec=1day\n' > /etc/systemd/journald.conf.d/retention.conf
+systemctl restart systemd-journald
+```
+
+`MaxFileSec=1day` starts a new journal file daily, so `MaxRetentionSec` can drop whole days on time. This applies to
+the whole host journal. Check: `journalctl -t habibi-web --since today | tail` shows nginx lines after the next deploy,
+and `journalctl --header | grep -i retention` or the oldest entry (`journalctl -t habibi-web | head -1`) is never
+older than 14 days. Coolify's proxy (Traefik) keeps no access log by default; leave it that way.
+
 ## Booking mail (owner, once)
 
 The `mailer` service in `docker-compose.yml` sends the form via SMTP. Design and security rules:

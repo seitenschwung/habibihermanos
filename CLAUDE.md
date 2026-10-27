@@ -50,7 +50,7 @@ shared CI runs `npm test` (the gig check); keep it dependency-free.
   `html.no-anim`); `window.habibiDebug.setSnap/setFlow/setAnim(bool)` do the same.
 - `Dockerfile` + `nginx.conf`: port 8080, `/healthz`, `/version.txt` (from `APP_VERSION`); copies `public/` and the mailer
   (`node /app/mailer/server.mjs`, port 3000, internal only). nginx proxies `POST /api/anfrage` with a rate limit.
-- `docker-compose.yml`: what Coolify runs (`image: ${IMAGE}`, CrowdSec labels, log rotation).
+- `docker-compose.yml`: what Coolify runs (`image: ${IMAGE}`, CrowdSec labels, logs to journald; the host keeps them 14 days, as the privacy policy says, see README "Log retention").
 
 ## CI and deploy contract
 `.github/workflows/ci.yml` is owner-managed; don't edit. CI needs: port 8080, `GET /healthz` 200,
