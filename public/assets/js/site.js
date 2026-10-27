@@ -121,6 +121,39 @@ const label=document.createElement('span');label.className='label';label.textCon
 }catch(e){}})();
 }
 
+// Song list (Musik, #songs) from the CMS (songs.json; demo file on localhost / ?demo). Filter buttons per kind and
+// language; own songs with a sample get a play button that shares one <audio> element.
+const songList=$('#songs');
+if(songList)(async()=>{try{
+const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$|\.localhost$/.test(location.hostname);
+const demo=q.has('demo')?q.get('demo')!=='0':local;
+const res=await fetch(demo?'assets/songs.demo.json':'assets/songs.json',{cache:'no-cache'});if(!res.ok)return;
+const songs=(await res.json()).filter(x=>x&&typeof x.title==='string'&&x.title.trim()).sort((a,b)=>(b.own===true)-(a.own===true)||a.title.localeCompare(b.title,'de'));
+if(!songs.length)return;
+const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n};
+const play='<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 4l11 6-11 6z"/></svg>',pause='<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3.5v12H5zM11.5 4H15v12h-3.5z"/></svg>';
+const sample=new Audio();sample.preload='none';sample.hidden=true;songList.after(sample);let current=null;
+const sync=()=>$$('.song-play',songList).forEach(b=>{const on=b===current&&!sample.paused;b.innerHTML=on?pause:play;b.setAttribute('aria-pressed',String(on));b.closest('.song').classList.toggle('is-playing',on)});
+['play','pause','ended'].forEach(ev=>sample.addEventListener(ev,sync));
+songList.replaceChildren(...(demo?[el('li','label','Demo · Beispielsongs, nicht echt')]:[]),...songs.map(x=>{
+const li=el('li','song');li.dataset.kind=x.own?'own':'cover';li.dataset.lang=x.language||'';
+const head=el('div','song-head');head.append(el('h3','song-title',x.title));
+const meta=el('p','song-meta');meta.append(el('span','song-tag'+(x.own?' song-tag--own':''),x.own?'Eigener Song':'Cover'));
+[x.own?'':(x.artist?`Original: ${x.artist}`:''),x.language].filter(Boolean).forEach(t=>meta.append(el('span','',t)));head.append(meta);
+if(x.note)head.append(el('p','song-note',x.note));li.append(head);
+const src=x.own&&typeof x.audio==='string'&&/^\/assets\/media\//.test(x.audio)&&!x.audio.includes('..')?x.audio:'';
+if(src){const b=el('button','song-play');b.type='button';b.setAttribute('aria-label',`Hörprobe abspielen: ${x.title}`);b.addEventListener('click',async()=>{if(current===b&&!sample.paused){sample.pause();return}
+if(current!==b){current=b;sample.src=src}try{await sample.play()}catch(e){console.warn('Audio nicht verfügbar',e)}sync()});li.append(b)}
+return li}));
+const filters=[['Alle',()=>true]];if(songs.some(x=>x.own))filters.push(['Eigene',li=>li.dataset.kind==='own']);
+[...new Set(songs.map(x=>x.language).filter(Boolean))].forEach(l=>filters.push([l,li=>li.dataset.lang===l]));
+const bar=$('.song-filter');if(filters.length>2)bar.replaceChildren(...filters.map(([name,test],i)=>{const b=el('button','song-filter-btn',name);b.type='button';b.setAttribute('aria-pressed',String(!i));
+b.addEventListener('click',()=>{$$('button',bar).forEach(o=>o.setAttribute('aria-pressed',String(o===b)));$$('.song',songList).forEach(li=>{li.hidden=!test(li)})});return b}));else bar.remove();
+sync();$('#repertoire').hidden=false;
+}catch(e){}})();
+// Only one sound at a time: starting any audio pauses the others (muted video loops are left alone).
+document.addEventListener('play',e=>{if(!(e.target instanceof HTMLAudioElement))return;$$('audio').forEach(a=>{if(a!==e.target&&!a.paused)a.pause()})},true);
+
 // Booking form posts JSON to /api/anfrage (mailer service, see mailer/); if that fails it offers the address and the copy button.
 const form=$('#booking-form');
 if(form){

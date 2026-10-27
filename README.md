@@ -41,6 +41,13 @@ at most 15 MB, title, date). The Docker build turns every upload upright, shrink
 strips all metadata including GPS (stage `photos` in the `Dockerfile`); git keeps the originals. To delete a photo,
 remove its entry and the file in Pages CMS (media).
 
+**Songs** (third form): Titel, Eigener Song, Original von (covers), Sprache, Notiz, Hörprobe →
+`public/assets/songs.json`, samples in `public/assets/media/uploads/`. `musik.html` shows them as "Repertoire" (own
+songs first, filter chips per kind and language, play button for samples); the section stays hidden while the list
+is empty. `scripts/check-songs.mjs`: covers need "Original von" and may not have a sample (publishing a cover recording
+needs a licence), samples MP3/M4A up to 20 MB. The Docker build (stage `audio`) re-encodes samples to 128 kbit/s and
+drops cover art and tags.
+
 Saving on `main` publishes after CI (a few minutes). `main` has no branch protection, so the commit lands directly;
 to review first, let them save on another branch and merge it as a PR.
 

@@ -1,8 +1,8 @@
 {
   "name": "habibihermanos",
   "private": true,
-  "description": "No build; only CI checks: the CMS files (termine.json, fotos.json) and the booking mailer tests.",
+  "description": "No build; only CI checks: the CMS files (termine.json, fotos.json, songs.json) and the booking mailer tests.",
   "scripts": {
-    "test": "node scripts/check-termine.mjs && node scripts/check-fotos.mjs && npm --prefix mailer ci --no-audit --no-fund && node --test mailer/*.test.mjs"
+    "test": "node scripts/check-termine.mjs && node scripts/check-fotos.mjs && node scripts/check-songs.mjs && npm --prefix mailer ci --no-audit --no-fund && node --test mailer/*.test.mjs"
   }
 }

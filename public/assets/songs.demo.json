@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Beispiel · Eigener Song",
+    "own": true,
+    "language": "Spanisch",
+    "note": "Beispiel-Eintrag, nur lokal sichtbar: ein eigener Song mit Hörprobe.",
+    "audio": "/assets/media/live-audio.m4a"
+  },
+  {
+    "title": "Beispiel · Cover",
+    "own": false,
+    "artist": "Beispiel-Band",
+    "language": "Arabisch"
+  },
+  {
+    "title": "Beispiel · Noch ein Cover",
+    "own": false,
+    "artist": "Beispiel-Interpretin",
+    "language": "Deutsch",
+    "note": "Wunschlied auf vielen Festen."
+  }
+]
