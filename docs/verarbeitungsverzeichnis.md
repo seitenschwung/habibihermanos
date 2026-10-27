@@ -20,7 +20,7 @@ und Impressum/Datenschutz anpassen (siehe `docs/legal-review-2026-10-27.md`, Pun
 
 | Wer | Wofür | Sitz | Vertrag |
 |---|---|---|---|
-| Hetzner Online GmbH | Server (Website, Mailer, Logs), Webhosting mit Mailpostfach `booking.habibihermanos@seitenschwung.com` (SMTP-Versand) | Gunzenhausen, DE | AV-Vertrag nach Art. 28 DSGVO, **abschließen bzw. prüfen** (Server- und Webhosting-Kundennummer) |
+| Hetzner Online GmbH | Server (Website, Mailer, Logs), Webhosting mit Mailpostfach `booking.habibihermanos@seitenschwung.com` (SMTP-Versand) | Gunzenhausen, DE | AV-Vertrag nach Art. 28 DSGVO, abgeschlossen am 27.10.2026 (PDF beim Verantwortlichen); läuft das Webhosting unter einer anderen Kundennummer, dort ebenfalls abschließen |
 | Google Ireland Ltd. (Gmail) | Postfach der Band, Empfänger der Anfragen | Dublin, IE; Übermittlung an Google LLC (USA) möglich | Kein AV-Vertrag (privates Konto); USA: EU-US Data Privacy Framework (Art. 45). Empfehlung: Anfragen ins Hetzner-Postfach umleiten |
 | CrowdSec SAS | Empfänger der IP-Adressen erkannter Angreifer (gemeinsame Sperrliste) | Paris, FR | Eigenverantwortlicher Empfänger, kein AV-Vertrag nötig |
 | GitHub Inc. | Quellcode, CI, Inhaltspflege über Pages CMS; keine Besucherdaten | USA | Nutzungsbedingungen; nur Daten der Bandmitglieder (siehe 5) |

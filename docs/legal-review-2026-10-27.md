@@ -35,7 +35,7 @@ Abschaltung (20.07.2025) nicht mehr nötig; ein VSBG-Hinweis ist erst ab mehr al
    `MAIL_TO` in Coolify auf das Hetzner-Postfach `booking.habibihermanos@seitenschwung.com` setzen (die Band liest es
    per App/IMAP) oder Google Workspace mit AV-Vertrag nutzen. Dann den Gmail-Absatz in § 4 anpassen und die
    Kontaktadresse auf der Seite ebenfalls umstellen.
-3. **AV-Vertrag mit Hetzner** im Hetzner-Konto (Robot/konsoleH) abschließen bzw. prüfen, dass er auch das
+3. **Erledigt 27.10.2026.** **AV-Vertrag mit Hetzner** im Hetzner-Konto (Robot/konsoleH) abschließen bzw. prüfen, dass er auch das
    Webhosting-Paket mit dem Mailpostfach abdeckt. Der Text behauptet, dass er besteht.
 4. **Log-Aufbewahrung 14 Tage** (umgesetzt): Container-Logs gehen an journald; auf dem Server muss einmal die
    Aufbewahrung gesetzt werden (README, „Log retention“), **bevor** dieser Stand deployt wird. § 2 nennt 14 Tage.
