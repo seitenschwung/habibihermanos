@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs';
 
 const files = ['public/assets/termine.json', 'public/assets/termine.demo.json'];
-const known = new Set(['date', 'time', 'venue', 'label', 'text']);
+const known = new Set(['date', 'time', 'venue', 'label', 'text', 'tickets']);
 const errors = [];
 
 for (const file of files) {
@@ -26,7 +26,12 @@ for (const file of files) {
     if (!m || d.getUTCMonth() !== +m[2] - 1 || d.getUTCDate() !== +m[3]) errors.push(`${at}: Datum "${g.date}" muss JJJJ-MM-TT sein`);
     if (g.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(g.time)) errors.push(`${at}: Uhrzeit "${g.time}" muss HH:MM sein`);
     if (typeof g.venue !== 'string' || !g.venue.trim()) errors.push(`${at}: Ort fehlt`);
-    for (const key of ['time', 'label', 'text']) if (g[key] != null && typeof g[key] !== 'string') errors.push(`${at}: ${key} muss Text sein`);
+    if (g.tickets) {
+      let url;
+      try { url = new URL(g.tickets); } catch { url = null; }
+      if (!url || url.protocol !== 'https:' || /\s/.test(g.tickets)) errors.push(`${at}: Ticket-Link "${g.tickets}" muss eine vollständige https://-Adresse sein`);
+    }
+    for (const key of ['time', 'label', 'text', 'tickets']) if (g[key] != null && typeof g[key] !== 'string') errors.push(`${at}: ${key} muss Text sein`);
     for (const key of Object.keys(g)) if (!known.has(key)) errors.push(`${at}: unbekanntes Feld "${key}"`);
   });
 }

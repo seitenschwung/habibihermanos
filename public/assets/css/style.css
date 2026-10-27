@@ -314,7 +314,10 @@ html.no-anim .reveal,html.no-anim .reveal-rise,html.no-anim .reveal-img{opacity:
 .gig-day{display:block;font:400 clamp(56px,7vw,104px)/.85 var(--font-display)}
 .gig-meta{display:block;font-size:15px;line-height:1.5}
 .gig-body .label{margin-bottom:6px}
-.gig-body p:last-child{margin:0;font-size:clamp(18px,1.6vw,22px)}
+.gig-body .label+p{margin:0;font-size:clamp(18px,1.6vw,22px)}
+/* Optional ticket link from the CMS (termine.json "tickets"): a compact square button under the text */
+.btn--ticket{min-height:44px;margin-top:18px;padding:11px 16px;gap:14px}
+.btn--ticket:hover svg{transform:translate(3px,-3px)}
 .dates-empty{display:none;padding:24px;background:rgba(255,246,238,.28)}
 .dates-layout.is-empty .dates-empty{display:block}
 
