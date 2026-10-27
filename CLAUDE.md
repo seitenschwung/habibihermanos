@@ -60,7 +60,7 @@ shared CI runs `npm test` (the gig check); keep it dependency-free.
 ## Conventions / pitfalls
 - UI language is German; keep copy honest (no invented dates, links or performers).
 - Every Buchen/anfragen link points to `buchen.html#formular` (the form card; `scroll-margin-top` keeps it clear of the header).
-- The form posts to `/api/anfrage` (mailer, SMTP via `booking.habibihermanos@seitenschwung.com` to `aemsez08@gmail.com`); `BOOKING_EMAIL` in `site.js` is only the fallback address shown when that fails. Mailer security rules and their tests: spec `2026-10-27-booking-mailer-design.md`, `mailer/*.test.mjs`; keep form `maxlength`s in sync with `mailer/lib.mjs`. Owner setup (mailbox, `SMTP_PASS` in Coolify): `README.md`.
+- The form posts to `/api/anfrage` (mailer, SMTP via and to the Hetzner mailbox `booking.habibihermanos@seitenschwung.com`, also the public contact address; no Gmail, so no US transfer); `BOOKING_EMAIL` in `site.js` is only the fallback address shown when that fails. Mailer security rules and their tests: spec `2026-10-27-booking-mailer-design.md`, `mailer/*.test.mjs`; keep form `maxlength`s in sync with `mailer/lib.mjs`. Owner setup (mailbox, `SMTP_PASS` in Coolify): `README.md`.
 - Fonts are self-hosted in `public/assets/fonts` (Anton, Roboto, Noto Naskh Arabic; OFL). No external requests.
   Add weights via `@font-face` at the top of `style.css`; keep it free of external requests (GDPR).
 - `public/impressum.html` and `public/datenschutz.html` are filled with the operator's details; the owner is responsible for their legal review.

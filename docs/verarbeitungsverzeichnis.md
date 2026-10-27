@@ -9,7 +9,7 @@ interne Details (Zugangsdaten, Server-Zugänge) gehören nicht hierher.
 
 ## Verantwortlicher
 
-Philipp Nirnberger, Wühren 35, 24794 Bünsdorf, aemsez08@gmail.com.
+Philipp Nirnberger, Wühren 35, 24794 Bünsdorf, booking.habibihermanos@seitenschwung.com.
 Ein Datenschutzbeauftragter ist nicht benannt (nicht erforderlich: weniger als 20 Personen verarbeiten regelmäßig
 personenbezogene Daten, keine Kerntätigkeit nach Art. 37 DSGVO).
 
@@ -21,7 +21,6 @@ und Impressum/Datenschutz anpassen (siehe `docs/legal-review-2026-10-27.md`, Pun
 | Wer | Wofür | Sitz | Vertrag |
 |---|---|---|---|
 | Hetzner Online GmbH | Server (Website, Mailer, Logs), Webhosting mit Mailpostfach `booking.habibihermanos@seitenschwung.com` (SMTP-Versand) | Gunzenhausen, DE | AV-Vertrag nach Art. 28 DSGVO, abgeschlossen am 27.10.2026 (PDF beim Verantwortlichen); läuft das Webhosting unter einer anderen Kundennummer, dort ebenfalls abschließen |
-| Google Ireland Ltd. (Gmail) | Postfach der Band, Empfänger der Anfragen | Dublin, IE; Übermittlung an Google LLC (USA) möglich | Kein AV-Vertrag (privates Konto); USA: EU-US Data Privacy Framework (Art. 45). Empfehlung: Anfragen ins Hetzner-Postfach umleiten |
 | CrowdSec SAS | Empfänger der IP-Adressen erkannter Angreifer (gemeinsame Sperrliste) | Paris, FR | Eigenverantwortlicher Empfänger, kein AV-Vertrag nötig |
 | GitHub Inc. | Quellcode, CI, Inhaltspflege über Pages CMS; keine Besucherdaten | USA | Nutzungsbedingungen; nur Daten der Bandmitglieder (siehe 5) |
 
@@ -55,8 +54,8 @@ und Impressum/Datenschutz anpassen (siehe `docs/legal-review-2026-10-27.md`, Pun
   Vertrags- und Rechnungsdaten.
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung); ohne Auftrittsbezug lit. f; Rechnungen
   lit. c (gesetzliche Aufbewahrung).
-- **Empfänger:** Hetzner (Versand über Mailserver), Google (Gmail-Postfach).
-- **Drittland:** USA möglich (Gmail, Data Privacy Framework).
+- **Empfänger:** Hetzner (Versand und Postfach booking.habibihermanos@seitenschwung.com).
+- **Drittland:** nein. Das Postfach mit einer normalen Mail-App (IMAP) lesen, nicht in Gmail importieren.
 - **Löschfrist:** nach Erledigung ohne Auftrag, spätestens nach 1 Jahr (Postfach einmal im Jahr aufräumen);
   bei Auftrag gesetzliche Fristen (bis 10 Jahre für steuerlich relevante Unterlagen).
 - **Missbrauchsschutz:** IP-Adresse höchstens 1 Stunde im Arbeitsspeicher (Rate-Limit), nicht gespeichert;
