@@ -10,11 +10,12 @@ services:
     labels:
       - crowdsec.enable=true
       - crowdsec.labels.type=nginx
+    # Logs go to the host's journald, which deletes them after 14 days (host setup in README, "Log retention");
+    # the privacy policy promises that period. `docker logs` and CrowdSec still read them through the Docker API.
     logging:
-      driver: json-file
+      driver: journald
       options:
-        max-size: "10m"
-        max-file: "3"
+        tag: habibi-web
     expose:
       - "8080"
     read_only: true
@@ -51,10 +52,9 @@ services:
       MAIL_TO: ${MAIL_TO:-aemsez08@gmail.com}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://habibihermanos.de,https://www.habibihermanos.de,https://habibi.seitenschwung.com,https://www.habibi.seitenschwung.com}
     logging:
-      driver: json-file
+      driver: journald
       options:
-        max-size: "10m"
-        max-file: "3"
+        tag: habibi-mailer
     expose:
       - "3000"
     read_only: true

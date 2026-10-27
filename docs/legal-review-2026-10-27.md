@@ -9,7 +9,7 @@ Technische und inhaltliche Prüfung gegen DDG, DSGVO und TDDDG anhand dessen, wa
 |---|---|---|
 | Gmail als Empfänger der Formular-Mails nicht genannt (Empfänger, Drittland: Art. 13 Abs. 1 lit. e, f) | hoch | Google Ireland als Empfänger, mögliche US-Übermittlung, Data Privacy Framework |
 | CrowdSec (wertet Logs aus, meldet Angreifer-IPs an CrowdSec SAS, Paris) fehlte | mittel | eigener Absatz mit Rechtsgrundlage |
-| Speicherdauer fehlte (Logs, Anfragen; Art. 13 Abs. 2 lit. a) | mittel | Logs: größenbasierte Rotation; Anfragen: Löschung nach Erledigung, spätestens 1 Jahr, sonst gesetzliche Fristen |
+| Speicherdauer fehlte (Logs, Anfragen; Art. 13 Abs. 2 lit. a) | mittel | Logs: 14 Tage (journald, Host-Einstellung); Anfragen: Löschung nach Erledigung, spätestens 1 Jahr, sonst gesetzliche Fristen |
 | Widerspruchsrecht nicht hervorgehoben (Art. 21 Abs. 4) | mittel | eigener, fett markierter Absatz |
 | Pflichtangaben im Formular nicht erklärt (Art. 13 Abs. 2 lit. e) | gering | ergänzt |
 | Log-Inhalte zu vage | gering | vollständige Liste (IP, Zeit, Datei, Status, Größe, User-Agent, Referrer) |
@@ -37,8 +37,7 @@ Abschaltung (20.07.2025) nicht mehr nötig; ein VSBG-Hinweis ist erst ab mehr al
    Kontaktadresse auf der Seite ebenfalls umstellen.
 3. **AV-Vertrag mit Hetzner** im Hetzner-Konto (Robot/konsoleH) abschließen bzw. prüfen, dass er auch das
    Webhosting-Paket mit dem Mailpostfach abdeckt. Der Text behauptet, dass er besteht.
-4. **Log-Aufbewahrung zeitlich begrenzen** (empfohlen): Docker rotiert nur nach Größe (3 × 10 MB); bei wenig
-   Verkehr bleiben IPs so monatelang liegen. Besser: feste Frist (z. B. 14 Tage) über Coolify/Logrotate oder
-   kleinere Rotation, dann die Frist in § 2 nennen.
+4. **Log-Aufbewahrung 14 Tage** (umgesetzt): Container-Logs gehen an journald; auf dem Server muss einmal die
+   Aufbewahrung gesetzt werden (README, „Log retention“), **bevor** dieser Stand deployt wird. § 2 nennt 14 Tage.
 5. **CrowdSec-Konsole:** Nur wenn die Instanz an der Community-Blocklist teilnimmt (Konsole eingeschrieben),
    werden Signale an CrowdSec übermittelt. Falls nicht, den Satz in § 2 streichen.
