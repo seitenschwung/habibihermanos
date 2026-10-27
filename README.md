@@ -34,6 +34,13 @@ Setup (owner, once):
 3. Invite the band as collaborators by email (they need no GitHub account). They can edit content but not
    `.pages.yml`.
 
+**Fotos** (second form): Bild, Titel, Datum, Beschreibung → `public/assets/fotos.json`, images in
+`public/assets/images/uploads/`. The gallery on `fotos.html` shows them before the fixed photos, newest first; date and
+description appear in the large view. `scripts/check-fotos.mjs` checks the entries (image exists, JPG/PNG/WebP,
+at most 15 MB, title, date). The Docker build turns every upload upright, shrinks it to 1600 px, recompresses it and
+strips all metadata including GPS (stage `photos` in the `Dockerfile`); git keeps the originals. To delete a photo,
+remove its entry and the file in Pages CMS (media).
+
 Saving on `main` publishes after CI (a few minutes). `main` has no branch protection, so the commit lands directly;
 to review first, let them save on another branch and merge it as a PR.
 

@@ -1,12 +1,18 @@
-# Pages CMS (https://pagescms.org): a form for the band to add and edit gigs.
-# It edits public/assets/termine.json (a top-level array); saving commits to the branch chosen in Pages CMS,
-# and CI deploys main after the checks (npm test runs scripts/check-termine.mjs).
+# Pages CMS (https://pagescms.org): forms for the band to add and edit gigs and photos.
+# It edits public/assets/termine.json and public/assets/fotos.json (top-level arrays); saving commits to the branch
+# chosen in Pages CMS, and CI deploys main after the checks (npm test runs scripts/check-termine.mjs and check-fotos.mjs).
+# Uploaded photos land in public/assets/images/uploads; the Docker build shrinks them and strips their metadata.
 
 settings:
   commit:
     identity: user
     templates:
-      update: "Termine aktualisiert ({path})"
+      update: "Inhalte aktualisiert ({path})"
+
+media:
+  input: public/assets/images/uploads
+  output: /assets/images/uploads
+  extensions: [jpg, jpeg, png, webp]
 
 content:
   - name: termine
@@ -52,3 +58,35 @@ content:
         description: "Vollständige Adresse zum Ticketverkauf, z. B. https://www.eventim.de/… Erscheint als Button „Tickets buchen“. Leer = kein Button."
         options:
           maxlength: 500
+  - name: fotos
+    label: Fotos
+    description: "Fotos für die Galerie auf der Fotos-Seite, neueste zuerst. Handyfotos einfach hochladen: sie werden beim Veröffentlichen automatisch verkleinert, und der Aufnahmeort wird entfernt."
+    type: file
+    path: public/assets/fotos.json
+    format: json
+    list: true
+    fields:
+      - name: image
+        label: Bild
+        type: image
+        required: true
+        description: "JPG, PNG oder WebP, höchstens 15 MB."
+      - name: title
+        label: Titel
+        type: string
+        required: true
+        description: "Kurz, z. B. Bandgründung im Alma."
+        options:
+          maxlength: 80
+      - name: date
+        label: Datum
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: text
+        label: Beschreibung
+        type: text
+        description: "Ein, zwei Sätze zum Foto. Wird in der Großansicht gezeigt und hilft Menschen, die das Bild nicht sehen können."
+        options:
+          maxlength: 400
