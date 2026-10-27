@@ -189,6 +189,12 @@ html.no-anim .reveal,html.no-anim .reveal-rise,html.no-anim .reveal-img{opacity:
 .opener--poster{flex-direction:column;align-items:stretch;padding-bottom:0}
 .opener-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:clamp(32px,6vh,64px)}
 .opener--poster .marquee{margin:0}
+/* Buchen: the form sits in the opener, next to title and occasions; the opener may grow past one screen */
+.book-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,80px);align-items:center;justify-content:normal}
+.opener--book .title{font-size:clamp(56px,7.4vw,124px)}
+.book-intro .occasions{margin-top:clamp(20px,4vh,40px)}
+.book-intro .occasions li{padding:10px 0}
+.opener--book .occasions,.opener--book .form-card{animation:fade-up .9s var(--ease) .55s both}
 /* Next gig teaser in the Live opener; stays hidden until site.js fills it */
 .ticket{display:inline-flex;align-items:center;gap:clamp(16px,2.4vw,28px);align-self:flex-start;margin-top:32px;padding:14px 20px;border:1.5px solid var(--ink);transition:background .2s,color .2s}
 .ticket:hover{background:var(--ink);color:var(--cream)}
@@ -313,7 +319,6 @@ html.no-anim .reveal,html.no-anim .reveal-rise,html.no-anim .reveal-img{opacity:
 .dates-layout.is-empty .dates-empty{display:block}
 
 /* Buchen */
-.booking{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,6vw,96px);align-items:start}
 .occasions{margin:0;padding:0;list-style:none}
 .occasions li{display:grid;gap:2px;padding:14px 0}
 .occasions strong{font-size:18px}
@@ -405,7 +410,12 @@ body.dialog-open{overflow:hidden}
   .motto{grid-template-columns:1fr}
   .motto-mark{height:160px}
   .home-mark{display:none}
-  .story,.booking,.block-grid{grid-template-columns:1fr}
+  .story,.block-grid,.book-hero{grid-template-columns:1fr}
+  /* phones: form right after the intro, occasions below it */
+  .book-hero{gap:0}
+  .book-intro{display:contents}
+  .book-hero .form-card{margin-top:28px}
+  .book-intro .occasions{order:1;margin-top:24px}
 }
 @media (max-width:860px){
   .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
