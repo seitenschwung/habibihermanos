@@ -1,7 +1,8 @@
-# Pages CMS (https://pagescms.org): forms for the band to add and edit gigs and photos.
-# It edits public/assets/termine.json and public/assets/fotos.json (top-level arrays); saving commits to the branch
-# chosen in Pages CMS, and CI deploys main after the checks (npm test runs scripts/check-termine.mjs and check-fotos.mjs).
-# Uploaded photos land in public/assets/images/uploads; the Docker build shrinks them and strips their metadata.
+# Pages CMS (https://pagescms.org): forms for the band to add and edit gigs, photos and songs.
+# It edits public/assets/{termine,fotos,songs}.json (top-level arrays); saving commits to the branch chosen in Pages CMS,
+# and CI deploys main after the checks (npm test runs scripts/check-{termine,fotos,songs}.mjs).
+# Uploads land in public/assets/images/uploads and public/assets/media/uploads; the Docker build shrinks and
+# recompresses them and strips their metadata.
 
 settings:
   commit:
@@ -10,9 +11,16 @@ settings:
       update: "Inhalte aktualisiert ({path})"
 
 media:
-  input: public/assets/images/uploads
-  output: /assets/images/uploads
-  extensions: [jpg, jpeg, png, webp]
+  - name: images
+    label: Fotos
+    input: public/assets/images/uploads
+    output: /assets/images/uploads
+    extensions: [jpg, jpeg, png, webp]
+  - name: audio
+    label: Hörproben
+    input: public/assets/media/uploads
+    output: /assets/media/uploads
+    extensions: [mp3, m4a]
 
 content:
   - name: termine
@@ -71,6 +79,8 @@ content:
         type: image
         required: true
         description: "JPG, PNG oder WebP, höchstens 15 MB."
+        options:
+          media: images
       - name: title
         label: Titel
         type: string
@@ -90,3 +100,47 @@ content:
         description: "Ein, zwei Sätze zum Foto. Wird in der Großansicht gezeigt und hilft Menschen, die das Bild nicht sehen können."
         options:
           maxlength: 400
+  - name: songs
+    label: Songs
+    description: "Die Songliste auf der Musik-Seite (Repertoire). Hörproben nur für eigene Songs: Aufnahmen von Covers dürfen wir nicht ohne Lizenz veröffentlichen."
+    type: file
+    path: public/assets/songs.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Titel
+        type: string
+        required: true
+        options:
+          maxlength: 80
+      - name: own
+        label: Eigener Song
+        type: boolean
+        description: "Anhaken, wenn ihr den Song selbst geschrieben habt."
+      - name: artist
+        label: Original von
+        type: string
+        description: "Nur bei Covers: Interpret oder Band des Originals. Bei Covers Pflicht."
+        options:
+          maxlength: 80
+      - name: language
+        label: Sprache
+        type: select
+        required: true
+        options:
+          values: [Spanisch, Arabisch, Deutsch, Englisch, Mehrsprachig, Instrumental]
+      - name: note
+        label: Notiz
+        type: string
+        description: "Optional, ein kurzer Satz, z. B. unsere erste eigene Nummer."
+        options:
+          maxlength: 140
+      - name: audio
+        label: Hörprobe
+        type: file
+        description: "Nur bei eigenen Songs. MP3 oder M4A, höchstens 20 MB; wird beim Veröffentlichen komprimiert."
+        options:
+          media: audio
+          extensions: [mp3, m4a]
+          rename: safe
