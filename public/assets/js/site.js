@@ -100,13 +100,25 @@ wave.addEventListener('keydown',ev=>{if(['ArrowLeft','ArrowRight','Home','End'].
 syncAudio();
 }
 
-// Photo lightbox (Fotos).
+// Photo lightbox (Fotos). Photos from the CMS (fotos.json; termine-style demo file on localhost / ?demo) are put in
+// front of the fixed ones, newest first; their date and description show under the large photo.
 const photoDialog=$('#photo-dialog');
 if(photoDialog){
-const large=$('#large-photo'),caption=$('#large-photo-caption');
-$$('[data-photo]').forEach(btn=>btn.addEventListener('click',()=>{const img=$('img',btn);large.src=btn.dataset.photo;large.alt=img?img.alt:'';caption.textContent=btn.dataset.caption;photoDialog.showModal();document.body.classList.add('dialog-open')}));
+const large=$('#large-photo'),caption=$('#large-photo-caption'),details=$('#large-photo-text'),gallery=$('.gallery');
+const openPhoto=btn=>{const img=$('img',btn);large.src=btn.dataset.photo;large.alt=img?img.alt:'';caption.textContent=btn.dataset.caption;details.textContent=[btn.dataset.date,btn.dataset.text].filter(Boolean).join(' · ');details.hidden=!details.textContent;photoDialog.showModal();document.body.classList.add('dialog-open')};
+gallery.addEventListener('click',e=>{const btn=e.target.closest('[data-photo]');if(btn)openPhoto(btn)});
 function closePhoto(){if(photoDialog.open)photoDialog.close();document.body.classList.remove('dialog-open')}
 $('#close-photo').addEventListener('click',closePhoto);photoDialog.addEventListener('cancel',e=>{e.preventDefault();closePhoto()});photoDialog.addEventListener('click',e=>{if(e.target===photoDialog)closePhoto()});
+(async()=>{try{
+const q=new URLSearchParams(location.search),local=/^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$|\.localhost$/.test(location.hostname);
+const demo=q.has('demo')?q.get('demo')!=='0':local;
+const res=await fetch(demo?'assets/fotos.demo.json':'assets/fotos.json',{cache:'no-cache'});if(!res.ok)return;
+const photos=(await res.json()).filter(p=>p&&typeof p.image==='string'&&/^\/assets\/images\//.test(p.image)&&!p.image.includes('..')&&p.title).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+gallery.prepend(...photos.map(p=>{const when=/^\d{4}-\d{2}-\d{2}$/.test(p.date||'')?new Date(`${p.date}T00:00`).toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'}):'';
+const btn=document.createElement('button');btn.type='button';btn.className='photo';btn.dataset.photo=p.image;btn.dataset.caption=p.title;btn.dataset.date=when;btn.dataset.text=p.text||'';btn.setAttribute('aria-label',`Foto vergrößern: ${p.title}`);
+const frame=document.createElement('span');frame.className='frame';const img=document.createElement('img');img.src=p.image;img.alt=p.text||p.title;img.loading='lazy';img.decoding='async';frame.append(img);
+const label=document.createElement('span');label.className='label';label.textContent=p.title;btn.append(frame,label);return btn}));
+}catch(e){}})();
 }
 
 // Booking form posts JSON to /api/anfrage (mailer service, see mailer/); if that fails it offers the address and the copy button.
