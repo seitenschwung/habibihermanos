@@ -2,8 +2,8 @@
 
 ## Purpose
 Artist website (German) for the acoustic duo Habibi Hermanos (guitar, vocals, cajón): music, about,
-dates, photos, booking form. Production: https://habibi.seitenschwung.com, also served at https://habibihermanos.de
-(+ `www.` for both, Coolify on Hetzner). Canonical/og URLs in the pages still point to habibi.seitenschwung.com.
+dates, photos, booking form. Production: https://habibihermanos.de (main address); `habibi.seitenschwung.com` and the `www.` names 301 to it (`nginx.conf`)
+(Coolify on Hetzner). Canonical/og URLs, `robots.txt` and `sitemap.xml` use habibihermanos.de; add new pages to the sitemap.
 
 ## Stack
 Plain static HTML/CSS/JS, no build step. Served by unprivileged nginx. One server part: the booking mailer

@@ -3,7 +3,7 @@
 Website of the acoustic duo Habibi Hermanos (guitar, vocals, cajón) from Kiel: music, photos, about, live dates
 and a booking form. German UI, plain static HTML/CSS/JS, no build step, served by nginx.
 
-Live: https://habibi.seitenschwung.com and https://habibihermanos.de
+Live: https://habibihermanos.de (habibi.seitenschwung.com and www. forward there)
 
 ## Work on it
 
