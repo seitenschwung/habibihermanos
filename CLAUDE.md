@@ -33,7 +33,7 @@ shared CI runs `npm test` (the gig check); keep it dependency-free.
   `.block` / `.block--dark` sections (`.block--fit` = content height). `musik.html`: `.opener--split` (text + framed
   portrait loop), one-screen song block, clips + audio player. `fotos.html`: no opener, photos uncropped in CSS
   columns (3 desktop / 2 phone), captions in the lightbox, hidden `h1`. `ueber-uns.html`: `.opener--motto` (Arabic
-  line + h1 "Musik verbindet uns"), story with h2. `live.html` / `buchen.html`: `.opener--poster` (title + marquee on
+  line + h1 "Musik verbindet"), story with h2. `live.html` / `buchen.html`: `.opener--poster` (title + marquee on
   the bottom edge), light `.cta-card` closing block; Live teases the next gig (`#next-gig`). Buchen (`.opener--book`) has
   the form card in the opener next to title and occasions (phones: form first, occasions below); the opener may be taller than one screen. Legal pages: plain text.
 - Scroll-snap (CSS only): `html.snap` (mandatory) on index, Musik, Über uns; keep every section at most one screen

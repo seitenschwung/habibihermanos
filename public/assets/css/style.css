@@ -131,6 +131,8 @@ html.no-anim .reveal,html.no-anim .reveal-rise,html.no-anim .reveal-img{opacity:
 .stage-photo{position:relative;height:100dvh;min-height:520px;clip-path:inset(0)}
 .stage-photo img{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 32%}
 .stage-photo::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(20,8,12,.35) 0%,transparent 22%,transparent 48%,rgba(20,8,12,.6) 72%,rgba(20,8,12,.92) 100%)}
+/* Landscape screens: a narrower photo box (less cropped and not upscaled, so sharper) over a blurred copy of the photo */
+@media (min-aspect-ratio:1/1){.stage-photo::before{content:"";position:fixed;inset:-60px;background:url(../images/hero-stage.webp) 50% 32%/cover;filter:blur(32px) brightness(.55)}.stage-photo img{--w:min(100%,calc(100dvh * 1.15));width:var(--w);left:calc(50% - var(--w) / 2);right:auto;object-position:50% 30%}}
 /* The white name is the poster; the about teaser is a quieter block on the dark band at the bottom, below the performers' upper bodies */
 .stage-content{position:absolute;z-index:1;left:var(--side);right:var(--side);bottom:clamp(36px,8vh,96px);display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(24px,5vw,80px);color:#fff}
 .stage-about{max-width:27em}
