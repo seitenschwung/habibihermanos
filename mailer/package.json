@@ -4,6 +4,6 @@
   "type": "module",
   "description": "Sends booking requests from the website as plain-text mail via SMTP (see docs/superpowers/specs/2026-10-27-booking-mailer-design.md).",
   "dependencies": {
-    "nodemailer": "10.2.1"
+    "nodemailer": "10.3.0"
   }
 }
