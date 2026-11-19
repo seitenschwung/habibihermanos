@@ -1,0 +1,45 @@
+{
+  "sha": "376c5ca741f7ff00d8b559d4f1d57d7471a9452a",
+  "pages": [
+    {
+      "slug": "buchen.html",
+      "path": "/buchen.html",
+      "hash": "4187b2b42f46968d54892f2d9748b97148b3cbf1704893c2cd0089d576da0313"
+    },
+    {
+      "slug": "datenschutz.html",
+      "path": "/datenschutz.html",
+      "hash": "169d0deb7a703f6e641a2c7af2b1cce12a2fe8edf69ac0147513c028933f1d4c"
+    },
+    {
+      "slug": "fotos.html",
+      "path": "/fotos.html",
+      "hash": "eb1a7c778c9e57b2bf6f8c5be2ba0048636c255e98afc1880adfde4f20f9cbbd"
+    },
+    {
+      "slug": "home",
+      "path": "/",
+      "hash": "1267acef2f20c4c29ccd2c803beb0ab584ec40639eafbf302010fc9dc617a43e"
+    },
+    {
+      "slug": "impressum.html",
+      "path": "/impressum.html",
+      "hash": "e21bce129ce49228eaa20fb70f3b1c552b6dcf7936b0538dd90754d6d878d59b"
+    },
+    {
+      "slug": "live.html",
+      "path": "/live.html",
+      "hash": "901d8f72e635f244bcc302537724e2b7e05522a6da69421f49274911912aef22"
+    },
+    {
+      "slug": "musik.html",
+      "path": "/musik.html",
+      "hash": "32a803c2ff407e785bc787eef28ee2239b2994aff099c4ece757f2121242d447"
+    },
+    {
+      "slug": "ueber-uns.html",
+      "path": "/ueber-uns.html",
+      "hash": "be74f0006615f5520e8ecff1763fbe74653d46a18fb1c8ddd01757e0b4019fc7"
+    }
+  ]
+}
